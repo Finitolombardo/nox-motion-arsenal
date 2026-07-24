@@ -13,6 +13,11 @@ declare module 'virtual:effect-packages' {
   export default effectPackages;
 }
 
+declare module 'virtual:effect-owned-files' {
+  const effectOwnedFiles: Record<string, string[]>;
+  export default effectOwnedFiles;
+}
+
 declare module 'virtual:community-flags' {
   const communityFlags: Record<string, boolean>;
   export default communityFlags;

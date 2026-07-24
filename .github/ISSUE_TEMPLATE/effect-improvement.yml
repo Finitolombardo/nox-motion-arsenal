@@ -1,0 +1,70 @@
+name: Effect improvement
+description: Propose or hand off a focused improvement for one NOX Motion Arsenal effect.
+title: "[effect: EFFECT_ID] "
+labels:
+  - enhancement
+body:
+  - type: input
+    id: effect-id
+    attributes:
+      label: Effect ID
+      description: Copy the stable ID from the effect detail page.
+      placeholder: canvasui-particle-reveal
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current state
+      description: What currently happens, and what feels wrong or incomplete?
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired-improvement
+    attributes:
+      label: Desired improvement
+      description: Describe the visual, motion, performance or control improvement.
+    validations:
+      required: true
+
+  - type: textarea
+    id: generated-code
+    attributes:
+      label: Generated code or patch
+      description: Paste a focused patch or link to a branch or gist. Remove secrets and unrelated files.
+      render: diff
+
+  - type: textarea
+    id: agent-report
+    attributes:
+      label: Agent report
+      description: Summarize the implementation, modified files and verification results.
+
+  - type: textarea
+    id: controls
+    attributes:
+      label: New or changed controls
+      description: List preserved, added or changed controls and their defaults.
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or video
+      description: Drag before/after screenshots or a short recording here.
+
+  - type: input
+    id: model
+    attributes:
+      label: Model used
+      description: Optional agent or model name and version.
+      placeholder: Codex, Claude Code, Cursor, or manual
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: The proposal contains no secrets, tracking, remote scripts or unrelated project changes.
+          required: true

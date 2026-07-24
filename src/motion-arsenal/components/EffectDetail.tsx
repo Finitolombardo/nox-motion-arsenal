@@ -4,16 +4,11 @@ import { formatEffectUpdatedAt } from '../lib/effectDates';
 import { EffectPreview } from './EffectPreview';
 import { PropsPanel } from './PropsPanel';
 import { FullscreenPreview } from './FullscreenPreview';
-import { buildEffectManifest, getOwnedSourceFiles } from '../community/manifests/buildManifest';
-import { buildImprovementPrompt } from '../community/prompt/buildImprovementPrompt';
-import { createImprovementPackageTemplate } from '../community/lib/packageTemplate';
-import { COMMUNITY_FEATURE_FLAGS } from '../community/config/featureFlags';
-import { SubmissionTokenPanel } from '../community/components/SubmissionTokenPanel';
+import { GitHubContributionPanel } from './GitHubContributionPanel';
 
 interface Props {
   entry: EffectEntry;
   onBack: () => void;
-  onImprove: () => void;
 }
 
 function CopyButton({ text, label }: { text: string; label: string }) {
@@ -33,11 +28,9 @@ function CopyButton({ text, label }: { text: string; label: string }) {
   );
 }
 
-export function EffectDetail({ entry, onBack, onImprove }: Props) {
+export function EffectDetail({ entry, onBack }: Props) {
   const m = entry.meta;
   const updated = formatEffectUpdatedAt(m.updatedAt);
-  const manifest = useMemo(() => buildEffectManifest(entry), [entry]);
-  const ownedSources = useMemo(() => getOwnedSourceFiles(manifest), [manifest]);
   const [fullscreen, setFullscreen] = useState(false);
   const [propValues, setPropValues] = useState<Record<string, unknown>>(() =>
     Object.fromEntries(m.props.map((p) => [p.key, p.default])),
@@ -85,34 +78,7 @@ export function EffectDetail({ entry, onBack, onImprove }: Props) {
             <CopyButton text={m.usageJsx} label="COPY JSX" />
           </div>
 
-          {COMMUNITY_FEATURE_FLAGS.manualSubmissions && (
-            <div className="community-entry-panel">
-              <div>
-                <span className="community-kicker">COMMUNITY IMPROVEMENT</span>
-                <h3>Den Effekt gezielt verbessern</h3>
-                <p>Manifest, erlaubter Quellkontext und validierbares NOX Improvement Package.</p>
-              </div>
-              <div className="community-entry-actions">
-                <CopyButton
-                  text={buildImprovementPrompt(manifest, ownedSources, false)}
-                  label="AI-PROMPT KOPIEREN"
-                />
-                <CopyButton
-                  text={buildImprovementPrompt(manifest, ownedSources, true)}
-                  label="PROMPT + EFFEKTCODE"
-                />
-                <CopyButton
-                  text={JSON.stringify(createImprovementPackageTemplate(manifest), null, 2)}
-                  label="PACKAGE-VORLAGE"
-                />
-                <button className="community-primary" onClick={onImprove}>VERBESSERUNG EINREICHEN</button>
-              </div>
-            </div>
-          )}
-
-          {COMMUNITY_FEATURE_FLAGS.tokenSubmissions && (
-            <SubmissionTokenPanel manifest={manifest} sources={ownedSources} />
-          )}
+          <GitHubContributionPanel entry={entry} />
 
           <div className="panel" style={{ marginTop: 14 }}>
             <h4>Usage</h4>
@@ -147,12 +113,6 @@ export function EffectDetail({ entry, onBack, onImprove }: Props) {
             {m.technicalBasis ? (
               <div className="meta-row"><span className="k">Technik</span><span className="v">{m.technicalBasis}</span></div>
             ) : null}
-            <div className="meta-row"><span className="k">Manifest</span><span className="v mono">{manifest.version}</span></div>
-            <div className="meta-row">
-              <span className="k">Manifest Hash</span>
-              <span className="v mono" title={manifest.manifestHash}>{manifest.manifestHash.slice(0, 22)}…</span>
-            </div>
-            <div className="meta-row"><span className="k">Runtime</span><span className="v">{manifest.runtime}</span></div>
           </div>
           <div className="panel">
             <h4>Performance</h4>

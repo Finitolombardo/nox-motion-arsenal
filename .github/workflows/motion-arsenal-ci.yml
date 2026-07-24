@@ -80,8 +80,8 @@ jobs:
               throw 'Vite did not become ready on port 5195.'
             }
 
-            npm run test:community:e2e
-            if ($LASTEXITCODE -ne 0) { throw 'Community E2E failed.' }
+            npm run test:contribution:e2e
+            if ($LASTEXITCODE -ne 0) { throw 'GitHub contribution E2E failed.' }
 
             npm run test:favorites
             if ($LASTEXITCODE -ne 0) { throw 'Favorites browser test failed.' }

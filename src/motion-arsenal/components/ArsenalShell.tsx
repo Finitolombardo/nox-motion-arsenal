@@ -2,15 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import type { EffectCategory, EffectEntry } from '../types';
 import { effectUpdatedAtTimestamp } from '../lib/effectDates';
 import { EffectCard } from './EffectCard';
-import { COMMUNITY_FEATURE_FLAGS } from '../community/config/featureFlags';
 
 const EffectDetail = React.lazy(() => import('./EffectDetail').then((module) => ({ default: module.EffectDetail })));
-const CommunitySubmissionPage = React.lazy(
-  () => import('../community/components/CommunitySubmissionPage').then((module) => ({ default: module.CommunitySubmissionPage })),
-);
-const AdminSubmissionsPage = React.lazy(
-  () => import('../community/components/AdminSubmissionsPage').then((module) => ({ default: module.AdminSubmissionsPage })),
-);
 
 const FAVORITES_STORAGE_KEY = 'nox-motion-arsenal:favorites:v1';
 
@@ -75,9 +68,6 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
 
   const openId = route.startsWith('/effect/') ? route.slice('/effect/'.length) : null;
   const openEntry = openId ? catalog.find((e) => e.meta.id === openId) : null;
-  const submissionId = route.startsWith('/community/submit/') ? route.slice('/community/submit/'.length) : null;
-  const submissionEntry = submissionId ? catalog.find((e) => e.meta.id === submissionId) : null;
-  const adminOpen = route === '/admin/submissions';
 
   const counts = useMemo(() => {
     const c = new Map<EffectCategory, number>();
@@ -130,34 +120,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   // Detail view scrolls to top on open.
   useEffect(() => {
     window.scrollTo({ top: 0 });
-  }, [openId, adminOpen, submissionId]);
-
-  if (adminOpen && COMMUNITY_FEATURE_FLAGS.admin) {
-    return (
-      <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
-        <main className="main">
-          <React.Suspense fallback={<div className="fallback-note" style={{ position: 'static', minHeight: 320 }}>ADMIN QUEUE LÄDT…</div>}>
-            <AdminSubmissionsPage onBack={() => navigate('/')} />
-          </React.Suspense>
-        </main>
-      </div>
-    );
-  }
-
-  if (submissionEntry && COMMUNITY_FEATURE_FLAGS.manualSubmissions) {
-    return (
-      <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
-        <main className="main">
-          <React.Suspense fallback={<div className="fallback-note" style={{ position: 'static', minHeight: 320 }}>COMMUNITY WORKBENCH LÄDT…</div>}>
-            <CommunitySubmissionPage
-              entry={submissionEntry}
-              onBack={() => navigate(`/effect/${submissionEntry.meta.id}`)}
-            />
-          </React.Suspense>
-        </main>
-      </div>
-    );
-  }
+  }, [openId]);
 
   if (openEntry) {
     return (
@@ -168,7 +131,6 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
               key={openEntry.meta.id}
               entry={openEntry}
               onBack={() => navigate('/')}
-              onImprove={() => navigate(`/community/submit/${openEntry.meta.id}`)}
             />
           </React.Suspense>
         </main>
@@ -199,12 +161,6 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           INTERNAL EFFECT LIBRARY
         </p>
         <div className="side-title">Meine Auswahl</div>
-        {COMMUNITY_FEATURE_FLAGS.admin && (
-          <button className="side-link community-admin-link" onClick={() => navigate('/admin/submissions')}>
-            <span>Review Queue</span>
-            <span className="side-count">LOCAL</span>
-          </button>
-        )}
         <button
           className={`side-link favorites-link ${favoritesOnly ? 'active' : ''}`}
           data-testid="favorites-sidebar-filter"
