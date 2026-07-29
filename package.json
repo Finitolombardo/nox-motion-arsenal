@@ -13,7 +13,7 @@
     "test:previews:smoke": "node scripts/audit-previews.mjs --ids bg-orbital-light-trails,premium-signal-particles,canvasui-particle-reveal,canvasui-shatter-reveal,cursor-magnetic-cta,img2threejs-nox-orbital-station",
     "typecheck:server": "tsc -p tsconfig.server.json",
     "lint": "npm run typecheck && npm run typecheck:server",
-    "test": "node scripts/test-contribution-contract.mjs",
+    "test": "node scripts/test-contribution-contract.mjs && node scripts/test-arsenal-v3-contract.mjs",
     "test:contribution:e2e": "node scripts/test-contribution-e2e.mjs",
     "test:future:community": "npm run test:community && npm run test:community:security",
     "test:community": "node scripts/test-community.mjs",

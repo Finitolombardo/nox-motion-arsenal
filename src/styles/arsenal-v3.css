@@ -1,0 +1,220 @@
+/* NOX Motion Arsenal v3 foundation — command header, persistent controls and mobile drawer. */
+
+.mobile-arsenal-nav-trigger,
+.mobile-sidebar-close,
+.mobile-nav-scrim {
+  display: none;
+}
+
+.arsenal-command-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(201, 48, 48, 0.13), transparent 32%),
+    linear-gradient(135deg, rgba(212, 162, 74, 0.055), transparent 42%),
+    var(--bg-raise);
+}
+
+.arsenal-command-copy {
+  max-width: 720px;
+}
+
+.command-kicker {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.arsenal-command-header h2 {
+  font-size: clamp(23px, 3.2vw, 42px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.arsenal-command-header p {
+  margin: 10px 0 0;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.arsenal-command-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(82px, 1fr));
+  min-width: min(390px, 42vw);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(10, 10, 11, 0.62);
+}
+
+.command-stat {
+  padding: 13px 14px;
+  border-right: 1px solid var(--line);
+}
+
+.command-stat:last-child {
+  border-right: 0;
+}
+
+.command-stat strong,
+.command-stat span {
+  display: block;
+}
+
+.command-stat strong {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 18px;
+}
+
+.command-stat span {
+  margin-top: 2px;
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.clear-filter-chip {
+  border-color: rgba(212, 162, 74, 0.35);
+  color: var(--gold);
+}
+
+.clear-filter-chip:hover {
+  border-color: var(--gold);
+}
+
+.sidebar-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media (max-width: 1080px) {
+  .arsenal-command-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .arsenal-command-stats {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .arsenal-v3-shell {
+    display: block;
+  }
+
+  .arsenal-v3-shell .main {
+    padding-top: 78px;
+  }
+
+  .arsenal-v3-shell .sidebar {
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    z-index: 90;
+    width: min(88vw, 350px);
+    height: 100dvh !important;
+    padding: 22px 18px 42px;
+    border-right: 1px solid var(--line-bright) !important;
+    border-bottom: 0 !important;
+    box-shadow: 20px 0 60px rgba(0, 0, 0, 0.55);
+    transform: translateX(-105%);
+    transition: transform 0.24s cubic-bezier(.2, .8, .2, 1);
+  }
+
+  .arsenal-v3-shell .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .mobile-arsenal-nav-trigger {
+    position: fixed;
+    top: 12px;
+    left: 14px;
+    z-index: 70;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 9px 13px;
+    border: 1px solid var(--line-bright);
+    border-radius: 9px;
+    background: rgba(10, 10, 11, 0.88);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(14px);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .mobile-arsenal-nav-trigger b {
+    color: var(--red-bright);
+    font-size: 15px;
+  }
+
+  .mobile-sidebar-close {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--text-dim);
+    font-size: 17px;
+  }
+
+  .mobile-nav-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: block;
+    background: rgba(0, 0, 0, 0.66);
+    backdrop-filter: blur(4px);
+  }
+
+  .arsenal-command-header {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .arsenal-command-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .command-stat {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .command-stat:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arsenal-v3-shell .sidebar {
+    transition: none;
+  }
+}
