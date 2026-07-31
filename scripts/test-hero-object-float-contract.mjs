@@ -12,6 +12,7 @@ const catalog = readFileSync(join(root, 'src/motion-arsenal/effects/hero/catalog
 const manifest = JSON.parse(readFileSync(join(root, 'public/agent-manifests/hero-object-float-variants.json'), 'utf8'));
 
 const variants = [
+  'nox-floating-card-os',
   'forge-obsidian-relic',
   'project-x-nexus-cube',
   'revenue-ascension-prism',

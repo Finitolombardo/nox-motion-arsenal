@@ -225,7 +225,7 @@ export const HERO_CATALOG: EffectEntry[] = [
       importPath: '@/motion-arsenal/effects/hero/HeroObjectFloat',
       usageJsx: '<HeroObjectFloat variant="project-x-nexus-cube" energy="overdrive" showVariantSwitcher={false} showEnergySwitcher={false} />',
       props: [
-        { key: 'variant', label: 'Object Variant', type: 'select', default: 'forge-obsidian-relic', options: ['forge-obsidian-relic', 'project-x-nexus-cube', 'revenue-ascension-prism', 'automation-kernel-chip', 'signal-resonance-orb'], group: 'Object' },
+        { key: 'variant', label: 'Object Variant', type: 'select', default: 'forge-obsidian-relic', options: ['nox-floating-card-os', 'forge-obsidian-relic', 'project-x-nexus-cube', 'revenue-ascension-prism', 'automation-kernel-chip', 'signal-resonance-orb'], group: 'Object' },
         { key: 'energy', label: 'Energy', type: 'select', default: 'charged', options: ['calm', 'charged', 'overdrive'], group: 'Object' },
         { key: 'objectScale', label: 'Object Scale', type: 'range', default: 1, min: 0.7, max: 1.3, step: 0.05, group: 'Object' },
         { key: 'amplitude', label: 'Float Amplitude', type: 'range', default: 18, min: 4, max: 42, step: 1, group: 'Motion' },

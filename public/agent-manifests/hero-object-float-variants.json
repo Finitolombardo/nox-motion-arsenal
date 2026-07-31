@@ -35,6 +35,13 @@
   ],
   "variants": [
     {
+      "id": "nox-floating-card-os",
+      "reference": "motion:hero-object-float@nox-floating-card-os",
+      "defaultShell": "classic-glass-card",
+      "bestFor": ["NOX revenue stage", "scroll-driven product narrative", "operator-controlled automation"],
+      "jsx": "<HeroObjectFloat variant=\"nox-floating-card-os\" shellVariant=\"classic-glass-card\" energy=\"calm\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
       "id": "forge-obsidian-relic",
       "reference": "motion:hero-object-float@forge-obsidian-relic",
       "defaultShell": "classic-glass-card",

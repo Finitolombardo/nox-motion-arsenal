@@ -1,4 +1,5 @@
 export type HeroObjectVariant =
+  | 'nox-floating-card-os'
   | 'forge-obsidian-relic'
   | 'project-x-nexus-cube'
   | 'revenue-ascension-prism'
@@ -46,6 +47,7 @@ export interface HeroObjectEnergyPreset {
 }
 
 export const HERO_OBJECT_VARIANTS: HeroObjectVariant[] = [
+  'nox-floating-card-os',
   'forge-obsidian-relic',
   'project-x-nexus-cube',
   'revenue-ascension-prism',
@@ -64,6 +66,7 @@ export const HERO_OBJECT_SHELL_VARIANTS: HeroObjectShellVariant[] = [
 export const HERO_OBJECT_ENERGIES: HeroObjectEnergy[] = ['calm', 'charged', 'overdrive'];
 
 export const HERO_OBJECT_DEFAULT_SHELL: Record<HeroObjectVariant, HeroObjectShellVariant> = {
+  'nox-floating-card-os': 'classic-glass-card',
   'forge-obsidian-relic': 'classic-glass-card',
   'project-x-nexus-cube': 'frosted-command-panel',
   'revenue-ascension-prism': 'museum-slab',
@@ -110,6 +113,18 @@ export const HERO_OBJECT_SHELL_PRESETS: Record<HeroObjectShellVariant, HeroObjec
 };
 
 export const HERO_OBJECT_PRESETS: Record<HeroObjectVariant, HeroObjectPreset> = {
+  'nox-floating-card-os': {
+    id: 'nox-floating-card-os',
+    shortLabel: 'CARD OS',
+    label: 'NOX Floating Card OS',
+    kicker: 'SIGNAL TO OPERATOR COMMAND',
+    reference: 'motion:hero-object-float@nox-floating-card-os',
+    accent: '#b7352d',
+    secondary: '#e2b56f',
+    light: '#fff6e8',
+    background: 'radial-gradient(76% 70% at 50% 54%, rgba(183,53,45,.18), transparent 68%), linear-gradient(180deg, #090708 0%, #030304 100%)',
+    bestFor: ['NOX revenue stage', 'scroll-driven product narrative', 'operator-controlled automation'],
+  },
   'forge-obsidian-relic': {
     id: 'forge-obsidian-relic',
     shortLabel: 'RELIC',

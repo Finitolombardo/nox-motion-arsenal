@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { glyphPath } from '../../lib/svgUtils';
 import type { HeroObjectVariant } from './heroObjectFloatPresets';
+import { NoxFloatingCardOS } from './NoxFloatingCardOS';
 
 interface HeroObjectVisualProps {
   variant: HeroObjectVariant;
@@ -121,6 +122,8 @@ function SignalOrb() {
 
 export function HeroObjectVisual({ variant, seed }: HeroObjectVisualProps) {
   switch (variant) {
+    case 'nox-floating-card-os':
+      return <NoxFloatingCardOS />;
     case 'project-x-nexus-cube':
       return <NexusCube />;
     case 'revenue-ascension-prism':

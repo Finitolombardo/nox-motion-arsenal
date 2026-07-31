@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { clamp, damp, lerp, seededRandom, smoothstep, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
 import { glyphPath } from '../../lib/svgUtils';
+import { NoxFloatingCardOS, type NoxCardStyle, type NoxStageCardVariant } from '../hero/NoxFloatingCardOS';
 
 // ---------------------------------------------------------------------------
 // PinnedProductStage — a reusable, referenceable product-story system.
@@ -16,6 +17,7 @@ import { glyphPath } from '../../lib/svgUtils';
 // ---------------------------------------------------------------------------
 
 export type ProductStageVariantId =
+  | 'nox-floating-card-os'
   | 'nox-revenue-os'
   | 'nox-global-sales-os'
   | 'project-x-command-center'
@@ -145,6 +147,19 @@ export interface PinnedProductStageProps {
 
   // --- Reduced motion -----------------------------------------------------
   reducedMotionRotation?: StageReducedMotionRotation;
+
+  // --- Floating card OS aliases ------------------------------------------
+  cardStyle?: NoxCardStyle;
+  stageCardVariant?: NoxStageCardVariant;
+  cardScale?: number;
+  cardTilt?: number;
+  cardFloat?: number;
+  cardFloatSpeed?: number;
+  scrollRotationTurns?: number;
+  morphStrength?: number;
+  stageSpread?: number;
+  depth?: number;
+  showHud?: boolean;
 }
 
 type CssVars = CSSProperties & Record<`--${string}`, string | number>;
@@ -226,6 +241,28 @@ const motion = (
 });
 
 export const PRODUCT_STAGE_VARIANTS: Record<ProductStageVariantId, ProductStageVariant> = {
+  'nox-floating-card-os': {
+    id: 'nox-floating-card-os',
+    shortLabel: 'FLOATING CARD OS',
+    productName: 'NOX OPERATING STAGE',
+    stageLabel: 'SIGNAL TO COMMAND',
+    agentReference: 'motion:scroll-pinned-product-stage@nox-floating-card-os',
+    ctaLabel: 'SYSTEM BESPRECHEN',
+    meterLabels: ['SIGNAL', 'PRIORITÄT', 'FREIGABE'],
+    fragments: [
+      { x: -1, y: -.7, z: 46, r: -14, label: 'SIGNAL' },
+      { x: 1, y: -.6, z: 34, r: 12, label: 'SCORE' },
+      { x: -1, y: .65, z: 26, r: 10, label: 'ACTION' },
+      { x: 1, y: .7, z: 50, r: -11, label: 'CONTROL' },
+    ],
+    sections: [
+      motion('01 / SIGNAL CAPTURE', 'SIGNALE\nERFASSEN', 'Website, Google, Content und Formulare laufen als verwertbare Nachfrage-Signale an einer Stelle zusammen.', '#b7352d', '#e2b56f', -8, -14, -2, .98, .9, .08, 'EINGANG', 'SIGNALE LAUFEN AUF', [30, 14, 8], ['RADAR', 'INPUTS', 'SIGNALS']),
+      motion('02 / QUALIFICATION', 'RELEVANZ\nSORTIEREN', 'Fit, Bedarf und Dringlichkeit werden strukturiert bewertet. Die nächste sinnvolle Bearbeitung wird sichtbar.', '#bc8b43', '#f1d49a', 4, -4, 2, 1.01, .78, .3, 'SCORE', 'PRIORISIERUNG AKTIV', [72, 48, 22], ['SCORE', 'FUNNEL', 'ANALYSE']),
+      motion('03 / PITCH MUTATION', 'ANGEBOT\nANPASSEN', 'Messaging, Proof und Angebot verändern sich mit Branche, Kontext und Entscheidungslage – sichtbar statt als statischer Standardpitch.', '#795ee8', '#d6cbff', -4, 8, -3, 1.05, 1, .55, 'MUTATION', 'VERSION IM KONTEXT', [88, 74, 40], ['GROWTH', 'CHART', 'MORPH']),
+      motion('04 / AGENT FOLLOW-UP', 'AKTIONEN\nVORBEREITEN', 'Agenten bereiten Follow-ups, Anreicherung und nächste Aufgaben vor. Versendet wird erst nach Freigabe.', '#2bb98d', '#b7f8df', 7, 18, 2, 1.02, .86, .22, 'QUEUED', 'AKTIONEN VORBEREITET', [96, 88, 62], ['AGENT', 'TIMELINE', 'TASKS']),
+      motion('05 / OPERATOR COMMAND', 'KONTROLLE\nBEHALTEN', 'Der Operator kontrolliert Freigaben, Pipeline und nächste Aktionen. Das System schlägt vor – der Mensch entscheidet.', '#c94638', '#ffd0a1', -2, 28, 0, 1.04, .82, .08, 'READY', 'HUMAN CONTROL ACTIVE', [100, 100, 100], ['COMMAND', 'APPROVAL', 'CONTROL']),
+    ],
+  },
   // NOX Revenue OS — the chapter set used on noxlabs.net. Deliberately free of
   // result claims: every stat line names a system state, never an outcome.
   // Each chapter carries its own module set, so the object re-assembles per
@@ -549,7 +586,7 @@ const CSS = String.raw`
 .pps-page::before { background:radial-gradient(circle at 22% 42%,color-mix(in srgb,var(--pps-accent) 15%,transparent),transparent 34%),radial-gradient(circle at 74% 38%,color-mix(in srgb,var(--pps-accent-2) 9%,transparent),transparent 42%); }
 .pps-page::after { display:none; }
 .pps-page .pps-scroll { position:absolute; inset:0; overflow:hidden; overscroll-behavior:auto; }
-.pps-page .pps-stage { position:absolute; inset:0; height:100%; }
+.pps-page .pps-stage { position:absolute; left:50%; top:0; width:min(100%,1360px); height:100%; transform:translateX(-50%); }
 .pps-copy-overlay { position:absolute; inset:0; z-index:18; pointer-events:none; }
 .pps-copy-overlay .pps-section { position:absolute; inset:0; height:100%; }
 .pps-copy-overlay .pps-copy[data-active='false'] { opacity:0; pointer-events:none; }
@@ -566,6 +603,10 @@ const CSS = String.raw`
 /* Ohne Arsenal-Chrome sitzt die Fortschrittszeile unten — oben kollidiert sie
    auf echten Seiten mit dem Website-Header. */
 .pps-minimal .pps-progress { top:auto; bottom:20px; left:5%; right:20%; }
+.pps-nohud .pps-progress,.pps-nohud .pps-reference,.pps-nohud .pps-telemetry,.pps-nohud .pps-stat,.pps-nohud .pps-scroll-hint,.pps-nohud .pps-nav { display:none; }
+.pps-root:has(.nfco-scene) .pps-product-zone { left:2%; width:58%; }
+.pps-root:has(.nfco-scene) .pps-product-wrap { width:calc(min(38cqw,52cqh) * var(--pps-object-scale,1)); }
+.pps-root:has(.nfco-scene) .pps-shell,.pps-root:has(.nfco-scene) .pps-orbit,.pps-root:has(.nfco-scene) .pps-fragment,.pps-root:has(.nfco-scene) .pps-core,.pps-root:has(.nfco-scene) .pps-scan { display:none; }
 
 /* ── signal-flow visual mode: the module set re-assembles per chapter ── */
 .pps-flow .pps-fragment { transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .5s ease,border-color .5s ease; }
@@ -624,6 +665,10 @@ const CSS = String.raw`
 .pps-quality-low .pps-aura { filter:blur(calc(14px * var(--pps-blur,1))); }
 .pps-nolabels .pps-fragment strong,
 .pps-nolabels .pps-tags { display:none; }
+@container (max-width:700px) {
+  .pps-root:has(.nfco-scene) .pps-product-zone { left:0; width:100%; }
+  .pps-root:has(.nfco-scene) .pps-product-wrap { width:calc(min(74cqw,42cqh) * var(--pps-object-scale,1)); }
+}
 `;
 
 export function PinnedProductStage({
@@ -687,6 +732,17 @@ export function PinnedProductStage({
   mobileEffectsQuality = 'medium',
   disableRotationOnMobile = false,
   reducedMotionRotation = 'static',
+  cardStyle = 'glass',
+  stageCardVariant = 'auto',
+  cardScale,
+  cardTilt,
+  cardFloat,
+  cardFloatSpeed,
+  scrollRotationTurns,
+  morphStrength,
+  stageSpread,
+  depth,
+  showHud = true,
 }: PinnedProductStageProps) {
   const reduced = usePrefersReducedMotion();
   const requestedPageDriven = scrollDriver === 'page' || pageScrollMode;
@@ -703,6 +759,14 @@ export function PinnedProductStage({
   const [selectedVariant, setSelectedVariant] = useState<ProductStageVariantId>(variant);
   const [active, setActive] = useState(reduced ? 4 : 0);
   const [copiedRef, setCopiedRef] = useState(false);
+  const resolvedScale = cardScale ?? objectScale;
+  const resolvedTilt = cardTilt ?? objectTilt;
+  const resolvedFloat = cardFloat ?? objectFloat;
+  const resolvedFloatSpeed = cardFloatSpeed ?? objectFloatSpeed;
+  const resolvedTurns = scrollRotationTurns ?? rotationTurns;
+  const resolvedMorph = morphStrength ?? stageMorphStrength;
+  const resolvedSpread = stageSpread ?? stageObjectSpread;
+  const resolvedDepth = depth ?? objectDepth;
 
   useEffect(() => {
     setSelectedVariant(variant);
@@ -803,7 +867,7 @@ export function PinnedProductStage({
       // Rückwärtsscrollen die Drehung exakt zurücknimmt.
       const turns = isNarrow
         ? (disableRotationOnMobile ? 0 : mobileRotationTurns)
-        : rotationTurns;
+        : resolvedTurns;
       const sign = rotationDirection === 'counter-clockwise' ? -1 : 1;
       const spin = scrollRotationEnabled ? progress * turns * 360 * sign : 0;
       const axisX = rotationAxis === 'x' ? 1 : rotationAxis === 'xy' ? 0.45 : rotationAxis === 'xyz' ? 0.35 : 0;
@@ -831,13 +895,13 @@ export function PinnedProductStage({
       const accent = colorShift ? mixHex(sections[0].accent, mixHex(a.accent, b.accent, local), shift) : sections[0].accent;
       const accent2 = colorShift ? mixHex(sections[0].accent2, mixHex(a.accent2, b.accent2, local), shift) : sections[0].accent2;
       const scanPhase = (progress * 3.4) % 1;
-      const float = objectFloat > 0
-        ? Math.sin(elapsed * Math.PI * 2 * Math.max(0.02, objectFloatSpeed)) * objectFloat
+      const float = resolvedFloat > 0
+        ? Math.sin(elapsed * Math.PI * 2 * Math.max(0.02, resolvedFloatSpeed)) * resolvedFloat
         : 0;
 
       product.style.transform =
         `translate3d(0,${float.toFixed(2)}px,${(-cameraDistance).toFixed(1)}px) ` +
-        `rotateX(${(rot.current.x + objectTilt).toFixed(2)}deg) ` +
+        `rotateX(${(rot.current.x + resolvedTilt).toFixed(2)}deg) ` +
         `rotateY(${rot.current.y.toFixed(2)}deg) ` +
         `rotateZ(${rot.current.z.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
       stage.style.setProperty('--pps-progress', progress.toFixed(4));
@@ -863,10 +927,10 @@ export function PinnedProductStage({
     const last = sections[n - 1];
     const stageTerm = reducedMotionRotation === 'stage-only' ? clamp(stageRotationInfluence, 0, 1) : 0;
     product.style.transform =
-      `rotateX(${(baseRotationX + last.rotX * stageTerm + objectTilt).toFixed(2)}deg) ` +
+      `rotateX(${(baseRotationX + last.rotX * stageTerm + resolvedTilt).toFixed(2)}deg) ` +
       `rotateY(${(baseRotationY + last.rotY * stageTerm).toFixed(2)}deg) ` +
       `rotateZ(${(baseRotationZ + last.rotZ * stageTerm).toFixed(2)}deg) scale(${last.scale})`;
-  }, [reduced, reducedMotionRotation, baseRotationX, baseRotationY, baseRotationZ, objectTilt, stageRotationInfluence, sections, n]);
+  }, [reduced, reducedMotionRotation, baseRotationX, baseRotationY, baseRotationZ, resolvedTilt, stageRotationInfluence, sections, n]);
 
   const goToSection = (index: number) => {
     const scroller = scrollerRef.current;
@@ -916,8 +980,8 @@ export function PinnedProductStage({
     '--pps-py': '0px',
     // Konfigurierbare Präsentationsschicht — siehe CSS-Block unten.
     '--pps-perspective': perspective,
-    '--pps-object-scale': isNarrow ? objectScale * mobileObjectScale : objectScale,
-    '--pps-object-depth': objectDepth,
+    '--pps-object-scale': isNarrow ? resolvedScale * mobileObjectScale : resolvedScale,
+    '--pps-object-depth': resolvedDepth,
     '--pps-bloom-scale': 0.6 + bloom,
     '--pps-rim': rimLight,
     '--pps-highlight': highlightIntensity,
@@ -928,7 +992,7 @@ export function PinnedProductStage({
     '--pps-grid': gridOpacity,
     '--pps-vignette': vignette,
     '--pps-atmo': atmosphericGlow,
-    '--pps-spread': stageObjectSpread,
+    '--pps-spread': resolvedSpread,
     '--pps-symbol': stageSymbolScale,
     '--pps-stage-transition': stageTransitionDuration,
   };
@@ -960,6 +1024,7 @@ export function PinnedProductStage({
         visualMode === 'signal-flow' ? 'pps-flow' : '',
         chrome === 'minimal' ? 'pps-minimal' : '',
         showLabels ? '' : 'pps-nolabels',
+        showHud ? '' : 'pps-nohud',
         isNarrow && mobileEffectsQuality === 'low' ? 'pps-quality-low' : '',
       ].filter(Boolean).join(' ')}
       onPointerMove={handlePointerMove}
@@ -1025,7 +1090,18 @@ export function PinnedProductStage({
               <div className="pps-aura" />
               <div className="pps-product-wrap">
                 <div ref={productRef} className="pps-product" style={{ transform: productTransform }}>
-                  {[0, 1, 2, 3, 4].map((index) => (
+                  {selectedVariant === 'nox-floating-card-os' ? (
+                    <NoxFloatingCardOS
+                      stageIndex={active}
+                      cardStyle={cardStyle}
+                      stageCardVariant={stageCardVariant}
+                      morphStrength={resolvedMorph}
+                      stageSpread={resolvedSpread}
+                      glow={glow}
+                      bloom={bloom}
+                      depth={resolvedDepth}
+                    />
+                  ) : <>{[0, 1, 2, 3, 4].map((index) => (
                     <div
                       key={index}
                       className="pps-shell"
@@ -1061,7 +1137,7 @@ export function PinnedProductStage({
                       <path d={glyph} fill="none" strokeWidth="2.5" strokeLinecap="round" />
                     </svg>
                   </div>
-                  <div className="pps-scan" />
+                  <div className="pps-scan" /></>}
                 </div>
                 <div className="pps-ground" />
               </div>

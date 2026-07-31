@@ -10,6 +10,7 @@ const VARIANT_IDS = Object.keys(PRODUCT_STAGE_VARIANTS) as ProductStageVariantId
 
 const CORE_SYSTEM_CSS = String.raw`
 .pcsys-root { position:absolute; inset:0; overflow:hidden; }
+.pcsys-root[data-product-variant='nox-floating-card-os'] .nfco-card { border-color:color-mix(in srgb,var(--pps-accent) 62%,rgba(255,255,255,.16)); }
 .pcsys-root > .pps-root { position:absolute; inset:0; }
 .pcsys-switcher { position:absolute; left:18px; right:18px; top:36px; z-index:70; display:flex; gap:5px; overflow-x:auto; scrollbar-width:none; pointer-events:auto; }
 .pcsys-switcher::-webkit-scrollbar { display:none; }

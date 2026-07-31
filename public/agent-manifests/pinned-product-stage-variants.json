@@ -7,6 +7,16 @@
   "selectionRule": "Select exactly one stable variant id and pass it through the variant prop. Disable showVariantSwitcher on production customer pages unless visitors should compare products. On real websites use scrollDriver=\"page\", chrome=\"minimal\" and keep the whole stage at roughly 3-4 viewport heights via compactScroll.",
   "variants": [
     {
+      "id": "nox-floating-card-os",
+      "label": "NOX FLOATING CARD OS",
+      "coreArtifact": "Five floating card states from signal radar to operator approval.",
+      "reference": "motion:scroll-pinned-product-stage@nox-floating-card-os",
+      "bestFor": ["noxlabs.net product stage", "short operator-controlled revenue narrative"],
+      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-floating-card-os\" scrollDriver=\"page\" scrollLength={3} cardStyle=\"glass\" cardScale={1.12} cardTilt={5} cardFloat={8} cardFloatSpeed={0.16} scrollRotationTurns={0.18} morphStrength={0.8} stageSpread={0.9} glow={0.6} bloom={0.35} depth={1} perspective={1100} showHud={false} showVariantSwitcher={false} />",
+      "chapters": ["01 SIGNAL CAPTURE", "02 QUALIFICATION", "03 PITCH MUTATION", "04 AGENT FOLLOW-UP", "05 OPERATOR COMMAND"],
+      "honesty": "System states only; no fabricated outcome claims."
+    },
+    {
       "id": "nox-revenue-os",
       "label": "NOX REVENUE OPERATING SYSTEM",
       "coreArtifact": "Command Core — squared operator console; signals enter, the release stays human.",
