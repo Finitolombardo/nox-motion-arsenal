@@ -16,6 +16,7 @@
     "test:section-transitions": "node scripts/test-section-transition-batch-contract.mjs",
     "test:favorites": "node scripts/test-favorites.mjs",
     "test:effect-config": "node scripts/test-effect-config-contract.mjs",
+    "test:signal-flow": "node scripts/test-signal-particles-flow.mjs",
     "typecheck": "tsc --noEmit",
     "test:previews": "node scripts/audit-previews.mjs",
     "test:previews:smoke": "node scripts/audit-previews.mjs --ids bg-orbital-light-trails,forms-selection-energy-ripple,premium-glass-distortion-cards,premium-signal-particles,premium-data-stream-journey,bg-depth-glow-stack,skilltree-glass-metal-panel,canvasui-particle-reveal,canvasui-shatter-reveal,cursor-magnetic-cta,img2threejs-nox-orbital-station,skilltree-locked-path-shadow,skilltree-svg-energy-lines,scroll-pinned-product-stage,bg-forge-energy-glyphs,hero-object-float,forms-answer-lock-in,forms-validation-pulse,bg-nox-starfield-drift",

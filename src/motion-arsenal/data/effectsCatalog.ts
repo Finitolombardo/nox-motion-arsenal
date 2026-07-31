@@ -85,13 +85,14 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
   },
   'premium-signal-particles': {
     improvementStatus: 'improved',
-    lastImprovedAt: '2026-07-31T00:09:00.000Z',
-    lastImprovedBy: 'foundry-hourly',
-    improvementVersion: '2.1.0',
+    lastImprovedAt: '2026-07-31T12:10:00.000Z',
+    lastImprovedBy: 'foundry-live',
+    improvementVersion: '3.0.0',
     improvementChangelog: [
-      'Added five production-ready particle narratives: Agent Constellation, Revenue Funnel Flight, Forge Ember Murmuration, Signal Resonance Vortex, and Command Formation.',
-      'Added calm, charged, and overdrive energy profiles plus operator-selectable orbit, swarm, settle, and automatic choreography while preserving the original count, mode, intensity, and sparkSize props.',
-      'Added configurable trail persistence, link distance, variant, energy, and mode switchers with a static reduced-motion presentation and a bounded single-Canvas2D particle budget.',
+      'Rebuilt the motion on a divergence-free curl-noise flow field with real force integration (flow, cursor attraction, tangential curl, turbulence, viscosity) instead of sin/cos target positions with damping.',
+      'Removed the link network, cross-hair sparks and straight trails in favour of soft glow sprites, transparent smoke splats, curved motion segments and a decay smear trail.',
+      'Added a lagging smoothed cursor attractor with drag on fast movement, convergence and re-injection at the core, and a slow automatic attractor when the pointer leaves.',
+      'Added the primary energy-smoke-flow narrative and replaced the controls with Flow Speed, Cursor Attraction, Turbulence, Viscosity, Smoke Persistence, Particle Size, Glow and Convergence Radius (linkDistance and the choreography modes are gone).',
     ],
   },
   'premium-terminal-scan-reveal': {
