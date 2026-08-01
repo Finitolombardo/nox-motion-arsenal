@@ -42,8 +42,13 @@ for (const token of [
   'useScrollProgress',
   'scrollReactive',
   'progress?: number',
-  'direction = \'right\'',
+  "direction = 'up'",
+  'Scrolling down produces a matching upward star movement',
 ]) includes(starfield, token, 'NoxStarfieldDrift');
+
+assert(!starfield.includes('ctx.ellipse('), 'NoxStarfieldDrift must not render the old oval gateway');
+assert(!starfield.includes('gateGlow'), 'NoxStarfieldDrift must not render the old center gate glow');
+assert(!starfield.includes('nebula.addColorStop'), 'NoxStarfieldDrift must not render the old moving nebula');
 
 for (const token of [
   "default: 'command-deck'",
