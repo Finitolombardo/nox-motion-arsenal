@@ -6,6 +6,7 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const BASE = process.env.ARSENAL_URL ?? 'http://127.0.0.1:5195';
 const OUT = process.env.FAVORITES_ARTIFACTS ?? 'artifacts/favorites';
 const STORAGE_KEY = 'nox-motion-arsenal:favorites:v1';
+const ARCHIVE_STORAGE_KEY = 'nox-motion-arsenal:archived:v1';
 
 mkdirSync(OUT, { recursive: true });
 
@@ -29,15 +30,20 @@ try {
 
   await page.goto(BASE, { waitUntil: 'load' });
   await page.evaluate((key) => localStorage.removeItem(key), STORAGE_KEY);
+  await page.evaluate((key) => localStorage.removeItem(key), ARCHIVE_STORAGE_KEY);
   await page.reload({ waitUntil: 'load' });
   await page.locator('[data-effect-id]').first().waitFor({ state: 'visible' });
 
   const cardCount = await page.locator('[data-effect-id]').count();
   const updateCount = await page.locator('.fx-updated').count();
   const updateLabels = await page.locator('.fx-updated').allTextContents();
-  assert(cardCount >= 148, `expected at least 148 effect cards, found ${cardCount}`);
+  assert(cardCount === 185, `expected 185 effect cards, found ${cardCount}`);
   assert(updateCount === cardCount, `only ${updateCount}/${cardCount} cards expose update metadata`);
   assert(!updateLabels.some((label) => label.includes('UNBEKANNT')), 'at least one update date is unknown');
+
+  await page.getByText('Neue Effekte · Konzeptdeck', { exact: true }).click();
+  assert((await page.locator('[data-effect-id]').count()) === 29, 'concept category does not contain all 29 concepts');
+  await page.getByText('Alle Effekte', { exact: true }).click();
 
   const favoriteId = await page.locator('[data-effect-id]').first().getAttribute('data-effect-id');
   assert(favoriteId, 'first effect id missing');
@@ -51,6 +57,18 @@ try {
   await page.reload({ waitUntil: 'load' });
   const persistedButton = page.locator(`[data-favorite-effect="${favoriteId}"]`);
   assert((await persistedButton.getAttribute('aria-pressed')) === 'true', 'favorite did not survive reload');
+
+  const archiveButton = page.locator(`[data-archive-effect="${favoriteId}"]`);
+  await archiveButton.click();
+  const archived = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '[]'), ARCHIVE_STORAGE_KEY);
+  assert(archived.length === 1 && archived[0] === favoriteId, 'archive was not persisted');
+  assert((await page.locator('[data-effect-id]').count()) === cardCount - 1, 'archived effect remained in the active catalog');
+  await page.getByTestId('archive-sidebar-filter').click();
+  assert((await page.locator('[data-effect-id]').count()) === 1, 'archive view did not show the archived effect');
+  await page.locator(`[data-archive-effect="${favoriteId}"]`).click();
+  await page.getByText('ARCHIV IST LEER · KARTE ÜBER ARCHIV ABLEGEN').waitFor({ state: 'visible' });
+  await page.getByText('Alle Effekte', { exact: true }).click();
+  assert((await page.locator('[data-effect-id]').count()) === cardCount, 'restored effect did not return to the active catalog');
 
   await page.getByTestId('favorites-chip').click();
   assert((await page.locator('[data-effect-id]').count()) === 1, 'favorites chip did not filter to one card');

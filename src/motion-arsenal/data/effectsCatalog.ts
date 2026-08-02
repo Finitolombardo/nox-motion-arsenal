@@ -17,6 +17,7 @@ import { CANVAS_UI_CATALOG } from '../effects/canvas-ui/catalog';
 import { IMG2THREEJS_CATALOG } from '../effects/img2threejs/catalog';
 import { LAB_CATALOG } from '../effects/lab/catalog';
 import { ORIGINKIT_CATALOG } from '../effects/originkit/catalog';
+import { CONCEPTS_CATALOG } from '../effects/concepts/catalog';
 
 const RAW_EFFECTS_CATALOG: EffectEntry[] = [
   ...SHOWCASE_CATALOG,
@@ -36,6 +37,7 @@ const RAW_EFFECTS_CATALOG: EffectEntry[] = [
   ...IMG2THREEJS_CATALOG,
   ...LAB_CATALOG,
   ...ORIGINKIT_CATALOG,
+  ...CONCEPTS_CATALOG,
 ];
 
 const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
@@ -182,7 +184,7 @@ function deriveImprovementStatus(entry: EffectEntry): EffectImprovementStatus {
 }
 
 export const EFFECTS_CATALOG: EffectEntry[] = RAW_EFFECTS_CATALOG.map((entry) => {
-  const updatedAt = effectUpdates[entry.meta.importPath];
+  const updatedAt = effectUpdates[entry.meta.importPath] ?? entry.meta.updatedAt;
   const override = IMPROVEMENT_OVERRIDES[entry.meta.id] ?? {};
   const mergedMeta = { ...entry.meta, ...override };
   const improvementStatus = deriveImprovementStatus({ ...entry, meta: mergedMeta });

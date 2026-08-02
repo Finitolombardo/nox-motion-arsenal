@@ -137,7 +137,7 @@ export function EffectDetail({ entry, onBack, initialConfig, initialContext, onC
         <span className="sub">{m.name} · {m.id}</span>
       </div>
       <div className="badges" style={{ marginBottom: 16 }}>
-        <span className="badge adapted">NOX Adapted</span>
+        <span className={`badge ${m.mode === 'nox-concept' ? 'lab' : 'adapted'}`}>{m.mode === 'nox-concept' ? 'NOX Concept' : 'NOX Adapted'}</span>
         <span className={`badge ${m.complexity === 'heavy' ? 'heavy' : ''}`}>{m.complexity}</span>
         {m.status ? (
           <span className={`badge ${m.status === 'production-safe' ? 'prod' : m.status === 'experimental' ? 'heavy' : ''}`}>{m.status}</span>

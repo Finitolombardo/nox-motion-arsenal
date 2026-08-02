@@ -6,8 +6,10 @@ import { EffectPreview } from './EffectPreview';
 interface Props {
   entry: EffectEntry;
   favorite: boolean;
+  archived: boolean;
   onOpen: (id: string) => void;
   onToggleFavorite: (id: string) => void;
+  onToggleArchive: (id: string) => void;
 }
 
 const IMPROVEMENT_LABELS: Record<EffectImprovementStatus, string> = {
@@ -17,7 +19,7 @@ const IMPROVEMENT_LABELS: Record<EffectImprovementStatus, string> = {
   'needs-review': 'NEEDS REVIEW',
 };
 
-export function EffectCard({ entry, favorite, onOpen, onToggleFavorite }: Props) {
+export function EffectCard({ entry, favorite, archived, onOpen, onToggleFavorite, onToggleArchive }: Props) {
   const m = entry.meta;
   const improvementStatus = m.improvementStatus ?? 'pending';
   const isImproved = improvementStatus === 'improved' && Boolean(m.lastImprovedAt);
@@ -28,7 +30,7 @@ export function EffectCard({ entry, favorite, onOpen, onToggleFavorite }: Props)
 
   return (
     <article
-      className={`fx-card ${favorite ? 'is-favorite' : ''}`}
+      className={`fx-card ${favorite ? 'is-favorite' : ''} ${archived ? 'is-archived' : ''}`}
       data-effect-id={m.id}
       data-improvement-status={improvementStatus}
       onClick={() => onOpen(m.id)}
@@ -40,6 +42,20 @@ export function EffectCard({ entry, favorite, onOpen, onToggleFavorite }: Props)
     >
       <div className="fx-preview">
         <EffectPreview entry={entry} interactive={false} variant="thumbnail" />
+        <button
+          type="button"
+          className={`archive-btn ${archived ? 'on' : ''}`}
+          aria-label={`${m.displayName ?? m.name} ${archived ? 'aus dem Archiv holen' : 'archivieren'}`}
+          aria-pressed={archived}
+          data-archive-effect={m.id}
+          onClick={(event) => {
+            event.stopPropagation();
+            onToggleArchive(m.id);
+          }}
+          onKeyDown={(event) => event.stopPropagation()}
+        >
+          {archived ? 'WIEDERHERSTELLEN' : 'ARCHIV'}
+        </button>
         <button
           type="button"
           className={`favorite-btn ${favorite ? 'on' : ''}`}
@@ -72,7 +88,7 @@ export function EffectCard({ entry, favorite, onOpen, onToggleFavorite }: Props)
             {IMPROVEMENT_LABELS[improvementStatus]}
           </span>
           {m.improvementVersion && <span className="badge">v{m.improvementVersion}</span>}
-          <span className="badge adapted">NOX Adapted</span>
+          <span className={`badge ${m.mode === 'nox-concept' ? 'lab' : 'adapted'}`}>{m.mode === 'nox-concept' ? 'NOX Concept' : 'NOX Adapted'}</span>
           <span className={`badge ${m.complexity === 'heavy' ? 'heavy' : ''}`}>{m.complexity}</span>
           {m.productionSafe && <span className="badge prod">production</span>}
           <span className="badge">{m.sourceWebsite}</span>

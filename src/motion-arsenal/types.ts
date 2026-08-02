@@ -14,9 +14,10 @@ export type EffectCategory =
   | 'overlays'
   | 'originkit'
   | 'canvas-ui'
-  | 'img2threejs';
+  | 'img2threejs'
+  | 'concepts';
 
-export type EffectMode = 'reference-lab' | 'nox-adapted';
+export type EffectMode = 'reference-lab' | 'nox-adapted' | 'nox-concept';
 export type EffectComplexity = 'low' | 'medium' | 'high' | 'heavy';
 export type EffectImprovementStatus = 'pending' | 'in-progress' | 'improved' | 'needs-review';
 

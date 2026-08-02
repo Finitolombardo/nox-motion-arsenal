@@ -8,6 +8,7 @@ import { EffectCard } from './EffectCard';
 const EffectDetail = React.lazy(() => import('./EffectDetail').then((module) => ({ default: module.EffectDetail })));
 
 const FAVORITES_STORAGE_KEY = 'nox-motion-arsenal:favorites:v1';
+const ARCHIVED_STORAGE_KEY = 'nox-motion-arsenal:archived:v1';
 
 const CATEGORY_LABELS: Record<EffectCategory, string> = {
   premium: 'Studio-Level NOX',
@@ -24,10 +25,11 @@ const CATEGORY_LABELS: Record<EffectCategory, string> = {
   originkit: 'Originkit Components',
   'canvas-ui': 'Canvas UI Import',
   img2threejs: 'Image → 3D Rebuilds',
+  concepts: 'Neue Effekte · Konzeptdeck',
 };
 
 const CATEGORY_ORDER: EffectCategory[] = [
-  'premium', 'forge-skilltree', 'backgrounds', 'hero', 'transitions', 'scroll', 'cursor', 'cards', 'system', 'forms', 'overlays', 'originkit', 'canvas-ui', 'img2threejs',
+  'concepts', 'premium', 'forge-skilltree', 'backgrounds', 'hero', 'transitions', 'scroll', 'cursor', 'cards', 'system', 'forms', 'overlays', 'originkit', 'canvas-ui', 'img2threejs',
 ];
 
 type ModeFilter = 'all' | 'nox-adapted' | 'production' | 'heavy' | 'lightweight';
@@ -60,6 +62,15 @@ function readFavorites(): Set<string> {
   }
 }
 
+function readArchived(): Set<string> {
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(ARCHIVED_STORAGE_KEY) ?? '[]');
+    return new Set(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : []);
+  } catch {
+    return new Set();
+  }
+}
+
 export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   const [route, navigate] = useHashRoute();
   const [query, setQuery] = useState('');
@@ -67,6 +78,8 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   const [mode, setMode] = useState<ModeFilter>('all');
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [favorites, setFavorites] = useState<Set<string>>(readFavorites);
+  const [archivedOnly, setArchivedOnly] = useState(false);
+  const [archived, setArchived] = useState<Set<string>>(readArchived);
   const [maintenanceSort, setMaintenanceSort] = useState<MaintenanceSort>('catalog');
   const [collectionId, setCollectionId] = useState<string | null>(null);
 
@@ -106,6 +119,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
       : catalog;
     const entries = source.filter((e) => {
       const m = e.meta;
+      if (archivedOnly ? !archived.has(m.id) : archived.has(m.id)) return false;
       if (favoritesOnly && !favorites.has(m.id)) return false;
       if (category !== 'all' && m.category !== category) return false;
       if (mode === 'nox-adapted' && m.mode !== 'nox-adapted') return false;
@@ -125,7 +139,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         (effectUpdatedAtTimestamp(a.meta.updatedAt) - effectUpdatedAtTimestamp(b.meta.updatedAt)) *
         direction,
     );
-  }, [catalog, query, category, mode, favoritesOnly, favorites, maintenanceSort, activeCollection]);
+  }, [catalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection]);
 
   useEffect(() => {
     try {
@@ -135,8 +149,25 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     }
   }, [favorites]);
 
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(ARCHIVED_STORAGE_KEY, JSON.stringify([...archived]));
+    } catch {
+      // Archive remains usable for the current session when storage is blocked.
+    }
+  }, [archived]);
+
   const toggleFavorite = (id: string) => {
     setFavorites((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleArchive = (id: string) => {
+    setArchived((current) => {
       const next = new Set(current);
       if (next.has(id)) next.delete(id);
       else next.add(id);
@@ -199,9 +230,10 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
             data-testid={`collection-${c.id}`}
             title={c.description}
             onClick={() => {
-              setCollectionId((current) => (current === c.id ? null : c.id));
-              setFavoritesOnly(false);
-              setCategory('all');
+            setCollectionId((current) => (current === c.id ? null : c.id));
+            setFavoritesOnly(false);
+            setArchivedOnly(false);
+            setCategory('all');
             }}
           >
             <span>{c.label}</span>
@@ -214,6 +246,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           data-testid="favorites-sidebar-filter"
           onClick={() => {
             setFavoritesOnly(true);
+            setArchivedOnly(false);
             setCategory('all');
             setCollectionId(null);
           }}
@@ -221,11 +254,25 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           <span><span aria-hidden="true">♥</span> Favoriten</span>
           <span className="side-count">{favorites.size}</span>
         </button>
+        <button
+          className={`side-link archive-link ${archivedOnly ? 'active' : ''}`}
+          data-testid="archive-sidebar-filter"
+          onClick={() => {
+            setArchivedOnly(true);
+            setFavoritesOnly(false);
+            setCategory('all');
+            setCollectionId(null);
+          }}
+        >
+          <span><span aria-hidden="true">▧</span> Archiv</span>
+          <span className="side-count">{archived.size}</span>
+        </button>
         <div className="side-title">Kategorien</div>
         <button
           className={`side-link ${!favoritesOnly && !collectionId && category === 'all' ? 'active' : ''}`}
           onClick={() => {
             setFavoritesOnly(false);
+            setArchivedOnly(false);
             setCategory('all');
             setCollectionId(null);
           }}
@@ -239,6 +286,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
             className={`side-link ${!favoritesOnly && !collectionId && category === c ? 'active' : ''}`}
             onClick={() => {
               setFavoritesOnly(false);
+              setArchivedOnly(false);
               setCategory(c);
               setCollectionId(null);
             }}
@@ -266,7 +314,11 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
             className={`chip favorites-chip ${favoritesOnly ? 'on' : ''}`}
             data-testid="favorites-chip"
             aria-pressed={favoritesOnly}
-            onClick={() => setFavoritesOnly((active) => !active)}
+            onClick={() => {
+              setFavoritesOnly((active) => !active);
+              setArchivedOnly(false);
+              setCollectionId(null);
+            }}
           >
             <span aria-hidden="true">♥</span> NUR FAVORITEN
           </button>
@@ -287,6 +339,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           {filtered.length} / {catalog.length} EFFEKTE
           {activeCollection ? ` · SAMMLUNG: ${activeCollection.label.toUpperCase()}` : ''}
           {favoritesOnly ? ` · ${favorites.size} FAVORITEN GESPEICHERT` : ''}
+          {archivedOnly ? ` · ${archived.size} ARCHIVIERT` : ''}
         </p>
         <div className="grid">
           {filtered.map((e) => (
@@ -294,14 +347,16 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
               key={e.meta.id}
               entry={e}
               favorite={favorites.has(e.meta.id)}
+              archived={archived.has(e.meta.id)}
               onOpen={(id) => navigate(`/effect/${id}`)}
               onToggleFavorite={toggleFavorite}
+              onToggleArchive={toggleArchive}
             />
           ))}
         </div>
         {!filtered.length && (
           <div className="fallback-note empty-favorites" style={{ position: 'static', padding: 60 }}>
-            {favoritesOnly ? 'NOCH KEINE FAVORITEN · HERZ AUF EINER KARTE MARKIEREN' : 'KEINE TREFFER'}
+            {archivedOnly ? 'ARCHIV IST LEER · KARTE ÜBER ARCHIV ABLEGEN' : favoritesOnly ? 'NOCH KEINE FAVORITEN · HERZ AUF EINER KARTE MARKIEREN' : 'KEINE TREFFER'}
           </div>
         )}
       </main>
