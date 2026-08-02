@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "skilltree-svg-energy-lines",
+  "component": "SvgEnergyLinesFlow",
+  "importPath": "@/motion-arsenal/effects/forge-skilltree/SvgEnergyLinesFlow",
+  "previewRoute": "/#/effect/skilltree-svg-energy-lines",
+  "selectionRule": "Select one stable styleVariant. Use showStyleSwitcher={false} on production pages unless visitors should compare visual styles.",
+  "variants": [
+    {
+      "id": "forge-ember-flow",
+      "reference": "motion:skilltree-svg-energy-lines@forge-ember-flow",
+      "bestFor": ["NOX Forge", "skill progression", "heated system state"],
+      "jsx": "<SvgEnergyLinesFlow styleVariant=\"forge-ember-flow\" intensityPreset=\"active\" showStyleSwitcher={false} />"
+    },
+    {
+      "id": "plasma-signal-stream",
+      "reference": "motion:skilltree-svg-energy-lines@plasma-signal-stream",
+      "bestFor": ["agent routing", "data flow", "AI product interfaces"],
+      "jsx": "<SvgEnergyLinesFlow styleVariant=\"plasma-signal-stream\" directionMode=\"bidirectional\" showStyleSwitcher={false} />"
+    },
+    {
+      "id": "gold-command-current",
+      "reference": "motion:skilltree-svg-energy-lines@gold-command-current",
+      "bestFor": ["premium systems", "sales pipelines", "command interfaces"],
+      "jsx": "<SvgEnergyLinesFlow styleVariant=\"gold-command-current\" intensityPreset=\"calm\" showStyleSwitcher={false} />"
+    },
+    {
+      "id": "ghost-wire-pulse",
+      "reference": "motion:skilltree-svg-energy-lines@ghost-wire-pulse",
+      "bestFor": ["stealth UI", "background networks", "subtle node connections"],
+      "jsx": "<SvgEnergyLinesFlow styleVariant=\"ghost-wire-pulse\" particleCount={24} showStyleSwitcher={false} />"
+    },
+    {
+      "id": "overdrive-storm",
+      "reference": "motion:skilltree-svg-energy-lines@overdrive-storm",
+      "bestFor": ["hero moments", "system activation", "high-energy product demos"],
+      "jsx": "<SvgEnergyLinesFlow styleVariant=\"overdrive-storm\" intensityPreset=\"overdrive\" particleCount={64} showStyleSwitcher={false} />"
+    }
+  ]
+}

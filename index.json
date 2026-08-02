@@ -1,0 +1,17 @@
+{
+  "sourceSha": "8a76b0107a635a038b8030d3a55e7c2a6e60eb6f",
+  "generatedAt": "2026-08-02T17:30:25.385Z",
+  "workflowRunId": 30759005381,
+  "artifactId": 8836847697,
+  "artifactUrl": "https://github.com/Finitolombardo/nox-motion-arsenal/actions/runs/30759005381/artifacts/8836847697",
+  "artifactDigest": "695d8e7e88d0ea57a86fb9e61263e43eaf76abe3fd7b2e2709c57208c82d4314",
+  "fileCount": 194,
+  "totalBytes": 2424289,
+  "binaryFiles": [],
+  "chunks": [
+    "chunks/chunk-000.json",
+    "chunks/chunk-001.json",
+    "chunks/chunk-002.json",
+    "chunks/chunk-003.json"
+  ]
+}

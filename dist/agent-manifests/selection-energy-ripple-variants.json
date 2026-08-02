@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "forms-selection-energy-ripple",
+  "component": "SelectionEnergyRipple",
+  "importPath": "@/motion-arsenal/effects/forms/SelectionEnergyRipple",
+  "previewRoute": "/#/effect/forms-selection-energy-ripple",
+  "selectionRule": "Select one semantic decision ritual and one energy state. The effect is intended for meaningful selections, assessments and progression moments rather than routine form controls.",
+  "energies": ["calm", "charged", "overdrive"],
+  "variants": [
+    { "id": "lock-in-shockwave", "reference": "motion:forms-selection-energy-ripple@lock-in-shockwave", "bestFor": ["commitment questions", "assessment lock-in", "habit tracking"], "jsx": "<SelectionEnergyRipple variant=\"lock-in-shockwave\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "forge-sigil-ripple", "reference": "motion:forms-selection-energy-ripple@forge-sigil-ripple", "bestFor": ["NOX Forge", "mode activation", "skill unlock choices"], "jsx": "<SelectionEnergyRipple variant=\"forge-sigil-ripple\" energy=\"overdrive\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "neural-choice-chain", "reference": "motion:forms-selection-energy-ripple@neural-choice-chain", "bestFor": ["agent routing", "workflow decisions", "AI assessments"], "jsx": "<SelectionEnergyRipple variant=\"neural-choice-chain\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "gold-ascension-vote", "reference": "motion:forms-selection-energy-ripple@gold-ascension-vote", "bestFor": ["sales audits", "high-ticket prioritization", "revenue planning"], "jsx": "<SelectionEnergyRipple variant=\"gold-ascension-vote\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "quantum-branch-collapse", "reference": "motion:forms-selection-energy-ripple@quantum-branch-collapse", "bestFor": ["scenario selection", "strategy tools", "decision systems"], "jsx": "<SelectionEnergyRipple variant=\"quantum-branch-collapse\" energy=\"overdrive\" showVariantSwitcher={false} showEnergySwitcher={false} />" }
+  ]
+}

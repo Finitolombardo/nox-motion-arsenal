@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.1",
+  "effectId": "bg-forge-energy-glyphs",
+  "component": "ForgeEnergyGlyphs",
+  "importPath": "@/motion-arsenal/effects/backgrounds/ForgeEnergyGlyphs",
+  "previewRoute": "/#/effect/bg-forge-energy-glyphs",
+  "runtimeArtwork": "deterministic-svg",
+  "selectionRule": "Select exactly one stable variant and one stateMode. Disable both switchers on production pages unless visitors should compare styles.",
+  "states": ["idle", "warming", "charged", "overdrive", "ritual", "stealth"],
+  "variants": [
+    {
+      "id": "forge-ember-runes",
+      "reference": "motion:bg-forge-energy-glyphs@forge-ember-runes",
+      "bestFor": ["NOX Forge", "skill unlocks", "progression and ritual scenes"],
+      "jsx": "<ForgeEnergyGlyphs variant=\"forge-ember-runes\" stateMode=\"charged\" showVariantSwitcher={false} showStateSwitcher={false} />"
+    },
+    {
+      "id": "command-nexus-sigils",
+      "reference": "motion:bg-forge-energy-glyphs@command-nexus-sigils",
+      "bestFor": ["Project-X", "agent command centers", "operator dashboards"],
+      "jsx": "<ForgeEnergyGlyphs variant=\"command-nexus-sigils\" stateMode=\"charged\" showVariantSwitcher={false} showStateSwitcher={false} />"
+    },
+    {
+      "id": "revenue-ascension-seals",
+      "reference": "motion:bg-forge-energy-glyphs@revenue-ascension-seals",
+      "bestFor": ["NOX Global Sales OS", "premium offers", "sales and revenue sections"],
+      "jsx": "<ForgeEnergyGlyphs variant=\"revenue-ascension-seals\" stateMode=\"ritual\" showVariantSwitcher={false} showStateSwitcher={false} />"
+    },
+    {
+      "id": "automation-circuit-glyphs",
+      "reference": "motion:bg-forge-energy-glyphs@automation-circuit-glyphs",
+      "bestFor": ["automation systems", "n8n workflows", "operations products"],
+      "jsx": "<ForgeEnergyGlyphs variant=\"automation-circuit-glyphs\" stateMode=\"charged\" showVariantSwitcher={false} showStateSwitcher={false} />"
+    },
+    {
+      "id": "signal-growth-constellations",
+      "reference": "motion:bg-forge-energy-glyphs@signal-growth-constellations",
+      "bestFor": ["AI Growth Engine", "signal and demand sections", "marketing systems"],
+      "jsx": "<ForgeEnergyGlyphs variant=\"signal-growth-constellations\" stateMode=\"warming\" showVariantSwitcher={false} showStateSwitcher={false} />"
+    }
+  ]
+}
