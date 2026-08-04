@@ -5,6 +5,7 @@ import {
   type PinnedProductStageProps,
   type ProductStageVariantId,
 } from './PinnedProductStageVariants';
+import { PinnedProductStageStickyStory } from './PinnedProductStageStickyStory';
 
 const VARIANT_IDS = Object.keys(PRODUCT_STAGE_VARIANTS) as ProductStageVariantId[];
 
@@ -76,6 +77,39 @@ const CORE_SYSTEM_CSS = String.raw`
 `;
 
 export function PinnedProductStageCoreSystem({
+  variant = 'nox-global-sales-os',
+  showVariantSwitcher = true,
+  ...motionProps
+}: PinnedProductStageProps) {
+  const [selectedVariant, setSelectedVariant] = useState<ProductStageVariantId>(variant);
+  useEffect(() => setSelectedVariant(variant), [variant]);
+
+  // `sticky-story` ist ein eigenes Layout, keine Variante der gepinnten Bühne:
+  // dort gibt es kein Scroll-Gefängnis und keinen Textaustausch am selben Ort.
+  if (motionProps.layoutMode === 'sticky-story') {
+    return (
+      <PinnedProductStageStickyStory
+        variant={selectedVariant}
+        chapterHeight={motionProps.chapterHeight}
+        stickyOffset={motionProps.stickyOffset}
+        activeThreshold={motionProps.activeThreshold}
+        panelTilt={[
+          motionProps.panelTiltX ?? motionProps.panelTilt?.[0] ?? 4,
+          motionProps.panelTiltY ?? motionProps.panelTilt?.[1] ?? -6,
+        ]}
+        panelDepth={motionProps.panelDepth}
+        contentTransition={motionProps.contentTransition}
+        textReveal={motionProps.textReveal}
+        mobileStack={motionProps.mobileStack}
+        scrollDriver={motionProps.scrollDriver === 'page' ? 'page' : 'internal'}
+      />
+    );
+  }
+
+  return <PinnedProductStagePinned variant={selectedVariant} showVariantSwitcher={showVariantSwitcher} {...motionProps} />;
+}
+
+function PinnedProductStagePinned({
   variant = 'nox-global-sales-os',
   showVariantSwitcher = true,
   ...motionProps

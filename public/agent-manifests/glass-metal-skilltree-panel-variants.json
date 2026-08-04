@@ -1,16 +1,18 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "effectId": "skilltree-glass-metal-panel",
   "component": "GlassMetalSkilltreePanel",
   "importPath": "@/motion-arsenal/effects/forge-skilltree/GlassMetalSkilltreePanel",
   "previewRoute": "/#/effect/skilltree-glass-metal-panel",
-  "selectionRule": "Select one panel shell and one energy state. Disable internal switchers on production pages unless visitors should compare configurations.",
+  "selectionRule": "Select one panel shell and energy state. On production stages disable internal switchers, pointer spotlight, hover glow, specular follow, and interactive lighting.",
+  "productionLightingProps": ["interactiveLighting", "pointerSpotlight", "hoverGlow", "specularFollow"],
   "energies": ["calm", "charged", "overdrive"],
   "variants": [
     {"id":"obsidian-command-deck","reference":"motion:skilltree-glass-metal-panel@obsidian-command-deck","bestFor":["operator dashboard","NOX command center","hard-surface system card"],"jsx":"<GlassMetalSkilltreePanel variant=\"obsidian-command-deck\" energy=\"charged\" blur={12} showVariantSwitcher={false} showEnergySwitcher={false} />"},
     {"id":"frosted-nexus","reference":"motion:skilltree-glass-metal-panel@frosted-nexus","bestFor":["Project X","agent network","glass dashboard"],"jsx":"<GlassMetalSkilltreePanel variant=\"frosted-nexus\" energy=\"overdrive\" blur={16} showVariantSwitcher={false} showEnergySwitcher={false} />"},
     {"id":"gold-ascension-console","reference":"motion:skilltree-glass-metal-panel@gold-ascension-console","bestFor":["Global Sales OS","premium metrics","revenue console"],"jsx":"<GlassMetalSkilltreePanel variant=\"gold-ascension-console\" energy=\"charged\" blur={11} showVariantSwitcher={false} showEnergySwitcher={false} />"},
     {"id":"holo-forge-matrix","reference":"motion:skilltree-glass-metal-panel@holo-forge-matrix","bestFor":["NOX Forge","skill progression","live system map"],"jsx":"<GlassMetalSkilltreePanel variant=\"holo-forge-matrix\" energy=\"overdrive\" blur={14} showVariantSwitcher={false} showEnergySwitcher={false} />"},
-    {"id":"void-citadel-panel","reference":"motion:skilltree-glass-metal-panel@void-citadel-panel","bestFor":["deep-tech interface","event horizon","security system"],"jsx":"<GlassMetalSkilltreePanel variant=\"void-citadel-panel\" energy=\"overdrive\" blur={15} showVariantSwitcher={false} showEnergySwitcher={false} />"}
+    {"id":"void-citadel-panel","reference":"motion:skilltree-glass-metal-panel@void-citadel-panel","bestFor":["deep-tech interface","event horizon","security system"],"jsx":"<GlassMetalSkilltreePanel variant=\"void-citadel-panel\" energy=\"overdrive\" blur={15} showVariantSwitcher={false} showEnergySwitcher={false} />"},
+    {"id":"nox-revenue-glass-panel","reference":"motion:skilltree-glass-metal-panel@nox-revenue-glass-panel","bestFor":["revenue operating system","scroll product stage","operator-controlled workflow"],"jsx":"<GlassMetalSkilltreePanel variant=\"nox-revenue-glass-panel\" energy=\"calm\" blur={10} hoverLift={false} interactiveLighting={false} pointerSpotlight={false} hoverGlow={false} specularFollow={false} showVariantSwitcher={false} showEnergySwitcher={false} />"}
   ]
 }

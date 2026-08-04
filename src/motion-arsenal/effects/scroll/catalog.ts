@@ -24,9 +24,9 @@ export const SCROLL_CATALOG: EffectEntry[] = [
       reducedMotionNotes: 'Kein rAF-Loop. reducedMotionRotation bestimmt den Standbildzustand: off = reine Basisrotation, stage-only = Basisrotation plus die Rotation der letzten Stufe, static = vollständiger Endzustand. Presets, Core-Formen und Referenzcodes bleiben bedienbar.',
       description: 'Referenzierbares Produkt-Story-System mit sechs fertigen NOX-Presets (inkl. nox-revenue-os für noxlabs.net) und zwei Scroll-Treibern: interner Scrollport für die Arsenal-Vorschau, `scrollDriver="page"` für echte Webseiten, wo die Stage im Dokumentfluss gepinnt wird statt das Mausrad einzufangen. Jede Variante besitzt eigene Kapitel, Module, Kennzahlen, CTA, stabile Agenten-Referenz und ein sichtbar anderes semantisches Kernobjekt: Revenue Reactor, Agent Nexus, Signal Nucleus, Conversion Prism oder Automation Kernel.',
       currentUsage: ['NOX Labs Produktpräsentation', 'Project-X Agentenzentrale', 'zukünftige Kundenwebseiten'],
-      technicalBasis: 'Sticky scroll timeline + CSS-3D layers + five semantic CSS/SVG core artifacts + exported preset registry + public agent manifest.',
+      technicalBasis: 'Sticky scroll timeline + CSS-3D layers + five semantic CSS/SVG core artifacts + exported preset registry + public agent manifest. Zwei Rotationsmodi: `free-spin` (progress x turns x 360, für abstrakte Kernobjekte) und `depth-flip` (pro Kapitel 0 → readableAngle → 0 plus stackDrift über die Sektion, für lesbare Tafeln — der Winkel bleibt unter der 90°-Kante, deshalb wird die Fläche nie zur Linie und die Rückseite nie sichtbar).',
       importPath: '@/motion-arsenal/effects/scroll/PinnedProductStageCoreSystem',
-      usageJsx: '<PinnedProductStageCoreSystem variant="nox-revenue-os" scrollRotationEnabled rotationAxis="y" rotationTurns={0.85} stageRotationInfluence={0.35} rotationSmoothing={0.12} perspective={1100} objectTilt={6} glow={0.6} bloom={0.35} />',
+      usageJsx: '<PinnedProductStageCoreSystem variant="nox-revenue-os" scrollRotationEnabled rotationMode="depth-flip" readableAngle={55} stackDrift={16} rotationAxis="y" stageRotationInfluence={0.35} rotationSmoothing={0.12} perspective={1100} objectTilt={6} glow={0.6} bloom={0.35} />',
       props: [
         {
           key: 'variant',
@@ -36,6 +36,7 @@ export const SCROLL_CATALOG: EffectEntry[] = [
           options: [
             'nox-floating-card-os',
             'nox-revenue-os',
+            'nox-scroll-story',
             'nox-global-sales-os',
             'project-x-command-center',
             'ai-growth-engine',
@@ -44,6 +45,19 @@ export const SCROLL_CATALOG: EffectEntry[] = [
           ],
           group: 'Content',
         },
+
+        { key: 'layoutMode', label: 'Layout Mode', type: 'select', default: 'pinned-stage', options: ['pinned-stage', 'sticky-story'], group: 'Sticky Story' },
+        { key: 'chapterHeight', label: 'Story Chapter Height (vh)', type: 'range', default: 68, min: 45, max: 100, step: 1, group: 'Sticky Story' },
+        { key: 'stickyOffset', label: 'Sticky Offset (vh)', type: 'range', default: 0, min: 0, max: 20, step: 1, group: 'Sticky Story' },
+        { key: 'activeThreshold', label: 'Active Threshold', type: 'range', default: 0.42, min: 0.2, max: 0.8, step: 0.01, group: 'Sticky Story' },
+        // panelTilt ist im Code ein Tupel; die Oberfläche steuert beide Achsen
+        // einzeln und bleibt damit im serialisierbaren Control-Schema.
+        { key: 'panelTiltX', label: 'Panel Tilt X (°)', type: 'range', default: 4, min: 0, max: 6, step: 1, group: 'Sticky Story' },
+        { key: 'panelTiltY', label: 'Panel Tilt Y (°)', type: 'range', default: -6, min: -14, max: 14, step: 1, group: 'Sticky Story' },
+        { key: 'panelDepth', label: 'Panel Depth (px)', type: 'range', default: -30, min: -80, max: 0, step: 5, group: 'Sticky Story' },
+        { key: 'contentTransition', label: 'Content Transition (ms)', type: 'range', default: 160, min: 100, max: 180, step: 10, group: 'Sticky Story' },
+        { key: 'textReveal', label: 'Text Reveal', type: 'select', default: 'blur-rise', options: ['blur-rise', 'fade', 'none'], group: 'Sticky Story' },
+        { key: 'mobileStack', label: 'Mobile Stack', type: 'boolean', default: true, group: 'Sticky Story' },
         { key: 'showVariantSwitcher', label: 'Show Variant Switcher', type: 'boolean', default: true, group: 'Content' },
         { key: 'chrome', label: 'Chrome', type: 'select', default: 'demo', options: ['demo', 'minimal'], group: 'Content' },
         { key: 'stage', label: 'Fixed Stage (-1 = Scroll)', type: 'range', default: -1, min: -1, max: 4, step: 1, group: 'Content' },
@@ -61,8 +75,11 @@ export const SCROLL_CATALOG: EffectEntry[] = [
         { key: 'stageTransitionDuration', label: 'Stage Transition Duration (s)', type: 'range', default: 0.5, min: 0.1, max: 1.6, step: 0.05, group: 'Scroll' },
 
         { key: 'scrollRotationEnabled', label: 'Scroll Rotation', type: 'boolean', default: true, group: 'Object Rotation' },
+        { key: 'rotationMode', label: 'Rotation Mode', type: 'select', default: 'free-spin', options: ['free-spin', 'depth-flip'], group: 'Object Rotation' },
+        { key: 'readableAngle', label: 'Readable Angle (°, depth-flip)', type: 'range', default: 55, min: 15, max: 80, step: 1, group: 'Object Rotation' },
+        { key: 'stackDrift', label: 'Stack Drift (°, depth-flip)', type: 'range', default: 16, min: 0, max: 60, step: 1, group: 'Object Rotation' },
         { key: 'rotationAxis', label: 'Rotation Axis', type: 'select', default: 'y', options: ['x', 'y', 'z', 'xy', 'xyz'], group: 'Object Rotation' },
-        { key: 'rotationTurns', label: 'Rotation Turns', type: 'range', default: 0.85, min: 0, max: 4, step: 0.05, group: 'Object Rotation' },
+        { key: 'rotationTurns', label: 'Rotation Turns (free-spin)', type: 'range', default: 0.85, min: 0, max: 4, step: 0.05, group: 'Object Rotation' },
         { key: 'rotationDirection', label: 'Rotation Direction', type: 'select', default: 'clockwise', options: ['clockwise', 'counter-clockwise'], group: 'Object Rotation' },
         { key: 'baseRotationX', label: 'Base Rotation X (°)', type: 'range', default: 0, min: -180, max: 180, step: 1, group: 'Object Rotation' },
         { key: 'baseRotationY', label: 'Base Rotation Y (°)', type: 'range', default: 0, min: -180, max: 180, step: 1, group: 'Object Rotation' },

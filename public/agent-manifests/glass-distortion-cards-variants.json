@@ -1,15 +1,16 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "effectId": "premium-glass-distortion-cards",
   "component": "NoxGlassCards",
   "importPath": "@/motion-arsenal/effects/premium/NoxGlassCards",
   "previewRoute": "/#/effect/premium-glass-distortion-cards",
-  "selectionRule": "Select one glass material and one energy state. Keep one shared WebGL context and disable switchers on production pages unless comparison is intentional.",
+  "selectionRule": "Select one material and energy state. For production hero cards, disable switchers and all pointer-lighting props; this preserves static depth without starting the shader or lighting rAF.",
+  "productionLightingProps": ["interactiveLighting", "pointerReflection", "hoverGlare", "causticSweep", "specularIntensity", "ambientReflection"],
   "energies": ["calm", "charged", "overdrive"],
   "variants": [
     { "id": "prism-command-grid", "reference": "motion:premium-glass-distortion-cards@prism-command-grid", "bestFor": ["Project X", "agent command surfaces", "technical module cards"], "jsx": "<NoxGlassCards variant=\"prism-command-grid\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
     { "id": "liquid-chrome-vault", "reference": "motion:premium-glass-distortion-cards@liquid-chrome-vault", "bestFor": ["luxury product displays", "editorial portfolios", "future-facing brands"], "jsx": "<NoxGlassCards variant=\"liquid-chrome-vault\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
-    { "id": "obsidian-caustic-deck", "reference": "motion:premium-glass-distortion-cards@obsidian-caustic-deck", "bestFor": ["NOX Forge", "dark premium services", "mastery systems"], "jsx": "<NoxGlassCards variant=\"obsidian-caustic-deck\" energy=\"overdrive\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "obsidian-caustic-deck", "reference": "motion:premium-glass-distortion-cards@obsidian-caustic-deck", "bestFor": ["NOX Forge", "dark premium services", "mastery systems"], "jsx": "<NoxGlassCards variant=\"obsidian-caustic-deck\" energy=\"calm\" tilt={9} refraction={0.03} fresnel={5.5} gridScale={17} depth={0.7} glassOpacity={0.7} interactiveLighting={false} pointerReflection={false} hoverGlare={false} causticSweep={false} specularIntensity={0.15} ambientReflection={0.12} showVariantSwitcher={false} showEnergySwitcher={false} />" },
     { "id": "signal-crystal-array", "reference": "motion:premium-glass-distortion-cards@signal-crystal-array", "bestFor": ["AI Growth Engine", "signal intelligence", "content systems"], "jsx": "<NoxGlassCards variant=\"signal-crystal-array\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
     { "id": "revenue-amber-monoliths", "reference": "motion:premium-glass-distortion-cards@revenue-amber-monoliths", "bestFor": ["Global Sales OS", "high-ticket offers", "revenue modules"], "jsx": "<NoxGlassCards variant=\"revenue-amber-monoliths\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" }
   ]

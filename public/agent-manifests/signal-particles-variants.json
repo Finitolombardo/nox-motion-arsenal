@@ -1,17 +1,23 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "effectId": "premium-signal-particles",
   "component": "NoxSignalParticles",
   "importPath": "@/motion-arsenal/effects/premium/NoxSignalParticles",
   "previewRoute": "/#/effect/premium-signal-particles",
-  "selectionRule": "Select one semantic particle field, one choreography mode and one energy state. Use auto mode for previews and a fixed mode for production storytelling.",
+  "selectionRule": "Select one narrative and one energy state. The narrative only changes palette, flow geometry, turbulence, convergence and spawn zone — the physics (curl-noise flow field with a lagging cursor attractor) is identical for all of them. Use energy-smoke-flow when the goal is a mouse-led energy stream.",
   "energies": ["calm", "charged", "overdrive"],
-  "modes": ["auto", "orbit", "swarm", "settle"],
+  "physics": {
+    "field": "divergence-free curl of a two-octave Perlin potential",
+    "forces": ["flowFieldForce", "cursorAttraction", "tangentialCurl", "convergenceBias", "pointerDrag", "perParticleTurbulence"],
+    "integration": "acceleration -> velocity -> position, exponential viscosity damping, speed clamp",
+    "attractor": "actualPointer -> damped smoothedPointer -> particle field"
+  },
   "variants": [
-    { "id": "agent-constellation", "reference": "motion:premium-signal-particles@agent-constellation", "bestFor": ["Project X", "agent orchestration", "network intelligence"], "jsx": "<NoxSignalParticles variant=\"agent-constellation\" mode=\"auto\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
-    { "id": "revenue-funnel", "reference": "motion:premium-signal-particles@revenue-funnel", "bestFor": ["sales pipeline", "lead qualification", "conversion CTA"], "jsx": "<NoxSignalParticles variant=\"revenue-funnel\" mode=\"settle\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
-    { "id": "forge-murmuration", "reference": "motion:premium-signal-particles@forge-murmuration", "bestFor": ["NOX Forge", "discipline and mastery", "ritual transitions"], "jsx": "<NoxSignalParticles variant=\"forge-murmuration\" mode=\"orbit\" energy=\"overdrive\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
-    { "id": "signal-vortex", "reference": "motion:premium-signal-particles@signal-vortex", "bestFor": ["AI Growth Engine", "demand generation", "signal capture"], "jsx": "<NoxSignalParticles variant=\"signal-vortex\" mode=\"swarm\" energy=\"overdrive\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
-    { "id": "command-formation", "reference": "motion:premium-signal-particles@command-formation", "bestFor": ["operator dashboards", "deployment moments", "system online states"], "jsx": "<NoxSignalParticles variant=\"command-formation\" mode=\"settle\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" }
+    { "id": "energy-smoke-flow", "reference": "motion:premium-signal-particles@energy-smoke-flow", "bestFor": ["hero backgrounds", "mouse-led energy streams", "premium landing headers"], "jsx": "<NoxSignalParticles variant=\"energy-smoke-flow\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "agent-constellation", "reference": "motion:premium-signal-particles@agent-constellation", "bestFor": ["Project X", "agent orchestration", "network intelligence"], "jsx": "<NoxSignalParticles variant=\"agent-constellation\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "revenue-funnel", "reference": "motion:premium-signal-particles@revenue-funnel", "bestFor": ["sales pipeline", "lead qualification", "conversion CTA"], "jsx": "<NoxSignalParticles variant=\"revenue-funnel\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "forge-murmuration", "reference": "motion:premium-signal-particles@forge-murmuration", "bestFor": ["NOX Forge", "discipline and mastery", "ritual transitions"], "jsx": "<NoxSignalParticles variant=\"forge-murmuration\" energy=\"overdrive\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "signal-vortex", "reference": "motion:premium-signal-particles@signal-vortex", "bestFor": ["AI Growth Engine", "demand generation", "signal capture"], "jsx": "<NoxSignalParticles variant=\"signal-vortex\" energy=\"overdrive\" showVariantSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "command-formation", "reference": "motion:premium-signal-particles@command-formation", "bestFor": ["operator dashboards", "deployment moments", "system online states"], "jsx": "<NoxSignalParticles variant=\"command-formation\" energy=\"charged\" showVariantSwitcher={false} showEnergySwitcher={false} />" }
   ]
 }

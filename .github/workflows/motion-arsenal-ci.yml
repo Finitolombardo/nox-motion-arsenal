@@ -92,6 +92,9 @@ jobs:
             npm run test:visual-config
             if ($LASTEXITCODE -ne 0) { throw 'Visual config serialization contract failed.' }
 
+            npm run test:signal-flow
+            if ($LASTEXITCODE -ne 0) { throw 'Signal particles flow behaviour test failed.' }
+
             npm run test:previews:smoke
             if ($LASTEXITCODE -ne 0) { throw 'Preview smoke test failed.' }
           } finally {

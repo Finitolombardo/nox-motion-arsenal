@@ -10,11 +10,16 @@ for (const contract of [
   'gold-ascension-console',
   'holo-forge-matrix',
   'void-citadel-panel',
+  'nox-revenue-glass-panel',
   'gmp2-link-flow',
   'gmp2-caustic',
   'gmp2-node-core',
   'showVariantSwitcher',
   'showEnergySwitcher',
+  'interactiveLighting',
+  'pointerSpotlight',
+  'hoverGlow',
+  'specularFollow',
   'MOVE TO TILT // TAP TO IMPULSE',
   'COPY CONFIG',
 ]) {
@@ -22,8 +27,9 @@ for (const contract of [
 }
 
 assert.equal(manifest.effectId, 'skilltree-glass-metal-panel');
-assert.equal(manifest.variants.length, 5);
-assert.equal(new Set(manifest.variants.map((variant) => variant.reference)).size, 5);
+assert.equal(manifest.variants.length, 6);
+assert.equal(new Set(manifest.variants.map((variant) => variant.reference)).size, 6);
+assert.deepEqual(manifest.productionLightingProps, ['interactiveLighting', 'pointerSpotlight', 'hoverGlow', 'specularFollow']);
 assert.ok(!source.includes('fetch('), 'Effect must not make network requests');
 assert.ok(!source.includes('Math.random'), 'Effect must stay deterministic');
 

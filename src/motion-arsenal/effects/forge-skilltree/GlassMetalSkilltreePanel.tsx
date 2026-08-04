@@ -8,6 +8,7 @@ export const GLASS_METAL_PANEL_VARIANTS = [
   'gold-ascension-console',
   'holo-forge-matrix',
   'void-citadel-panel',
+  'nox-revenue-glass-panel',
 ] as const;
 
 export const GLASS_METAL_PANEL_ENERGIES = ['calm', 'charged', 'overdrive'] as const;
@@ -16,7 +17,7 @@ export type GlassMetalPanelVariant = (typeof GLASS_METAL_PANEL_VARIANTS)[number]
 export type GlassMetalPanelEnergy = (typeof GLASS_METAL_PANEL_ENERGIES)[number];
 
 type Rgb = readonly [number, number, number];
-type PanelShell = 'obsidian' | 'frosted' | 'museum' | 'holo' | 'citadel';
+type PanelShell = 'obsidian' | 'frosted' | 'museum' | 'holo' | 'citadel' | 'revenue';
 
 interface NodeSpec {
   state: SkillNodeState;
@@ -159,6 +160,27 @@ export const GLASS_METAL_PANEL_PRESETS: Record<GlassMetalPanelVariant, PanelPres
       { state: 'locked', x: 85, y: 67, label: 'Singularity', size: 40 },
     ],
   },
+  'nox-revenue-glass-panel': {
+    id: 'nox-revenue-glass-panel',
+    shortLabel: 'REVENUE',
+    label: 'NOX Revenue Glass Panel',
+    kicker: 'SIGNAL // QUALIFY // OPERATOR GATE',
+    reference: 'motion:skilltree-glass-metal-panel@nox-revenue-glass-panel',
+    shell: 'revenue',
+    accent: [255, 80, 105],
+    secondary: [213, 164, 118],
+    light: [255, 241, 243],
+    background: 'radial-gradient(72% 62% at 50% 54%, rgba(153,34,54,.16), transparent 70%), linear-gradient(180deg,#0b0709,#030204)',
+    status: 'OPERATOR CONTROL ACTIVE',
+    metrics: ['SIGNAL INTAKE', 'ACTION PREPARED', 'APPROVAL REQUIRED'],
+    nodes: [
+      { state: 'completed', x: 16, y: 64, label: 'Signale', size: 40 },
+      { state: 'available', x: 34, y: 36, label: 'Fit', size: 44 },
+      { state: 'active', x: 52, y: 50, label: 'Angebot', size: 56 },
+      { state: 'recommended', x: 72, y: 31, label: 'Aktion', size: 44, badge: 'READY' },
+      { state: 'locked', x: 85, y: 67, label: 'Freigabe', size: 40 },
+    ],
+  },
 };
 
 export const GLASS_METAL_PANEL_ENERGY_PRESETS: Record<GlassMetalPanelEnergy, PanelEnergyPreset> = {
@@ -176,6 +198,10 @@ export interface GlassMetalSkilltreePanelProps {
   tilt?: number;
   showVariantSwitcher?: boolean;
   showEnergySwitcher?: boolean;
+  interactiveLighting?: boolean;
+  pointerSpotlight?: boolean;
+  hoverGlow?: boolean;
+  specularFollow?: boolean;
 }
 
 const rgb = (value: Rgb) => value.join(',');
@@ -209,6 +235,8 @@ const GLASS_METAL_PANEL_STYLES = `
 .gmp2-panel--holo .gmp2-surface { background:linear-gradient(145deg,rgba(226,255,241,.10),rgba(12,36,27,.42) 40%,rgba(2,8,5,.76)); border-color:rgba(var(--gmp-accent),.26); }
 .gmp2-panel--citadel .gmp2-surface,.gmp2-panel--citadel .gmp2-backplate { border-radius:40px 12px 40px 12px; }
 .gmp2-panel--citadel .gmp2-surface { background:linear-gradient(145deg,rgba(233,246,255,.08),rgba(12,18,43,.43) 42%,rgba(2,3,10,.82)); border-color:rgba(var(--gmp-accent),.24); }
+.gmp2-panel--revenue .gmp2-surface,.gmp2-panel--revenue .gmp2-backplate { clip-path:polygon(4% 0,96% 0,100% 8%,100% 92%,96% 100%,4% 100%,0 92%,0 8%); }
+.gmp2-panel--revenue .gmp2-surface { background:linear-gradient(148deg,rgba(255,241,243,.065),rgba(22,13,17,.86) 38%,rgba(5,3,5,.97));border-color:rgba(var(--gmp-accent),.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 0 0 0 7px rgba(255,255,255,.012),inset 0 0 64px rgba(0,0,0,.48),0 0 calc(34px * var(--gmp-glow)) rgba(var(--gmp-accent),.13); }
 .gmp2-shell-grid { position:absolute; inset:0; opacity:.24; background-image:linear-gradient(rgba(var(--gmp-light),.055) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--gmp-light),.045) 1px,transparent 1px); background-size:22px 22px; mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent); }
 .gmp2-metal-edge { position:absolute; left:2%; right:2%; top:0; height:2px; background:linear-gradient(90deg,transparent,rgba(var(--gmp-light),.42),rgba(var(--gmp-accent),.72),rgba(var(--gmp-light),.42),transparent); box-shadow:0 0 16px rgba(var(--gmp-accent),.34); }
 .gmp2-caustic { position:absolute; width:64%; height:150%; left:-36%; top:-36%; transform:rotate(16deg) translateX(calc((var(--gmp-px,.5) - .5) * 52px)); background:linear-gradient(90deg,transparent,rgba(var(--gmp-light),.10),transparent); filter:blur(11px); mix-blend-mode:screen; opacity:.72; pointer-events:none; }
@@ -242,6 +270,7 @@ const GLASS_METAL_PANEL_STYLES = `
 .gmp2-hint { position:absolute; left:14px; bottom:15px; z-index:20; font:700 7px/1 var(--mono,monospace); letter-spacing:.18em; color:rgba(255,255,255,.27); pointer-events:none; }
 .gmp2-root[data-energy='overdrive'] .gmp2-surface { box-shadow:inset 0 1px 0 rgba(255,255,255,.17),inset 0 0 64px rgba(0,0,0,.38),0 0 calc(58px * var(--gmp-glow)) rgba(var(--gmp-accent),.20); }
 .gmp2-root[data-energy='calm'] .gmp2-sweep,.gmp2-root[data-energy='calm'] .gmp2-scanline { opacity:.38; }
+.gmp2-root[data-interactive-lighting='false'] .gmp2-sweep,.gmp2-root[data-interactive-lighting='false'] .gmp2-scanline,.gmp2-root[data-interactive-lighting='false'] .gmp2-impact{display:none}.gmp2-root[data-pointer-spotlight='false'] .gmp2-atmosphere,.gmp2-root[data-pointer-spotlight='false'] .gmp2-glare{background:none}.gmp2-root[data-hover-glow='false'] .gmp2-panel{cursor:default}.gmp2-root[data-specular-follow='false'] .gmp2-caustic{transform:rotate(16deg) translateX(0);opacity:.2}
 @keyframes gmp2-flow { to { stroke-dashoffset:-20; } }
 @keyframes gmp2-spin { to { transform:rotate(360deg); } }
 @keyframes gmp2-sweep { 0%,12% { transform:translate3d(-12%,-8%,0) rotate(-7deg); opacity:.12; } 48% { opacity:.9; } 78%,100% { transform:translate3d(12%,8%,0) rotate(8deg); opacity:.18; } }
@@ -271,6 +300,10 @@ export function GlassMetalSkilltreePanel({
   tilt = 1,
   showVariantSwitcher = true,
   showEnergySwitcher = true,
+  interactiveLighting = true,
+  pointerSpotlight = true,
+  hoverGlow = true,
+  specularFollow = true,
 }: GlassMetalSkilltreePanelProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -290,12 +323,12 @@ export function GlassMetalSkilltreePanel({
 
   useRafLoop((dt) => {
     const p = pointer.current;
-    const inside = p.inside;
+    const inside = interactiveLighting && p.inside;
     const targetRx = inside ? (0.5 - p.ty) * 14 * tilt * energyPreset.tilt : 0;
     const targetRy = inside ? (p.tx - 0.5) * 18 * tilt * energyPreset.tilt : 0;
     const targetX = inside ? (p.tx - 0.5) * 8 * depth : 0;
-    const targetY = inside ? (p.ty - 0.5) * 7 * depth - (hoverLift ? 4 : 0) : 0;
-    const targetZ = inside && hoverLift ? 24 * depth : 0;
+    const targetY = inside ? (p.ty - 0.5) * 7 * depth - (hoverLift && hoverGlow ? 4 : 0) : 0;
+    const targetZ = inside && hoverLift && hoverGlow ? 24 * depth : 0;
     motion.current.rx = damp(motion.current.rx, targetRx, 7.5, dt);
     motion.current.ry = damp(motion.current.ry, targetRy, 7.5, dt);
     motion.current.x = damp(motion.current.x, targetX, 7, dt);
@@ -310,9 +343,10 @@ export function GlassMetalSkilltreePanel({
       root.style.setProperty('--gmp-px', (inside ? p.tx : 0.5).toFixed(3));
       root.style.setProperty('--gmp-py', (inside ? p.ty : 0.5).toFixed(3));
     }
-  }, !reduced);
+  }, !reduced && interactiveLighting);
 
   const handleImpulse = (event: PointerEvent<HTMLDivElement>) => {
+    if (!interactiveLighting || !hoverGlow) return;
     const panel = panelRef.current?.getBoundingClientRect();
     if (!panel) return;
     setImpact((current) => ({
@@ -349,7 +383,7 @@ export function GlassMetalSkilltreePanel({
   } as CSSProperties;
 
   return (
-    <div ref={rootRef} className="stfx-stage gmp2-root" data-variant={activeVariant} data-energy={activeEnergy} style={rootStyle} onPointerDown={handleImpulse}>
+    <div ref={rootRef} className="stfx-stage gmp2-root" data-variant={activeVariant} data-energy={activeEnergy} data-interactive-lighting={interactiveLighting} data-pointer-spotlight={pointerSpotlight} data-hover-glow={hoverGlow} data-specular-follow={specularFollow} style={rootStyle} onPointerDown={handleImpulse}>
       <style>{GLASS_METAL_PANEL_STYLES}</style>
       <AtmosLayer
         particles={Math.round(18 * energyPreset.particles)}
@@ -408,10 +442,10 @@ export function GlassMetalSkilltreePanel({
           <div className="gmp2-surface">
             <div className="gmp2-shell-grid" />
             <div className="gmp2-metal-edge" />
-            <div className="gmp2-caustic" />
-            <div className="gmp2-sweep" />
-            <div className="gmp2-scanline" />
-            <div className="gmp2-glare" />
+            {specularFollow ? <div className="gmp2-caustic" /> : null}
+            {interactiveLighting ? <div className="gmp2-sweep" /> : null}
+            {interactiveLighting ? <div className="gmp2-scanline" /> : null}
+            {pointerSpotlight ? <div className="gmp2-glare" /> : null}
 
             <div className="gmp2-header">
               <div className="gmp2-header-left"><span className="gmp2-status-dot" />{preset.status}</div>
@@ -446,12 +480,12 @@ export function GlassMetalSkilltreePanel({
             </div>
             <div className="gmp2-rail"><span /><span /><span /></div>
             <div className="gmp2-corners"><span className="gmp2-corner" /><span className="gmp2-corner" /><span className="gmp2-corner" /><span className="gmp2-corner" /></div>
-            {impact.id > 0 ? <span key={impact.id} className="gmp2-impact" style={{ left: `${impact.x}%`, top: `${impact.y}%` }} /> : null}
+            {interactiveLighting && hoverGlow && impact.id > 0 ? <span key={impact.id} className="gmp2-impact" style={{ left: `${impact.x}%`, top: `${impact.y}%` }} /> : null}
           </div>
         </div>
       </div>
 
-      <div className="gmp2-hint">MOVE TO TILT // TAP TO IMPULSE</div>
+      <div className="gmp2-hint">{interactiveLighting ? 'MOVE TO TILT // TAP TO IMPULSE' : 'STATIC MATERIAL // POINTER LIGHTING OFF'}</div>
       <button type="button" className="gmp2-reference" onPointerDown={(event: PointerEvent<HTMLButtonElement>) => event.stopPropagation()} onClick={copyReference}>
         {copied ? 'COPIED' : 'COPY CONFIG'}
       </button>
