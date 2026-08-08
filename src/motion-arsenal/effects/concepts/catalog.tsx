@@ -71,7 +71,7 @@ export const CONCEPTS_CATALOG: EffectEntry[] = entries.map(([name, description, 
       importPath: '@/motion-arsenal/effects/concepts',
       usageJsx: `<${name.replace(/[^A-Za-z0-9]/g, '')} />`,
       props: [],
-      updatedAt: '2026-08-09T00:00:00.000Z',
+      updatedAt: canonicalEffect ? '2026-08-09T00:00:00.000Z' : '2026-08-02T10:09:00.000Z',
       improvementStatus: canonicalEffect ? 'improved' : 'needs-review',
       improvementVersion: canonicalEffect ? '0.1.1' : '0.1.0',
       improvementChangelog: canonicalEffect
