@@ -7,6 +7,8 @@ const BASE = process.env.ARSENAL_URL ?? 'http://127.0.0.1:5195';
 const OUT = process.env.FAVORITES_ARTIFACTS ?? 'artifacts/favorites';
 const STORAGE_KEY = 'nox-motion-arsenal:favorites:v1';
 const ARCHIVE_STORAGE_KEY = 'nox-motion-arsenal:archived:v1';
+const EXPECTED_VISIBLE_EFFECTS = 185;
+const EXPECTED_VISIBLE_CONCEPTS = 28;
 
 mkdirSync(OUT, { recursive: true });
 
@@ -37,12 +39,15 @@ try {
   const cardCount = await page.locator('[data-effect-id]').count();
   const updateCount = await page.locator('.fx-updated').count();
   const updateLabels = await page.locator('.fx-updated').allTextContents();
-  assert(cardCount === 186, `expected 186 effect cards, found ${cardCount}`);
+  assert(cardCount === EXPECTED_VISIBLE_EFFECTS, `expected ${EXPECTED_VISIBLE_EFFECTS} visible effect cards, found ${cardCount}`);
   assert(updateCount === cardCount, `only ${updateCount}/${cardCount} cards expose update metadata`);
   assert(!updateLabels.some((label) => label.includes('UNBEKANNT')), 'at least one update date is unknown');
 
   await page.getByText('Neue Effekte · Konzeptdeck', { exact: true }).click();
-  assert((await page.locator('[data-effect-id]').count()) === 29, 'concept category does not contain all 29 concepts');
+  assert(
+    (await page.locator('[data-effect-id]').count()) === EXPECTED_VISIBLE_CONCEPTS,
+    `concept category does not contain the expected ${EXPECTED_VISIBLE_CONCEPTS} non-consolidated concepts`,
+  );
   await page.getByText('Alle Effekte', { exact: true }).click();
 
   const favoriteId = await page.locator('[data-effect-id]').first().getAttribute('data-effect-id');
