@@ -25,43 +25,48 @@ await page.goto(url, { waitUntil: 'networkidle' });
 const stage = page.locator('.ncsg-carousel .ncsg-stage');
 await stage.waitFor({ state: 'visible' });
 
-const initial = await page.evaluate(() => {
+const snapshot = () => page.evaluate(() => {
   const stage = document.querySelector('.ncsg-carousel .ncsg-stage');
   const cards = [...document.querySelectorAll('.ncsg-carousel .ncsg-card')];
+  const activeIndex = cards.findIndex((card) => card.classList.contains('is-active'));
   return {
     cards: cards.length,
     clientWidth: stage?.clientWidth ?? 0,
     scrollWidth: stage?.scrollWidth ?? 0,
-    scrollLeft: stage?.scrollLeft ?? 0,
-    active: document.querySelectorAll('.ncsg-carousel .ncsg-card.is-active').length,
+    left: stage?.scrollLeft ?? 0,
+    activeCount: document.querySelectorAll('.ncsg-carousel .ncsg-card.is-active').length,
+    activeIndex,
+    dragging: stage?.classList.contains('is-dragging') ?? false,
   };
 });
+
+const initial = await snapshot();
 assert.ok(initial.cards >= 4, 'carousel did not render the expected card set');
 assert.ok(initial.clientWidth > 0, 'carousel stage has no visible width');
 assert.ok(initial.scrollWidth > initial.clientWidth, 'carousel track is not horizontally scrollable');
-assert.equal(initial.active, 1, 'carousel must expose exactly one active card');
+assert.equal(initial.activeCount, 1, 'carousel must expose exactly one active card');
 
 await page.locator('.ncsg-controls > button').last().click();
 await page.waitForTimeout(700);
-const afterArrow = await page.evaluate(() => {
-  const stage = document.querySelector('.ncsg-carousel .ncsg-stage');
-  return {
-    left: stage?.scrollLeft ?? 0,
-    active: document.querySelectorAll('.ncsg-carousel .ncsg-card.is-active').length,
-  };
-});
-assert.ok(afterArrow.left > initial.scrollLeft + 20, 'next control did not move the horizontal track');
-assert.equal(afterArrow.active, 1, 'arrow navigation produced an invalid active-card state');
+const afterArrow = await snapshot();
+assert.ok(afterArrow.left > initial.left + 20, 'next control did not move the horizontal track');
+assert.equal(afterArrow.activeCount, 1, 'arrow navigation produced an invalid active-card state');
 
 const box = await stage.boundingBox();
 assert.ok(box, 'carousel stage has no bounding box');
 await page.mouse.move(box.x + box.width * 0.72, box.y + box.height * 0.55);
 await page.mouse.down();
 await page.mouse.move(box.x + box.width * 0.22, box.y + box.height * 0.55, { steps: 14 });
+await page.waitForTimeout(40);
+const duringDrag = await snapshot();
+assert.equal(duringDrag.dragging, true, 'mouse pointer did not enter carousel drag mode');
+assert.ok(duringDrag.left > afterArrow.left + 80, `live mouse drag did not track pointer movement (${afterArrow.left} -> ${duringDrag.left})`);
 await page.mouse.up();
 await page.waitForTimeout(950);
-const afterDrag = await stage.evaluate((el) => el.scrollLeft);
-assert.notEqual(Math.round(afterDrag), Math.round(afterArrow.left), 'mouse drag/inertia did not move the track');
+const afterDrag = await snapshot();
+assert.equal(afterDrag.dragging, false, 'carousel stayed in dragging mode after release');
+assert.equal(afterDrag.activeCount, 1, 'drag settle produced an invalid active-card state');
+assert.ok(afterDrag.activeIndex >= afterArrow.activeIndex, 'leftward drag unexpectedly settled on an earlier slide');
 
 await page.setViewportSize({ width: 390, height: 844 });
 await stage.evaluate((el) => { el.scrollLeft = 0; });
@@ -89,4 +94,4 @@ assert.equal(reducedTransform, 'none', 'reduced-motion mode still applies carous
 
 assert.deepEqual(errors, [], `runtime errors: ${errors.join('; ')}`);
 await browser.close();
-console.log('case-study-gallery browser: OK (real scroll track, arrows, mouse drag/inertia, mobile peek, reduced motion)');
+console.log('case-study-gallery browser: OK (real scroll track, arrows, live mouse drag, inertia/snap settle, mobile peek, reduced motion)');
