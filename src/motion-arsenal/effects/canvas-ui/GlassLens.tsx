@@ -110,12 +110,17 @@ export function GlassLens({ lensRadius = 0.16, zoom = 2.2, chroma = 0.006 }: Gla
   const inView = useInView(rootRef, '80px');
   const hoverCapable = useHoverCapable();
   const [active, setActive] = useState(false);
+  const [configRefresh, setConfigRefresh] = useState(false);
   const dampedPtr = useRef({ x: 0.5, y: 0.5 });
 
   const safeLensRadius = clamp(lensRadius, 0.08, 0.4);
   const safeZoom = clamp(zoom, 1, 4);
   const safeChroma = clamp(chroma, 0, 0.02);
-  const shaderRunning = !reduced && inView && (!hoverCapable || active);
+  const pointerRunning = !reduced && inView && (!hoverCapable || active);
+  // Paused shaders still need to repaint when their production props change.
+  // A short refresh window lets useShaderQuad consume the latest uniforms, then
+  // returns to a static frame instead of leaving a permanent idle rAF running.
+  const shaderRunning = inView && (pointerRunning || configRefresh);
 
   const resetLens = () => {
     pointer.current.tx = 0.5;
@@ -126,9 +131,17 @@ export function GlassLens({ lensRadius = 0.16, zoom = 2.2, chroma = 0.006 }: Gla
   };
 
   useEffect(() => {
+    if (!inView) return;
+    setConfigRefresh(true);
+    const timeout = window.setTimeout(() => setConfigRefresh(false), 96);
+    return () => window.clearTimeout(timeout);
+  }, [safeLensRadius, safeZoom, safeChroma, inView]);
+
+  useEffect(() => {
     if (inView) return;
     resetLens();
     setActive(false);
+    setConfigRefresh(false);
   }, [inView]);
 
   useRafLoop((dt, elapsed) => {
@@ -136,7 +149,7 @@ export function GlassLens({ lensRadius = 0.16, zoom = 2.2, chroma = 0.006 }: Gla
     if (!hoverCapable) driftPointer(p, elapsed);
     dampedPtr.current.x = damp(dampedPtr.current.x, p.inside ? p.tx : 0.5, 12, dt);
     dampedPtr.current.y = damp(dampedPtr.current.y, p.inside ? p.ty : 0.5, 12, dt);
-  }, shaderRunning);
+  }, pointerRunning);
 
   useShaderQuad(canvasRef, {
     fragment: FRAGMENT,
