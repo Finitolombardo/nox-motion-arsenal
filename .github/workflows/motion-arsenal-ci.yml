@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: motion-arsenal-ci-${{ github.event.pull_request.number || github.ref }}
@@ -44,18 +44,25 @@ jobs:
       - name: Generate audited lockfile repair
         run: npm audit fix --package-lock-only
 
+      - name: Commit exact repaired lockfile
+        shell: powershell
+        run: |
+          $changes = git status --porcelain -- package-lock.json
+          if ($changes) {
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "fix: repair audited npm lockfile"
+            git push origin HEAD:${{ github.head_ref }}
+          } else {
+            Write-Host "No lockfile repair needed."
+          }
+
       - name: Reinstall repaired dependencies
         run: npm ci
 
       - name: Audit dependencies
         run: npm audit --audit-level=high
-
-      - name: Upload repaired lockfile
-        uses: actions/upload-artifact@v4
-        with:
-          name: repaired-package-lock
-          path: package-lock.json
-          if-no-files-found: error
 
       - name: Lint and typecheck
         run: npm run lint
