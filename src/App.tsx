@@ -1,9 +1,33 @@
 import React from 'react';
 import { ArsenalShell } from './motion-arsenal/components/ArsenalShell';
+import { CapabilityShell } from './motion-arsenal/components/CapabilityShell';
 import { EFFECTS_CATALOG } from './motion-arsenal/data/effectsCatalog';
 import NoxCosmicDepthField from './motion-arsenal/effects/backgrounds/NoxCosmicDepthField';
 
+function useArsenalMode(): ['motion' | 'capabilities', (mode: 'motion' | 'capabilities') => void] {
+  const getMode = () => {
+    const route = window.location.hash.slice(1);
+    return route.startsWith('/capabilit') ? 'capabilities' as const : 'motion' as const;
+  };
+
+  const [mode, setMode] = React.useState<'motion' | 'capabilities'>(getMode);
+
+  React.useEffect(() => {
+    const onHash = () => setMode(getMode());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const navigate = (next: 'motion' | 'capabilities') => {
+    window.location.hash = next === 'capabilities' ? '/capabilities' : '/';
+  };
+
+  return [mode, navigate];
+}
+
 export default function App() {
+  const [mode, navigateMode] = useArsenalMode();
+
   return (
     <div className="arsenal-app">
       <div className="arsenal-cosmic-background" aria-hidden="true">
@@ -56,7 +80,15 @@ export default function App() {
           seed={20260731}
         />
       </div>
-      <div className="arsenal-app-content"><ArsenalShell catalog={EFFECTS_CATALOG} /></div>
+
+      <div className="arsenal-app-content">
+        {mode === 'capabilities' ? <CapabilityShell /> : <ArsenalShell catalog={EFFECTS_CATALOG} />}
+      </div>
+
+      <nav className="arsenal-mode-nav" aria-label="Arsenal mode">
+        <button className={mode === 'motion' ? 'active' : ''} onClick={() => navigateMode('motion')}>MOTION ARSENAL</button>
+        <button className={mode === 'capabilities' ? 'active' : ''} onClick={() => navigateMode('capabilities')}>CAPABILITY ARSENAL</button>
+      </nav>
     </div>
   );
 }
