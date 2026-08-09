@@ -36,31 +36,50 @@ const entries = [
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-export const CONCEPTS_CATALOG: EffectEntry[] = entries.map(([name, description, technicalBasis], tone) => ({
-  meta: {
-    id: `concept-${slug(name)}`,
-    name: name.replace(/[^A-Za-z0-9]/g, ''),
-    displayName: name,
-    category: 'concepts',
-    sourceWebsite: 'nox-original',
-    sourceFiles: [`NOX-Arsenal_Neue-Effekte_2026-08-01-02.zip / Effekte/${name}.md`],
-    mode: 'nox-concept',
-    complexity: technicalBasis.includes('WebGL') || technicalBasis.includes('GSAP') ? 'high' : 'medium',
-    dependencies: [],
-    bestFor: ['Experimentelle Motion- und Interaktionsprototypen'],
-    performanceNotes: 'Interaktive Prototyp-Preview: Produktions-Performance noch nicht validiert.',
-    mobileNotes: 'Mobile-Verhalten vor Produktion separat verifizieren.',
-    reducedMotionNotes: 'Statische, vollständig lesbare Endansicht ist vorgesehen.',
-    description,
-    technicalBasis,
-    importPath: '@/motion-arsenal/effects/concepts',
-    usageJsx: `<${name.replace(/[^A-Za-z0-9]/g, '')} />`,
-    props: [],
-    updatedAt: '2026-08-02T10:09:00.000Z',
-    improvementStatus: 'needs-review',
-    improvementVersion: '0.1.0',
-    productionSafe: false,
-    status: 'experimental',
-  },
-  Component: () => <ConceptEffectPreview kind={slug(name)} name={name} tone={tone} />,
-}));
+const consolidatedInto: Partial<Record<(typeof entries)[number][0], string>> = {
+  'Magnetic Field Cards': 'cursor-magnetic-cta',
+};
+
+export const CONCEPTS_CATALOG: EffectEntry[] = entries.map(([name, description, technicalBasis], tone) => {
+  const canonicalEffect = consolidatedInto[name];
+
+  return {
+    meta: {
+      id: `concept-${slug(name)}`,
+      name: name.replace(/[^A-Za-z0-9]/g, ''),
+      displayName: name,
+      category: 'concepts',
+      sourceWebsite: 'nox-original',
+      sourceFiles: [`NOX-Arsenal_Neue-Effekte_2026-08-01-02.zip / Effekte/${name}.md`],
+      mode: 'nox-concept',
+      complexity: technicalBasis.includes('WebGL') || technicalBasis.includes('GSAP') ? 'high' : 'medium',
+      dependencies: [],
+      bestFor: ['Experimentelle Motion- und Interaktionsprototypen'],
+      performanceNotes: canonicalEffect
+        ? `Konzept konsolidiert in ${canonicalEffect}; keine zweite Runtime-Implementierung pflegen.`
+        : 'Interaktive Prototyp-Preview: Produktions-Performance noch nicht validiert.',
+      mobileNotes: canonicalEffect
+        ? `Mobile-/Touch-Verhalten wird ausschließlich im kanonischen Effekt ${canonicalEffect} gepflegt.`
+        : 'Mobile-Verhalten vor Produktion separat verifizieren.',
+      reducedMotionNotes: canonicalEffect
+        ? `Reduced-Motion-Verhalten wird ausschließlich im kanonischen Effekt ${canonicalEffect} gepflegt.`
+        : 'Statische, vollständig lesbare Endansicht ist vorgesehen.',
+      description: canonicalEffect
+        ? `${description} Als Dublette konsolidiert: der produktive kanonische Strang ist ${canonicalEffect}; dieses Konzept bleibt nur als Herkunftsnachweis bestehen.`
+        : description,
+      technicalBasis,
+      importPath: '@/motion-arsenal/effects/concepts',
+      usageJsx: `<${name.replace(/[^A-Za-z0-9]/g, '')} />`,
+      props: [],
+      updatedAt: canonicalEffect ? '2026-08-09T00:00:00.000Z' : '2026-08-02T10:09:00.000Z',
+      improvementStatus: canonicalEffect ? 'improved' : 'needs-review',
+      improvementVersion: canonicalEffect ? '0.1.1' : '0.1.0',
+      improvementChangelog: canonicalEffect
+        ? [`Consolidated into ${canonicalEffect}; do not promote as a second production effect.`]
+        : undefined,
+      productionSafe: false,
+      status: 'experimental',
+    },
+    Component: () => <ConceptEffectPreview kind={slug(name)} name={name} tone={tone} />,
+  };
+});
