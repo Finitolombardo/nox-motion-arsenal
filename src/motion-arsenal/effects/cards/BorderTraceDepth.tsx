@@ -1,23 +1,15 @@
 import { useRef, type CSSProperties } from 'react';
-import { damp, usePointer, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
+import { clamp, damp, useInView, usePointer, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
 import { NOX_COLORS } from '../../lib/motionPresets';
 import { useTouchMode } from './cardDemoUtils';
 
-// ---------------------------------------------------------------------------
-// BorderTraceDepth — border trace with real depth.
-// Not the 0815 border scan: three coupled layers driven by ONE angle state
-// (Active-Theory "one physics source drives everything" doctrine):
-//   1. running light head on the edge (rotating conic gradient masked to a ring)
-//   2. an OFFSET blurred glow copy of that ring floating BEHIND the card
-//   3. an inner reflex spot inside the card that tracks the light head.
-// Hover boosts speed + intensity (damped). Touch: sine-breathing auto boost.
-// ---------------------------------------------------------------------------
-
 export interface BorderTraceDepthProps {
-  speed?: number; // base rotations multiplier
-  color?: string; // trace color
-  thickness?: number; // ring thickness px
-  depthOffset?: number; // 0..2 how far the glow copy sits behind
+  speed?: number;
+  color?: string;
+  thickness?: number;
+  depthOffset?: number;
+  glowStrength?: number;
+  interactiveBoost?: number;
 }
 
 export function BorderTraceDepth({
@@ -25,26 +17,36 @@ export function BorderTraceDepth({
   color = NOX_COLORS.red,
   thickness = 2,
   depthOffset = 1,
+  glowStrength = 1,
+  interactiveBoost = 1,
 }: BorderTraceDepthProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const pointer = usePointer(rootRef);
   const reduced = usePrefersReducedMotion();
   const touch = useTouchMode();
+  const inView = useInView(rootRef);
 
-  const anim = useRef({ a: 0, boost: 0 });
+  const safeSpeed = clamp(Number.isFinite(speed) ? speed : 1, 0, 4);
+  const safeThickness = clamp(Number.isFinite(thickness) ? thickness : 2, 0.5, 8);
+  const safeDepth = clamp(Number.isFinite(depthOffset) ? depthOffset : 1, 0, 2.5);
+  const safeGlow = clamp(Number.isFinite(glowStrength) ? glowStrength : 1, 0, 2);
+  const safeBoost = clamp(Number.isFinite(interactiveBoost) ? interactiveBoost : 1, 0, 2);
+
+  const anim = useRef({ a: 40, boost: 0 });
 
   useRafLoop(
     (dt, t) => {
       const el = cardRef.current;
       if (!el) return;
+
       const p = pointer.current;
       const s = anim.current;
-      const targetBoost = touch ? (Math.sin(t * 0.9) + 1) / 2 : p.inside ? 1 : 0;
-      s.boost = damp(s.boost, targetBoost, 5, dt);
-      s.a = (s.a + dt * (55 + s.boost * 190) * speed) % 360;
-      // The bright head of the conic sits ~318deg into the gradient; convert
-      // that to a point on the border so the inner reflex can follow it.
+      const touchPulse = 0.22 + ((Math.sin(t * 0.72) + 1) / 2) * 0.18;
+      const targetBoost = touch ? touchPulse : p.inside ? safeBoost : 0;
+      s.boost = damp(s.boost, targetBoost, 5.5, dt);
+      s.a = (s.a + dt * (48 + s.boost * 170) * safeSpeed) % 360;
+
       const headRad = ((s.a + 318) * Math.PI) / 180;
       const lx = 50 + Math.sin(headRad) * 47;
       const ly = 50 - Math.cos(headRad) * 44;
@@ -53,19 +55,18 @@ export function BorderTraceDepth({
       el.style.setProperty('--btd-ly', `${ly.toFixed(2)}%`);
       el.style.setProperty('--btd-boost', s.boost.toFixed(3));
     },
-    !reduced,
+    inView && !reduced && safeSpeed > 0,
   );
 
-  // Reduced motion: frozen trace head top-right + steady glow.
   const cardVars = {
     '--btd-a': '40deg',
     '--btd-lx': '82%',
     '--btd-ly': '12%',
-    '--btd-boost': reduced ? '0.65' : '0',
+    '--btd-boost': reduced ? '0.55' : '0',
   } as CSSProperties;
 
   const ringMask: CSSProperties = {
-    padding: thickness,
+    padding: safeThickness,
     WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
     WebkitMaskComposite: 'xor',
     mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -80,6 +81,7 @@ export function BorderTraceDepth({
   return (
     <div
       ref={rootRef}
+      aria-label="Border trace depth preview"
       style={{
         position: 'absolute',
         inset: 0,
@@ -87,6 +89,8 @@ export function BorderTraceDepth({
         background: 'radial-gradient(110% 100% at 50% 115%, #120e0f 0%, #0a0a0b 58%)',
         display: 'grid',
         placeItems: 'center',
+        touchAction: 'pan-y',
+        contain: 'layout paint style',
       }}
     >
       <div
@@ -94,26 +98,28 @@ export function BorderTraceDepth({
         style={{
           ...cardVars,
           position: 'relative',
-          width: 'min(360px, 78%)',
+          width: 'min(360px, 82%)',
           aspectRatio: '1.62',
-          maxHeight: '80%',
+          maxHeight: '82%',
+          transform: 'translateZ(0)',
         }}
       >
-        {/* Layer 2: offset blurred glow copy BEHIND the card (the depth) */}
         <div
+          aria-hidden
           style={{
             position: 'absolute',
             inset: -2,
             borderRadius: 18,
-            transform: `translate(${(9 * depthOffset).toFixed(1)}px, ${(15 * depthOffset).toFixed(1)}px)`,
+            transform: `translate(${(9 * safeDepth).toFixed(1)}px, ${(15 * safeDepth).toFixed(1)}px) translateZ(0)`,
             background: traceGradient,
             ...ringMask,
-            padding: thickness + 3,
-            filter: 'blur(14px)',
-            opacity: `calc(0.32 + var(--btd-boost) * 0.5)`,
+            padding: safeThickness + 3,
+            filter: `blur(${(10 + safeGlow * 5).toFixed(1)}px)`,
+            opacity: `calc(${(0.2 + safeGlow * 0.18).toFixed(2)} + var(--btd-boost) * ${(0.28 + safeGlow * 0.22).toFixed(2)})`,
+            pointerEvents: 'none',
           }}
         />
-        {/* Card body */}
+
         <div
           style={{
             position: 'absolute',
@@ -121,22 +127,22 @@ export function BorderTraceDepth({
             borderRadius: 16,
             background: `linear-gradient(168deg, #17171b 0%, ${NOX_COLORS.bgPanel} 55%, #0d0d10 100%)`,
             border: '1px solid rgba(255,255,255,0.07)',
-            boxShadow: '0 18px 44px rgba(0,0,0,0.5)',
+            boxShadow: '0 18px 44px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.04)',
             overflow: 'hidden',
           }}
         >
-          {/* Layer 3: inner reflex following the light head */}
           <div
+            aria-hidden
             style={{
               position: 'absolute',
               inset: 0,
-              background: `radial-gradient(190px circle at var(--btd-lx) var(--btd-ly), ${color}55 0%, ${color}18 34%, transparent 62%)`,
+              background: `radial-gradient(190px circle at var(--btd-lx) var(--btd-ly), ${color}66 0%, ${color}1c 34%, transparent 62%)`,
               mixBlendMode: 'screen',
-              opacity: `calc(0.35 + var(--btd-boost) * 0.65)`,
+              opacity: `calc(0.28 + var(--btd-boost) * ${(0.42 + safeGlow * 0.2).toFixed(2)})`,
               pointerEvents: 'none',
             }}
           />
-          {/* NOX skill panel demo content */}
+
           <div
             style={{
               position: 'absolute',
@@ -149,11 +155,11 @@ export function BorderTraceDepth({
               color: NOX_COLORS.text,
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 9, letterSpacing: '0.34em', color: NOX_COLORS.textDim }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+              <span style={{ fontSize: 9, letterSpacing: '0.28em', color: NOX_COLORS.textDim }}>
                 SKILL // SCAN PROTOCOL
               </span>
-              <span style={{ fontSize: 9, letterSpacing: '0.2em', color }}>TRACE.9</span>
+              <span style={{ fontSize: 9, letterSpacing: '0.18em', color, whiteSpace: 'nowrap' }}>TRACE.9</span>
             </div>
             <div style={{ fontSize: 'clamp(18px, 3.6vw, 26px)', fontWeight: 740, letterSpacing: '0.03em' }}>
               EDGE RUNNER
@@ -164,14 +170,7 @@ export function BorderTraceDepth({
                 ['FORGE', 0.56],
               ].map(([label, v]) => (
                 <div key={label as string}>
-                  <div
-                    style={{
-                      fontSize: 8,
-                      letterSpacing: '0.3em',
-                      color: NOX_COLORS.textDim,
-                      marginBottom: 3,
-                    }}
-                  >
+                  <div style={{ fontSize: 8, letterSpacing: '0.3em', color: NOX_COLORS.textDim, marginBottom: 3 }}>
                     {label}
                   </div>
                   <div style={{ height: 3, borderRadius: 2, background: 'rgba(255,255,255,0.08)' }}>
@@ -190,15 +189,16 @@ export function BorderTraceDepth({
             </div>
           </div>
         </div>
-        {/* Layer 1: the crisp running light on the edge (on top) */}
+
         <div
+          aria-hidden
           style={{
             position: 'absolute',
             inset: 0,
             borderRadius: 16,
             background: traceGradient,
             ...ringMask,
-            opacity: `calc(0.55 + var(--btd-boost) * 0.45)`,
+            opacity: `calc(0.5 + var(--btd-boost) * 0.5)`,
             pointerEvents: 'none',
           }}
         />
