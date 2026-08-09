@@ -21,9 +21,12 @@ for (const token of [
   assert.ok(source.includes(token), `glass lens optical contract missing: ${token}`);
 }
 
-// Runtime invariants: no time-driven desktop idle animation, offscreen pause, bounded DPR and touch scrolling.
+// Runtime invariants: idle/offscreen pause, live prop refresh, bounded DPR and touch scrolling.
 assert.ok(source.includes("useInView(rootRef, '80px')"), 'glass lens must pause offscreen');
-assert.ok(source.includes('!hoverCapable || active'), 'desktop shader must run only during interaction');
+assert.ok(source.includes('const pointerRunning = !reduced && inView && (!hoverCapable || active)'), 'pointer physics must run only during meaningful interaction');
+assert.ok(source.includes('const [configRefresh, setConfigRefresh] = useState(false)'), 'paused lens must support a bounded config refresh');
+assert.ok(source.includes('window.setTimeout(() => setConfigRefresh(false), 96)'), 'config refresh must return promptly to idle');
+assert.ok(source.includes('const shaderRunning = inView && (pointerRunning || configRefresh)'), 'shader runtime gate must include bounded prop refresh');
 assert.ok(source.includes('running: shaderRunning'), 'shader runtime gate missing');
 assert.ok(source.includes('dprCap: 1.25'), 'glass lens DPR budget missing');
 assert.ok(source.includes("touchAction: 'pan-y'"), 'glass lens must preserve vertical touch scrolling');
