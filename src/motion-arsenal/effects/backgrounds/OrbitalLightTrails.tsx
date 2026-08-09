@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useCanvas2D } from '../../lib/canvasUtils';
 import { clamp, damp, seededRandom, useInView, usePrefersReducedMotion } from '../../lib/animationUtils';
 
@@ -117,6 +117,34 @@ export function OrbitalLightTrails({
   const safeSpeed = clamp(speed, 0.15, 3);
   const safeTrailLength = Math.round(clamp(trailLength, 12, 120));
 
+  // The effect itself stays pointer-transparent so it can safely sit behind
+  // real buttons/content. Pointer parallax is sampled passively from window.
+  useEffect(() => {
+    if (reduced) {
+      pointer.current.active = false;
+      return;
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') {
+        pointer.current.active = false;
+        return;
+      }
+      const host = hostRef.current;
+      if (!host) return;
+      const rect = host.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+      pointer.current.active = inside;
+      if (!inside) return;
+      pointer.current.tx = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+      pointer.current.ty = clamp((event.clientY - rect.top) / rect.height, 0, 1);
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onPointerMove);
+  }, [reduced]);
+
   useCanvas2D(
     canvasRef,
     (ctx, size, dt, elapsed) => {
@@ -219,23 +247,12 @@ export function OrbitalLightTrails({
   return (
     <div
       ref={hostRef}
-      onPointerMove={(event) => {
-        if (reduced || event.pointerType === 'touch') return;
-        const rect = event.currentTarget.getBoundingClientRect();
-        if (rect.width <= 0 || rect.height <= 0) return;
-        pointer.current.tx = clamp((event.clientX - rect.left) / rect.width, 0, 1);
-        pointer.current.ty = clamp((event.clientY - rect.top) / rect.height, 0, 1);
-        pointer.current.active = true;
-      }}
-      onPointerLeave={() => {
-        pointer.current.active = false;
-      }}
       aria-hidden="true"
       style={{
         position: 'absolute',
         inset: 0,
         overflow: 'hidden',
-        pointerEvents: 'auto',
+        pointerEvents: 'none',
         background:
           'radial-gradient(circle at 50% 115%, rgba(74, 26, 12, 0.34), transparent 54%), radial-gradient(circle at 50% 42%, #111116 0%, #09090c 58%, #060608 100%)',
       }}
