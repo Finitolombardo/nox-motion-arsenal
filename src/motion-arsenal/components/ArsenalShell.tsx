@@ -217,7 +217,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     <div className="shell">
       <aside className="sidebar">
         <div className="arsenal-header">
-          <h1 style={{ fontSize: 16 }}>NOX MOTION<br />ARSENAL <span style={{ color: 'var(--red)' }}>v2</span></h1>
+          <h1 style={{ fontSize: 16 }}>AVISTO MOTION<br />ARSENAL <span style={{ color: 'var(--red)' }}>v2</span></h1>
         </div>
         <p className="sub" style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.14em', margin: '4px 0 0' }}>
           INTERNAL EFFECT LIBRARY

@@ -244,4 +244,72 @@ export const HERO_CATALOG: EffectEntry[] = [
     },
     Component: lazy(() => import('./HeroObjectFloat')),
   },
+  {
+    meta: {
+      id: 'hero-pointer-text-depth',
+      name: 'Pointer Text Depth',
+      category: 'hero',
+      sourceWebsite: 'nox-original',
+      sourceFiles: [
+        'PointerTextDepth.tsx — damped pointer tilt (Lusion-Lambda 5.5–20), per-letter deterministic depth factors via seededRandom, CSS-var driven rotateX/rotateY/translateZ',
+        'Referenz-Mechanik: „3D text effect – mousemove" (Dennis Garrn, CodePen, via codemyui.com/3d-text-animation-on-hover-2/) — eigene NOX-Variante',
+      ],
+      mode: 'nox-adapted',
+      complexity: 'medium',
+      dependencies: [],
+      bestFor: ['Hero-Headlines mit Tiefen-Interaktion', 'Statement-Typo über dem Fold', 'Produkt-/Marken-Wordmarks mit Pointer-Parallax'],
+      performanceNotes:
+        'Ein rAF-Loop (nur bei inView && !reduced) schreibt 3 CSS-Vars aufs Root; die per-Letter-Transforms werden vom Compositor verarbeitet (will-change: transform). Deterministische Faktoren via seeded PRNG, keine Allokationen pro Frame.',
+      mobileNotes: 'Ohne Pointer bleiben die Buchstaben in Neutralposition — Entrance (Blur-Rise-Stagger) und Gold-Sheen laufen trotzdem; kein Touch-Konflikt, da keine Klick-Handler.',
+      reducedMotionNotes: 'Kein rAF, keine Entrance-Animation, keine 3D-Transforms: Die Typo steht sofort flach, voll deckend und scharf im Endzustand; Media-Query deaktiviert zusätzlich Sheen/Animationen.',
+      description:
+        'Große Display-Typo mit echter 3D-Tiefe: Jeder Buchstabe hat einen deterministischen Tiefen-Faktor und kippt/schwebt mit gedämpftem Pointer-Follow (rotateX/rotateY/translateZ per CSS-Vars). Gold-Gradient-Füllung mit langsamem Sheen-Drift und Blur-Rise-Entrance-Stagger.',
+      importPath: '@/motion-arsenal/effects/hero/PointerTextDepth',
+      usageJsx: '<PointerTextDepth text="NOX FORGE" depth={1} speed={1} glow seed={7} />',
+      props: [
+        { key: 'text', label: 'Text', type: 'text', default: 'NOX FORGE' },
+        { key: 'depth', label: 'Depth', type: 'range', default: 1, min: 0, max: 2, step: 0.1 },
+        { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.1, max: 3, step: 0.1 },
+        { key: 'color', label: 'Gold', type: 'color', default: '#d4a24a' },
+        { key: 'glow', label: 'Glow', type: 'boolean', default: true },
+        { key: 'seed', label: 'Seed', type: 'range', default: 7, min: 1, max: 20, step: 1 },
+      ],
+      productionSafe: true,
+    },
+    Component: lazy(() => import('./PointerTextDepth')),
+  },
+  {
+    meta: {
+      id: 'hero-angled-gold-strike',
+      name: 'Angled Gold Strikethrough',
+      category: 'hero',
+      sourceWebsite: 'nox-original',
+      sourceFiles: [
+        'AngledGoldStrike.tsx — pure CSS transition/scaleX-Keyframes, Strike zeichnet sich schräg über die Zeile (translateY-Sweep + scaleX), Multi-Line-Stagger deterministisch pro Index',
+        'Referenz-Mechanik: „Bottom-to-Top Angled Text Strikethrough Effect in Pure CSS" (codemyui.com/bottom-to-top-angled-text-strikethrough-effect-in-pure-css/) — eigene NOX-Variante',
+      ],
+      mode: 'nox-adapted',
+      complexity: 'low',
+      dependencies: [],
+      bestFor: ['Ausgehakte/veraltete Preise oder Claims', 'Hero-Subline-Markierungen', 'Editoriale Akzentzeilen mit Gold-Signatur'],
+      performanceNotes:
+        'Komplett CSS-only: transition/scaleX-Keyframes auf transform — Compositor-freundlich, kein rAF, kein JS pro Frame. Multi-Line-Stagger nur über animation-delay/transition-delay.',
+      mobileNotes: 'Hover greift per :hover und :focus-visible; Touch-Nutzer steuern den Strike über die struck-Prop (controlled) oder sehen den Auto-Sweep (trigger="auto").',
+      reducedMotionNotes: 'Keine Transition, keine Sweep-Animation: Der Strike ist nur sichtbar, wenn er kontrolliert gestrichen ist (struck-Prop) — als statische Gold-Linie; Media-Query deaktiviert animation/transition zusätzlich.',
+      description:
+        'Schräger Gold-Durchstrich (Winkel -20..20°, Gold-Gradient mit Glow-Kante), der bei Hover/Fokus oder als Auto-Sweep-Loop über die Zeile wischt — bottom-to-top-Sweep mit scaleX-Draw, Multi-Line-Stagger und kontrollierbarer struck-Prop für dauerhaft gestrichene Zustände.',
+      importPath: '@/motion-arsenal/effects/hero/AngledGoldStrike',
+      usageJsx: '<AngledGoldStrike lines={["NOX MOTION ARSENAL", "SIGNAL OVER NOISE"]} angle={-7} trigger="hover" />',
+      props: [
+        { key: 'color', label: 'Gold', type: 'color', default: '#d4a24a' },
+        { key: 'angle', label: 'Angle (°)', type: 'range', default: -7, min: -20, max: 20, step: 1 },
+        { key: 'thickness', label: 'Thickness (px)', type: 'range', default: 3, min: 1, max: 8, step: 1 },
+        { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.1, max: 3, step: 0.1 },
+        { key: 'trigger', label: 'Trigger', type: 'select', default: 'hover', options: ['hover', 'auto'] },
+        { key: 'struck', label: 'Struck', type: 'boolean', default: false },
+      ],
+      productionSafe: true,
+    },
+    Component: lazy(() => import('./AngledGoldStrike')),
+  },
 ];

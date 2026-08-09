@@ -9,6 +9,12 @@ import { AtmosLayer, ICONS, det } from './skilltreeShared';
 
 export interface LockedPathShadowProps {
   veilStrength?: number; // 0..1
+  // Skilltree-Erweiterungen. Defaults bilden das bisherige Verhalten exakt ab.
+  scanDirection?: 'left-to-right' | 'right-to-left' | 'top-to-bottom'; // Laufrichtung des Scanstrahls
+  scanSpeed?: number; // 0.3..2.5 — Tempofaktor des Scans
+  nodeShape?: 'circle' | 'hex' | 'diamond'; // Umriss der gesperrten Knoten
+  shadowColor?: string; // Grundton von Strahl, Staub und Sperrpfaden
+  dustCount?: number; // 0..64 — Dichte des schwebenden Staubs
 }
 
 type CssVars = React.CSSProperties & Record<`--${string}`, string | number>;
@@ -57,9 +63,18 @@ const CSS = String.raw`
 .lps-packet { fill:#fff0ad; filter:drop-shadow(0 0 5px #d4af37) drop-shadow(0 0 13px rgba(212,175,55,.75)); }
 .lps-scan-beam { position:absolute; top:-8%; bottom:-8%; left:42%; z-index:11; width:1px; pointer-events:none; opacity:0; background:linear-gradient(180deg,transparent,rgba(203,151,242,.78) 18%,#fff 49%,rgba(203,151,242,.7) 77%,transparent); box-shadow:0 0 18px rgba(176,90,235,.75),0 0 55px rgba(107,41,154,.4); }
 .lps-scan-beam::after { content:''; position:absolute; top:0; bottom:0; left:-90px; width:180px; background:linear-gradient(90deg,transparent,rgba(151,74,204,.11),transparent); }
-.lps-stage.is-scanning .lps-scan-beam { opacity:1; animation:lps-scan 3.6s cubic-bezier(.55,0,.2,1) infinite; }
+.lps-stage.is-scanning .lps-scan-beam { opacity:1; animation:lps-scan var(--lps-scan-dur,3.6s) cubic-bezier(.55,0,.2,1) infinite; }
 @keyframes lps-scan { 0%{transform:translateX(0);opacity:0}9%{opacity:.9}78%{opacity:.75}100%{transform:translateX(54vw);opacity:0} }
-.lps-dust { position:absolute; z-index:4; width:var(--dust-size); height:var(--dust-size); left:var(--dust-x); top:var(--dust-y); border-radius:50%; pointer-events:none; background:rgba(196,147,230,.55); opacity:var(--dust-o); box-shadow:0 0 7px rgba(172,96,226,.45); animation:lps-dust-drift var(--dust-d) ease-in-out var(--dust-delay) infinite alternate; }
+/* Laufrichtung: eigene Keyframes statt Variable, weil Transforms in
+   Keyframe-Schritten nicht per CSS-Variable umkehrbar sind. */
+.lps-stage.scan-rtl .lps-scan-beam { left:auto; right:42%; }
+.lps-stage.scan-rtl.is-scanning .lps-scan-beam { animation-name:lps-scan-rtl; }
+@keyframes lps-scan-rtl { 0%{transform:translateX(0);opacity:0}9%{opacity:.9}78%{opacity:.75}100%{transform:translateX(-54vw);opacity:0} }
+.lps-stage.scan-ttb .lps-scan-beam { top:0; bottom:auto; left:-8%; right:-8%; width:auto; height:1px; background:linear-gradient(90deg,transparent,rgba(203,151,242,.78) 18%,#fff 49%,rgba(203,151,242,.7) 77%,transparent); }
+.lps-stage.scan-ttb .lps-scan-beam::after { top:-90px; bottom:auto; left:0; right:0; width:auto; height:180px; background:linear-gradient(180deg,transparent,rgba(151,74,204,.11),transparent); }
+.lps-stage.scan-ttb.is-scanning .lps-scan-beam { animation-name:lps-scan-ttb; }
+@keyframes lps-scan-ttb { 0%{transform:translateY(0);opacity:0}9%{opacity:.9}78%{opacity:.75}100%{transform:translateY(46vh);opacity:0} }
+.lps-dust { position:absolute; z-index:4; width:var(--dust-size); height:var(--dust-size); left:var(--dust-x); top:var(--dust-y); border-radius:50%; pointer-events:none; background:color-mix(in srgb, var(--lps-shadow,#cb97f2) 78%, transparent); opacity:var(--dust-o); box-shadow:0 0 7px color-mix(in srgb, var(--lps-shadow,#cb97f2) 52%, transparent); animation:lps-dust-drift var(--dust-d) ease-in-out var(--dust-delay) infinite alternate; }
 @keyframes lps-dust-drift { to{transform:translate3d(var(--dust-dx),var(--dust-dy),0) scale(1.7);opacity:.08} }
 .lps-active-node,.lps-locked-node { position:absolute; z-index:15; transform:translate(-50%,-50%); }
 .lps-active-node { left:40%; top:49%; width:clamp(60px,9vw,92px); height:clamp(60px,9vw,92px); display:grid; place-items:center; border-radius:50%; border:1px solid rgba(212,175,55,.82); color:#ffeaa7; background:radial-gradient(circle at 36% 32%,rgba(255,246,190,.2),transparent 28%),radial-gradient(circle,rgba(102,71,8,.42),rgba(12,10,7,.96) 68%); box-shadow:0 0 22px rgba(212,175,55,.32),inset 0 0 22px rgba(212,175,55,.12); animation:lps-core-breathe 2.8s ease-in-out infinite; }
@@ -73,7 +88,7 @@ const CSS = String.raw`
 .lps-active-copy { position:absolute; top:calc(100% + 13px); left:50%; width:150px; transform:translateX(-50%); text-align:center; pointer-events:none; }
 .lps-active-copy strong,.lps-node-copy strong { display:block; font-size:9px; letter-spacing:.16em; }
 .lps-active-copy span,.lps-node-copy span { display:block; margin-top:3px; color:rgba(255,255,255,.28); font-size:7px; letter-spacing:.13em; }
-.lps-locked-node { left:var(--node-x); top:var(--node-y); width:var(--node-size); height:var(--node-size); padding:0; border:1px solid rgba(177,140,201,.17); border-radius:50%; color:rgba(206,187,220,.45); background:radial-gradient(circle at 34% 30%,rgba(180,132,212,.08),transparent 32%),radial-gradient(circle,rgba(19,14,23,.9),rgba(4,4,6,.98) 70%); box-shadow:inset 0 0 17px rgba(0,0,0,.9),0 0 0 7px rgba(115,61,151,.02); cursor:crosshair; opacity:.62; filter:saturate(.48); transition:opacity .32s ease,color .32s ease,border-color .32s ease,box-shadow .32s ease,filter .32s ease,transform .32s cubic-bezier(.16,1,.3,1); }
+.lps-locked-node { left:var(--node-x); top:var(--node-y); width:var(--node-size); height:var(--node-size); padding:0; border:1px solid rgba(177,140,201,.17); border-radius:var(--lps-node-radius,50%); clip-path:var(--lps-node-clip,none); color:rgba(206,187,220,.45); background:radial-gradient(circle at 34% 30%,rgba(180,132,212,.08),transparent 32%),radial-gradient(circle,rgba(19,14,23,.9),rgba(4,4,6,.98) 70%); box-shadow:inset 0 0 17px rgba(0,0,0,.9),0 0 0 7px rgba(115,61,151,.02); cursor:crosshair; opacity:.62; filter:saturate(.48); transition:opacity .32s ease,color .32s ease,border-color .32s ease,box-shadow .32s ease,filter .32s ease,transform .32s cubic-bezier(.16,1,.3,1); }
 .lps-locked-node::before { content:''; position:absolute; inset:-8px; border-radius:inherit; border:1px dashed rgba(184,133,218,.14); animation:lps-spin 26s linear infinite reverse; }
 .lps-locked-node::after { content:''; position:absolute; inset:19%; border-radius:inherit; background:linear-gradient(135deg,transparent 44%,rgba(208,165,237,.18) 48%,rgba(208,165,237,.18) 52%,transparent 56%); transform:rotate(-11deg); }
 .lps-locked-node:hover,.lps-locked-node:focus-visible,.lps-locked-node.is-selected,.lps-stage.is-scanning .lps-locked-node { opacity:1; color:#d8b8eb; filter:saturate(1); border-color:rgba(197,137,235,.65); box-shadow:inset 0 0 20px rgba(63,22,88,.9),0 0 25px rgba(152,67,205,.32),0 0 0 7px rgba(115,61,151,.06); transform:translate(-50%,-50%) scale(1.08); }
@@ -104,14 +119,22 @@ const CSS = String.raw`
 @media (prefers-reduced-motion:reduce) { .lps-noise,.lps-path-active,.lps-path-locked,.lps-scan-beam,.lps-dust,.lps-active-node,.lps-active-node::before,.lps-active-node::after,.lps-locked-node,.lps-locked-node::before,.lps-panel-rule::after{animation:none!important}.lps-stage *,.lps-stage::after{transition-duration:.01ms!important} }
 `;
 
-export function LockedPathShadow({ veilStrength = 0.55 }: LockedPathShadowProps) {
+export function LockedPathShadow({
+  veilStrength = 0.55,
+  scanDirection = 'left-to-right',
+  scanSpeed = 1,
+  nodeShape = 'circle',
+  shadowColor = '#cb97f2',
+  dustCount = 32,
+}: LockedPathShadowProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const [scanning, setScanning] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const veil = Math.max(0, Math.min(1, veilStrength));
   const selected = LOCKED_NODES.find((node) => node.id === selectedId) ?? null;
+  const dustTotal = Math.max(0, Math.min(64, Math.round(dustCount)));
 
-  const dust = useMemo(() => Array.from({ length: 32 }, (_, index) => ({
+  const dust = useMemo(() => Array.from({ length: dustTotal }, (_, index) => ({
     x: 43 + det(index, 31) * 56,
     y: det(index, 32) * 100,
     size: 1 + det(index, 33) * 2.6,
@@ -120,7 +143,7 @@ export function LockedPathShadow({ veilStrength = 0.55 }: LockedPathShadowProps)
     delay: det(index, 36) * -8,
     dx: (det(index, 37) - 0.5) * 44,
     dy: (det(index, 38) - 0.5) * 64,
-  })), []);
+  })), [dustTotal]);
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -130,10 +153,27 @@ export function LockedPathShadow({ veilStrength = 0.55 }: LockedPathShadowProps)
     event.currentTarget.style.setProperty('--lps-y', `${Math.max(0, Math.min(100, y))}%`);
   };
 
-  const stageStyle: CssVars = { '--lps-veil': veil, '--lps-x': '74%', '--lps-y': '50%' };
+  const SHAPES: Record<string, { radius: string; clip: string }> = {
+    circle: { radius: '50%', clip: 'none' },
+    hex: { radius: '12%', clip: 'polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%)' },
+    diamond: { radius: '10%', clip: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' },
+  };
+  const shape = SHAPES[nodeShape] ?? SHAPES.circle;
+  const scanClass =
+    scanDirection === 'right-to-left' ? 'scan-rtl' : scanDirection === 'top-to-bottom' ? 'scan-ttb' : '';
+
+  const stageStyle: CssVars = {
+    '--lps-veil': veil,
+    '--lps-x': '74%',
+    '--lps-y': '50%',
+    '--lps-scan-dur': `${(3.6 / Math.max(0.3, scanSpeed)).toFixed(2)}s`,
+    '--lps-node-radius': shape.radius,
+    '--lps-node-clip': shape.clip,
+    '--lps-shadow': shadowColor,
+  };
 
   return (
-    <div ref={stageRef} className={`lps-stage ${scanning ? 'is-scanning' : ''}`} style={stageStyle} onPointerMove={handlePointerMove} onPointerDown={handlePointerMove} onPointerLeave={(event) => { event.currentTarget.style.setProperty('--lps-x', '74%'); event.currentTarget.style.setProperty('--lps-y', '50%'); }}>
+    <div ref={stageRef} className={`lps-stage ${scanClass} ${scanning ? 'is-scanning' : ''}`} style={stageStyle} onPointerMove={handlePointerMove} onPointerDown={handlePointerMove} onPointerLeave={(event) => { event.currentTarget.style.setProperty('--lps-x', '74%'); event.currentTarget.style.setProperty('--lps-y', '50%'); }}>
       <style>{CSS}</style>
       <AtmosLayer particles={8} stars={14} />
       <div className="lps-noise" aria-hidden="true" />

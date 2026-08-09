@@ -17,12 +17,29 @@ import { NOX_COLORS } from '../../lib/motionPresets';
 export interface GlitchBurstProps {
   burstIntensity?: number; // 0..1 — slice displacement + split strength
   burstFrequency?: number; // 0.3..3 — average bursts per second
+  // Skilltree-Erweiterungen. Alle Defaults entsprechen exakt dem urspruenglichen
+  // Verhalten — der Effekt sieht ohne Zutun aus wie vorher.
+  tearDirection?: 'horizontal' | 'vertical' | 'both'; // Achse, entlang der der Riss laeuft
+  sliceShape?: 'band' | 'wedge' | 'block'; // Form der verschobenen Bruchstuecke
+  splitColorA?: string; // erste Kanaltrennung (klassisch Rot)
+  splitColorB?: string; // zweite Kanaltrennung (klassisch Cyan)
+  accentColor?: string; // Tag-Farbe im Log-Panel
+  scanline?: boolean; // rollende Bandzeile im Leerlauf
+  seed?: number; // deterministisches Rauschen
 }
 
 const BUF_W = 260;
 const BUF_H = 150;
 
-function paintLogPanel(ctx: CanvasRenderingContext2D, rnd: () => number) {
+// '#d4a24a' -> '212,162,74', damit die Alpha-Werte des Panels erhalten bleiben.
+function toRgbTriplet(hex: string, fallback: string) {
+  const match = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!match) return fallback;
+  const value = parseInt(match[1], 16);
+  return `${(value >> 16) & 255},${(value >> 8) & 255},${value & 255}`;
+}
+
+function paintLogPanel(ctx: CanvasRenderingContext2D, rnd: () => number, accent: string) {
   ctx.fillStyle = '#0a0a0b';
   ctx.fillRect(0, 0, BUF_W, BUF_H);
 
@@ -31,7 +48,7 @@ function paintLogPanel(ctx: CanvasRenderingContext2D, rnd: () => number) {
   for (let i = 0; i < 10; i++) {
     const y = 8 + i * 14;
     const tag = tags[Math.floor(rnd() * tags.length)];
-    ctx.fillStyle = 'rgba(212,162,74,0.85)';
+    ctx.fillStyle = `rgba(${accent},0.85)`;
     ctx.fillText(`[${tag}]`, 8, y);
     ctx.fillStyle = 'rgba(240,236,228,0.4)';
     const barW = 60 + rnd() * 140;
@@ -41,21 +58,35 @@ function paintLogPanel(ctx: CanvasRenderingContext2D, rnd: () => number) {
   ctx.strokeRect(4, 4, BUF_W - 8, BUF_H - 8);
 }
 
-export function GlitchBurst({ burstIntensity = 0.7, burstFrequency = 1.1 }: GlitchBurstProps) {
+export function GlitchBurst({
+  burstIntensity = 0.7,
+  burstFrequency = 1.1,
+  tearDirection = 'horizontal',
+  sliceShape = 'band',
+  splitColorA = '#ff3b3b',
+  splitColorB = '#39d0ff',
+  accentColor = '#d4a24a',
+  scanline = true,
+  seed = 19,
+}: GlitchBurstProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reduced = usePrefersReducedMotion();
   const srcCanvas = useRef<HTMLCanvasElement | null>(null);
   const nextBurst = useRef(0.6);
   const burstUntil = useRef(0);
-  const rnd = useRef(seededRandom(19));
+  const rnd = useRef(seededRandom(seed));
+
+  useEffect(() => {
+    rnd.current = seededRandom(seed);
+  }, [seed]);
 
   useEffect(() => {
     const c = document.createElement('canvas');
     c.width = BUF_W;
     c.height = BUF_H;
-    paintLogPanel(c.getContext('2d')!, seededRandom(4));
+    paintLogPanel(c.getContext('2d')!, seededRandom(4), toRgbTriplet(accentColor, '212,162,74'));
     srcCanvas.current = c;
-  }, []);
+  }, [accentColor]);
 
   useCanvas2D(
     canvasRef,
@@ -80,21 +111,59 @@ export function GlitchBurst({ burstIntensity = 0.7, burstFrequency = 1.1 }: Glit
       if (bursting) {
         const sliceCount = 4 + Math.floor(rnd.current() * 4);
         for (let i = 0; i < sliceCount; i++) {
+          // Reihenfolge der Zufallsziehungen bleibt unveraendert, damit das
+          // Bruchmuster in der Grundeinstellung dasselbe ist wie bisher.
           const bandH = (6 + rnd.current() * 18) * scaleY;
           const bandY = rnd.current() * size.h;
           const shift = (rnd.current() - 0.5) * 40 * burstIntensity;
+
+          const vertical =
+            tearDirection === 'vertical' || (tearDirection === 'both' && i % 2 === 1);
+          // Quer zur Rissachse gemessen: bei vertikalem Riss wird aus der
+          // Bandhoehe eine Spaltenbreite.
+          const across = vertical ? size.h : size.w;
+          const bandPos = vertical ? (bandY / size.h) * size.w : bandY;
+          const thickness = vertical ? (bandH / scaleY) * scaleX : bandH;
+
           ctx.save();
           ctx.beginPath();
-          ctx.rect(0, bandY, size.w, bandH);
+          if (sliceShape === 'wedge') {
+            // Keil: laeuft von voller Dicke auf null zu.
+            if (vertical) {
+              ctx.moveTo(bandPos, 0);
+              ctx.lineTo(bandPos + thickness, 0);
+              ctx.lineTo(bandPos, across);
+            } else {
+              ctx.moveTo(0, bandPos);
+              ctx.lineTo(across, bandPos);
+              ctx.lineTo(0, bandPos + thickness);
+            }
+            ctx.closePath();
+          } else if (sliceShape === 'block') {
+            // Block: kurzes Bruchstueck statt durchgehender Riss.
+            const start = ((i * 137) % 100) / 100;
+            const length = across * 0.45;
+            if (vertical) ctx.rect(bandPos, start * across * 0.55, thickness, length);
+            else ctx.rect(start * across * 0.55, bandPos, length, thickness);
+          } else if (vertical) {
+            ctx.rect(bandPos, 0, thickness, across);
+          } else {
+            ctx.rect(0, bandPos, across, thickness);
+          }
           ctx.clip();
-          ctx.drawImage(src, 0, 0, BUF_W, BUF_H, shift, 0, size.w, size.h);
+
+          const dx = vertical ? 0 : shift;
+          const dy = vertical ? shift : 0;
+          ctx.drawImage(src, 0, 0, BUF_W, BUF_H, dx, dy, size.w, size.h);
 
           ctx.globalCompositeOperation = 'lighter';
           ctx.globalAlpha = 0.35 * burstIntensity;
-          ctx.fillStyle = '#ff3b3b';
-          ctx.fillRect(shift - 3, bandY, size.w, bandH);
-          ctx.fillStyle = '#39d0ff';
-          ctx.fillRect(shift + 3, bandY, size.w, bandH);
+          ctx.fillStyle = splitColorA;
+          if (vertical) ctx.fillRect(bandPos, dy - 3, thickness, across);
+          else ctx.fillRect(dx - 3, bandPos, across, thickness);
+          ctx.fillStyle = splitColorB;
+          if (vertical) ctx.fillRect(bandPos, dy + 3, thickness, across);
+          else ctx.fillRect(dx + 3, bandPos, across, thickness);
           ctx.globalAlpha = 1;
           ctx.globalCompositeOperation = 'source-over';
           ctx.restore();
@@ -106,9 +175,11 @@ export function GlitchBurst({ burstIntensity = 0.7, burstFrequency = 1.1 }: Glit
       }
 
       // Idle worn-tape flicker: faint rolling scanline + grain.
-      const lineY = ((elapsed * 40) % size.h);
-      ctx.fillStyle = 'rgba(255,255,255,0.03)';
-      ctx.fillRect(0, lineY, size.w, 1.5);
+      if (scanline) {
+        const lineY = ((elapsed * 40) % size.h);
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.fillRect(0, lineY, size.w, 1.5);
+      }
       if (Math.sin(elapsed * 37) > 0.985) {
         ctx.fillStyle = 'rgba(255,255,255,0.05)';
         ctx.fillRect(0, 0, size.w, size.h);

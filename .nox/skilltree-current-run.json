@@ -1,0 +1,69 @@
+{
+  "date": "2026-08-09",
+  "branch": "skilltree/2026-08-09",
+  "round": 1,
+  "remaining": 157,
+  "chosen": [
+    {
+      "id": "bg-holographic-mask-shader",
+      "displayName": "Holographic Mask Shader",
+      "category": "backgrounds",
+      "file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
+      "importPath": "@/motion-arsenal/effects/backgrounds/HolographicMaskShader",
+      "props": 0,
+      "propKeys": [],
+      "selects": [],
+      "colors": [],
+      "level": 0,
+      "runs": 0,
+      "description": "Exact scroll-driven Holographic Masks treatment from Christian Alder’s CodePen: while the document moves, the fixed rainbow gradient passes behind the sparrow mask through color-dodge compositing. Uses the author-hosted base and mask assets with the source attribution retained."
+    },
+    {
+      "id": "img2threejs-nox-orbital-station",
+      "displayName": "NoxOrbitalStation",
+      "category": "img2threejs",
+      "file": "src/motion-arsenal/effects/img2threejs/catalog.ts",
+      "importPath": "@/motion-arsenal/effects/img2threejs/NoxOrbitalStation",
+      "props": 0,
+      "propKeys": [],
+      "selects": [],
+      "colors": [],
+      "level": 0,
+      "runs": 0,
+      "description": "Aus einem einzelnen Referenzbild (NOX-Orbitalstation-Render) über die img2threejs-Skill rekonstruiert: Agent-Vision liest das Bild, Python-Scripts erzwingen eine echte Spec (Komponenten, Attachments, Materialien), daraus generiert eine deterministische Pipeline den Three.js-Code — kein ML-Mesh, kein Photogrammetrie-Blob. Aktuell Blockout-Pass: Silhouette und Hierarchie stimmen (Spine, Hub, X-Solar-Arme, Dish, Docking-Node), Materialien sind noch Platzhalter. \"DOWNLOAD .GLB\" exportiert die Szene als echte Datei."
+    },
+    {
+      "id": "skilltree-locked-path-shadow",
+      "displayName": "Locked Path Shadow",
+      "category": "forge-skilltree",
+      "file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/LockedPathShadow",
+      "props": 1,
+      "propKeys": [
+        "veilStrength"
+      ],
+      "selects": [],
+      "colors": [],
+      "level": 0,
+      "runs": 0,
+      "description": "Gesperrte Pfade liegen im Schatten: ein radialer Dunkelschleier legt sich über den gesperrten Ast, die Verbindungslinien dimmen auf 8% Weiß, die Nodes verlieren Farbe und Float. Der Kontrast erhellter Pfad ↔ toter Ast erzählt Progression ohne ein einziges Wort."
+    },
+    {
+      "id": "canvasui-glitch-burst",
+      "displayName": "GlitchBurst",
+      "category": "canvas-ui",
+      "file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/GlitchBurst",
+      "props": 2,
+      "propKeys": [
+        "burstIntensity",
+        "burstFrequency"
+      ],
+      "selects": [],
+      "colors": [],
+      "level": 0,
+      "runs": 0,
+      "description": "Kombiniert Canvas UIs \"Glitch\" (Broadcast-Tearing mit RGB-Split über die Fläche) und \"VHS\" (Scanline-/Grain-Idle) auf einem selbst gezeichneten NOX-Signal-Log-Panel: kurze, unregelmäßig getaktete Burst-Fenster reißen Slices seitlich auf, dazwischen läuft dezentes Tape-Flicker."
+    }
+  ]
+}

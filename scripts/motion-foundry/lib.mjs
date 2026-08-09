@@ -6,6 +6,10 @@ import { fileURLToPath } from "node:url"
 
 export const ROOT = path.resolve(fileURLToPath(new URL("../..", import.meta.url)))
 export const CONFIG_PATH = path.join(ROOT, ".nox", "motion-foundry.json")
+// Untracked per-checkout override. Lets a fork publish to its own GitHub repo
+// and Vercel project without editing (and later conflicting on) the shared
+// baseline config.
+export const LOCAL_CONFIG_PATH = path.join(ROOT, ".nox", "motion-foundry.local.json")
 
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".json"])
 const RESOLVABLE_EXTENSIONS = ["", ".tsx", ".ts", ".jsx", ".js", ".json"]
@@ -43,8 +47,28 @@ export async function writeJson(filePath, value) {
     await fsp.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8")
 }
 
+// Shallow merge, one level deep for the nested `vercel` and `publishGuard`
+// objects. Deliberately not a generic deep merge: the override should stay
+// readable as "these keys point somewhere else in this checkout".
+function mergeConfig(base, override) {
+    const merged = { ...base, ...override }
+    for (const key of ["vercel", "publishGuard"]) {
+        if (base?.[key] || override?.[key]) {
+            merged[key] = { ...(base?.[key] ?? {}), ...(override?.[key] ?? {}) }
+        }
+    }
+    return merged
+}
+
 export async function loadConfig() {
-    const config = await readJson(CONFIG_PATH)
+    let config = await readJson(CONFIG_PATH)
+    if (fs.existsSync(LOCAL_CONFIG_PATH)) {
+        const local = await readJson(LOCAL_CONFIG_PATH)
+        config = mergeConfig(config, local)
+        config.configSource = "baseline + .nox/motion-foundry.local.json"
+    } else {
+        config.configSource = "baseline"
+    }
     if (config?.schemaVersion !== "1.0.0") {
         throw new Error(`Unsupported Motion Foundry config version: ${config?.schemaVersion ?? "missing"}`)
     }
