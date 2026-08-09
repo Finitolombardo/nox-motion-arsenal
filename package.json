@@ -50,6 +50,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/three": "^0.178.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "playwright-core": "^1.61.1",
     "typescript": "~5.8.2",
     "vite": "^6.2.3"
