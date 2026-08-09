@@ -41,8 +41,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate audited lockfile repair
+        run: npm audit fix --package-lock-only
+
+      - name: Reinstall repaired dependencies
+        run: npm ci
+
       - name: Audit dependencies
         run: npm audit --audit-level=high
+
+      - name: Upload repaired lockfile
+        uses: actions/upload-artifact@v4
+        with:
+          name: repaired-package-lock
+          path: package-lock.json
+          if-no-files-found: error
 
       - name: Lint and typecheck
         run: npm run lint
