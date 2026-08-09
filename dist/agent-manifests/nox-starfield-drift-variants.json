@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "bg-nox-starfield-drift",
+  "component": "NoxStarfieldDrift",
+  "importPath": "@/motion-arsenal/effects/backgrounds/NoxStarfieldDrift",
+  "previewRoute": "/#/effect/bg-nox-starfield-drift",
+  "selectionRule": "Use section-warp between page sections, deep-drift behind readable content, and brand-gateway for hero or CTA portals. Bind progress to the host page scroll choreography when exact control is required.",
+  "directions": ["forward", "backward", "left", "right", "up", "down"],
+  "variants": [
+    {
+      "id": "deep-drift",
+      "reference": "motion:bg-nox-starfield-drift@deep-drift",
+      "bestFor": ["hero backgrounds", "long content sections", "text-safe cosmic atmosphere"],
+      "jsx": "<NoxStarfieldDrift variant=\"deep-drift\" direction=\"forward\" textSafety={0.72} />"
+    },
+    {
+      "id": "section-warp",
+      "reference": "motion:bg-nox-starfield-drift@section-warp",
+      "bestFor": ["scroll transitions", "horizontal section changes", "product-story handoffs"],
+      "jsx": "<NoxStarfieldDrift variant=\"section-warp\" direction=\"right\" scrollReactive streakStrength={0.8} transitionStrength={0.9} />"
+    },
+    {
+      "id": "brand-gateway",
+      "reference": "motion:bg-nox-starfield-drift@brand-gateway",
+      "bestFor": ["customer brand reveals", "premium CTA gateways", "launch sequences"],
+      "jsx": "<NoxStarfieldDrift variant=\"brand-gateway\" direction=\"left\" accentColor=\"#8b5cf6\" nebulaStrength={0.9} />"
+    }
+  ],
+  "integration": {
+    "controlledScroll": "Pass progress={0..1} from the host scroll timeline for deterministic section choreography.",
+    "automaticScroll": "Set scrollReactive to true and position the component absolute inside the transition section.",
+    "reverse": "Switch direction between left and right, or forward and backward."
+  }
+}

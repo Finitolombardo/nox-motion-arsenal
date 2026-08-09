@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "premium-data-stream-journey",
+  "component": "NoxDataStreamJourney",
+  "importPath": "@/motion-arsenal/effects/premium/NoxDataStreamJourney",
+  "previewRoute": "/#/effect/premium-data-stream-journey",
+  "selectionRule": "Select one stream geometry and one energy state. Disable internal switchers on production pages unless visitors should compare configurations.",
+  "energies": ["calm", "charged", "overdrive"],
+  "variants": [
+    {
+      "id": "revenue-river",
+      "reference": "motion:premium-data-stream-journey@revenue-river",
+      "bestFor": ["Global Sales OS", "lead pipeline", "conversion journey"],
+      "jsx": "<NoxDataStreamJourney variant=\"revenue-river\" energy=\"charged\" particleCount={110} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "agent-swarm-routing",
+      "reference": "motion:premium-data-stream-journey@agent-swarm-routing",
+      "bestFor": ["Project X", "agent orchestration", "tool routing"],
+      "jsx": "<NoxDataStreamJourney variant=\"agent-swarm-routing\" energy=\"overdrive\" particleCount={130} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "conversion-helix",
+      "reference": "motion:premium-data-stream-journey@conversion-helix",
+      "bestFor": ["high-ticket funnel", "trust journey", "revenue system"],
+      "jsx": "<NoxDataStreamJourney variant=\"conversion-helix\" energy=\"charged\" particleCount={120} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "signal-storm",
+      "reference": "motion:premium-data-stream-journey@signal-storm",
+      "bestFor": ["AI Growth Engine", "demand generation", "signal intelligence"],
+      "jsx": "<NoxDataStreamJourney variant=\"signal-storm\" energy=\"overdrive\" particleCount={150} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "quantum-tunnel",
+      "reference": "motion:premium-data-stream-journey@quantum-tunnel",
+      "bestFor": ["decision systems", "AI pipeline", "scale narrative"],
+      "jsx": "<NoxDataStreamJourney variant=\"quantum-tunnel\" energy=\"overdrive\" particleCount={140} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    }
+  ]
+}

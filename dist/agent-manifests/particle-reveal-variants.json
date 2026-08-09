@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "canvasui-particle-reveal",
+  "component": "ParticleReveal",
+  "importPath": "@/motion-arsenal/effects/canvas-ui/ParticleReveal",
+  "previewRoute": "/#/effect/canvasui-particle-reveal",
+  "selectionRule": "Select one stable variant and one interaction mode. Disable internal switchers on production pages unless visitors should compare styles.",
+  "modes": ["cursor", "sweep", "pulse", "hybrid"],
+  "variants": [
+    {
+      "id": "ghost-signal-assembly",
+      "reference": "motion:canvasui-particle-reveal@ghost-signal-assembly",
+      "bestFor": ["subtle hero wordmark", "AI intelligence reveal", "stealth interface"],
+      "jsx": "<ParticleReveal variant=\"ghost-signal-assembly\" mode=\"hybrid\" showVariantSwitcher={false} showModeSwitcher={false} />"
+    },
+    {
+      "id": "ember-forge-materialize",
+      "reference": "motion:canvasui-particle-reveal@ember-forge-materialize",
+      "bestFor": ["NOX Forge", "product activation", "high-energy hero"],
+      "jsx": "<ParticleReveal variant=\"ember-forge-materialize\" mode=\"cursor\" showVariantSwitcher={false} showModeSwitcher={false} />"
+    },
+    {
+      "id": "plasma-command-interface",
+      "reference": "motion:canvasui-particle-reveal@plasma-command-interface",
+      "bestFor": ["Project X", "agent command center", "routing visualization"],
+      "jsx": "<ParticleReveal variant=\"plasma-command-interface\" mode=\"hybrid\" showVariantSwitcher={false} showModeSwitcher={false} />"
+    },
+    {
+      "id": "gold-product-blueprint",
+      "reference": "motion:canvasui-particle-reveal@gold-product-blueprint",
+      "bestFor": ["premium product presentation", "sales system", "service blueprint"],
+      "jsx": "<ParticleReveal variant=\"gold-product-blueprint\" mode=\"sweep\" showVariantSwitcher={false} showModeSwitcher={false} />"
+    },
+    {
+      "id": "overdrive-particle-collapse",
+      "reference": "motion:canvasui-particle-reveal@overdrive-particle-collapse",
+      "bestFor": ["system boot moment", "launch transition", "maximum-impact reveal"],
+      "jsx": "<ParticleReveal variant=\"overdrive-particle-collapse\" mode=\"pulse\" density={5200} showVariantSwitcher={false} showModeSwitcher={false} />"
+    }
+  ]
+}

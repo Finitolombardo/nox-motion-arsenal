@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "premium-signal-particles",
+  "component": "NoxSignalParticles",
+  "importPath": "@/motion-arsenal/effects/premium/NoxSignalParticles",
+  "previewRoute": "/#/effect/premium-signal-particles",
+  "selectionRule": "Select one semantic particle field, one choreography mode and one energy state. Use auto mode for previews and a fixed mode for production storytelling.",
+  "energies": ["calm", "charged", "overdrive"],
+  "modes": ["auto", "orbit", "swarm", "settle"],
+  "variants": [
+    { "id": "agent-constellation", "reference": "motion:premium-signal-particles@agent-constellation", "bestFor": ["Project X", "agent orchestration", "network intelligence"], "jsx": "<NoxSignalParticles variant=\"agent-constellation\" mode=\"auto\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "revenue-funnel", "reference": "motion:premium-signal-particles@revenue-funnel", "bestFor": ["sales pipeline", "lead qualification", "conversion CTA"], "jsx": "<NoxSignalParticles variant=\"revenue-funnel\" mode=\"settle\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "forge-murmuration", "reference": "motion:premium-signal-particles@forge-murmuration", "bestFor": ["NOX Forge", "discipline and mastery", "ritual transitions"], "jsx": "<NoxSignalParticles variant=\"forge-murmuration\" mode=\"orbit\" energy=\"overdrive\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "signal-vortex", "reference": "motion:premium-signal-particles@signal-vortex", "bestFor": ["AI Growth Engine", "demand generation", "signal capture"], "jsx": "<NoxSignalParticles variant=\"signal-vortex\" mode=\"swarm\" energy=\"overdrive\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" },
+    { "id": "command-formation", "reference": "motion:premium-signal-particles@command-formation", "bestFor": ["operator dashboards", "deployment moments", "system online states"], "jsx": "<NoxSignalParticles variant=\"command-formation\" mode=\"settle\" energy=\"charged\" showVariantSwitcher={false} showModeSwitcher={false} showEnergySwitcher={false} />" }
+  ]
+}

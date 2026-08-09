@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "bg-depth-glow-stack",
+  "component": "DepthGlowLayerStack",
+  "importPath": "@/motion-arsenal/effects/backgrounds/DepthGlowLayerStack",
+  "previewRoute": "/#/effect/bg-depth-glow-stack",
+  "selectionRule": "Select one volumetric atmosphere and one energy state. Disable internal switchers on production pages unless visitors should compare configurations.",
+  "energies": ["calm", "charged", "overdrive"],
+  "variants": [
+    {
+      "id": "ember-vault",
+      "reference": "motion:bg-depth-glow-stack@ember-vault",
+      "bestFor": ["NOX Forge", "ritual hero", "dark luxury atmosphere"],
+      "jsx": "<DepthGlowLayerStack variant=\"ember-vault\" energy=\"charged\" layerCount={8} beamCount={3} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "violet-nebula",
+      "reference": "motion:bg-depth-glow-stack@violet-nebula",
+      "bestFor": ["AI Growth Engine", "signal cloud", "cosmic section"],
+      "jsx": "<DepthGlowLayerStack variant=\"violet-nebula\" energy=\"charged\" layerCount={9} beamCount={2} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "command-aurora",
+      "reference": "motion:bg-depth-glow-stack@command-aurora",
+      "bestFor": ["Project X", "agent dashboard", "technical command surface"],
+      "jsx": "<DepthGlowLayerStack variant=\"command-aurora\" energy=\"overdrive\" layerCount={8} beamCount={4} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "gold-cathedral",
+      "reference": "motion:bg-depth-glow-stack@gold-cathedral",
+      "bestFor": ["high-ticket offer", "premium CTA", "revenue ascension"],
+      "jsx": "<DepthGlowLayerStack variant=\"gold-cathedral\" energy=\"charged\" layerCount={7} beamCount={5} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "void-plasma",
+      "reference": "motion:bg-depth-glow-stack@void-plasma",
+      "bestFor": ["event horizon", "deep tech", "cinematic transition"],
+      "jsx": "<DepthGlowLayerStack variant=\"void-plasma\" energy=\"overdrive\" layerCount={10} beamCount={3} showVariantSwitcher={false} showEnergySwitcher={false} />"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "forms-validation-pulse",
+  "component": "ValidationPulse",
+  "importPath": "@/motion-arsenal/effects/forms/ValidationPulse",
+  "previewRoute": "/#/effect/forms-validation-pulse",
+  "selectionRule": "Choose one terminal density. Keep telemetry enabled for demos and disable it for compact production forms when necessary.",
+  "variants": [
+    {
+      "id": "field",
+      "reference": "motion:forms-validation-pulse@field",
+      "bestFor": ["inline signup fields", "newsletter capture", "compact forms"],
+      "jsx": "<ValidationPulse variant=\"field\" showTelemetry={false} />"
+    },
+    {
+      "id": "command",
+      "reference": "motion:forms-validation-pulse@command",
+      "bestFor": ["NOX interfaces", "operator login", "premium lead capture"],
+      "jsx": "<ValidationPulse variant=\"command\" signalStrength={1} showTelemetry />"
+    },
+    {
+      "id": "checkout",
+      "reference": "motion:forms-validation-pulse@checkout",
+      "bestFor": ["checkout identity", "booking forms", "customer onboarding"],
+      "jsx": "<ValidationPulse variant=\"checkout\" autoValidate successColor=\"#39ff8b\" showTelemetry={false} />"
+    }
+  ]
+}

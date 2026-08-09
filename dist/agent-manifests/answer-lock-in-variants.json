@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "effectId": "forms-answer-lock-in",
+  "component": "AnswerLockIn",
+  "importPath": "@/motion-arsenal/effects/forms/AnswerLockIn",
+  "previewRoute": "/#/effect/forms-answer-lock-in",
+  "selectionRule": "Choose one visual variant and one orientation. Pass a customer logo only from an approved local asset path.",
+  "variants": [
+    {
+      "id": "assessment",
+      "reference": "motion:forms-answer-lock-in@assessment",
+      "bestFor": ["assessment funnels", "diagnostic quizzes", "survey scoring"],
+      "jsx": "<AnswerLockIn variant=\"assessment\" orientation=\"horizontal\" accentColor=\"#C93030\" />"
+    },
+    {
+      "id": "command-deck",
+      "reference": "motion:forms-answer-lock-in@command-deck",
+      "bestFor": ["NOX Forge", "operator onboarding", "premium interactive forms"],
+      "jsx": "<AnswerLockIn variant=\"command-deck\" orientation=\"horizontal\" energyIntensity={1} showProgressRail />"
+    },
+    {
+      "id": "brand-lock",
+      "reference": "motion:forms-answer-lock-in@brand-lock",
+      "bestFor": ["customer websites", "branded lead qualification", "high-ticket applications"],
+      "jsx": "<AnswerLockIn variant=\"brand-lock\" orientation=\"horizontal\" brandMark=\"CLIENT // DECISION CORE\" logoUrl=\"/brand/logo.svg\" />"
+    }
+  ]
+}

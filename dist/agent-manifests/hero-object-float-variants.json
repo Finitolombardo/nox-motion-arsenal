@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.1.0",
+  "effectId": "hero-object-float",
+  "component": "HeroObjectFloat",
+  "importPath": "@/motion-arsenal/effects/hero/HeroObjectFloat",
+  "previewRoute": "/#/effect/hero-object-float",
+  "selectionRule": "Select one core object, one independent glass shell and one energy state. Disable internal switchers on production pages unless visitors should compare configurations.",
+  "energies": ["calm", "charged", "overdrive"],
+  "shells": [
+    {
+      "id": "classic-glass-card",
+      "reference": "motion:hero-object-float-shell@classic-glass-card",
+      "bestFor": ["premium product card", "NOX Forge artifact", "clean dark hero"]
+    },
+    {
+      "id": "obsidian-plaque",
+      "reference": "motion:hero-object-float-shell@obsidian-plaque",
+      "bestFor": ["ritual artifact", "luxury dark product", "forge identity"]
+    },
+    {
+      "id": "frosted-command-panel",
+      "reference": "motion:hero-object-float-shell@frosted-command-panel",
+      "bestFor": ["agent dashboard", "Project X", "technical system hero"]
+    },
+    {
+      "id": "museum-slab",
+      "reference": "motion:hero-object-float-shell@museum-slab",
+      "bestFor": ["high-ticket offer", "editorial product display", "premium showcase"]
+    },
+    {
+      "id": "holo-sigil-tablet",
+      "reference": "motion:hero-object-float-shell@holo-sigil-tablet",
+      "bestFor": ["AI growth system", "signal intelligence", "futuristic product hero"]
+    }
+  ],
+  "variants": [
+    {
+      "id": "nox-floating-card-os",
+      "reference": "motion:hero-object-float@nox-floating-card-os",
+      "defaultShell": "classic-glass-card",
+      "bestFor": ["NOX revenue stage", "scroll-driven product narrative", "operator-controlled automation"],
+      "jsx": "<HeroObjectFloat variant=\"nox-floating-card-os\" shellVariant=\"classic-glass-card\" energy=\"calm\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "forge-obsidian-relic",
+      "reference": "motion:hero-object-float@forge-obsidian-relic",
+      "defaultShell": "classic-glass-card",
+      "bestFor": ["NOX Forge", "skill unlock hero", "premium artifact reveal"],
+      "jsx": "<HeroObjectFloat variant=\"forge-obsidian-relic\" shellVariant=\"classic-glass-card\" energy=\"charged\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "project-x-nexus-cube",
+      "reference": "motion:hero-object-float@project-x-nexus-cube",
+      "defaultShell": "frosted-command-panel",
+      "bestFor": ["Project X", "agent command center", "AI orchestration product"],
+      "jsx": "<HeroObjectFloat variant=\"project-x-nexus-cube\" shellVariant=\"frosted-command-panel\" energy=\"overdrive\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "revenue-ascension-prism",
+      "reference": "motion:hero-object-float@revenue-ascension-prism",
+      "defaultShell": "museum-slab",
+      "bestFor": ["Global Sales OS", "high-ticket offer", "revenue engine hero"],
+      "jsx": "<HeroObjectFloat variant=\"revenue-ascension-prism\" shellVariant=\"museum-slab\" energy=\"charged\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "automation-kernel-chip",
+      "reference": "motion:hero-object-float@automation-kernel-chip",
+      "defaultShell": "frosted-command-panel",
+      "bestFor": ["automation systems", "n8n workflows", "operations platform"],
+      "jsx": "<HeroObjectFloat variant=\"automation-kernel-chip\" shellVariant=\"frosted-command-panel\" energy=\"charged\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    },
+    {
+      "id": "signal-resonance-orb",
+      "reference": "motion:hero-object-float@signal-resonance-orb",
+      "defaultShell": "holo-sigil-tablet",
+      "bestFor": ["AI Growth Engine", "signal intelligence", "content and demand system"],
+      "jsx": "<HeroObjectFloat variant=\"signal-resonance-orb\" shellVariant=\"holo-sigil-tablet\" energy=\"overdrive\" showVariantSwitcher={false} showShellSwitcher={false} showEnergySwitcher={false} />"
+    }
+  ]
+}
