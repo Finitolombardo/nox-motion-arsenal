@@ -1,17 +1,14 @@
-import { useRef } from 'react';
-import { damp, usePointer, usePrefersReducedMotion } from '../../lib/animationUtils';
+import { useMemo, useRef } from 'react';
+import { clamp, damp, useInView, usePointer, usePrefersReducedMotion } from '../../lib/animationUtils';
 import { useCanvas2D } from '../../lib/canvasUtils';
 import { NOX_COLORS } from '../../lib/motionPresets';
 import { driftPointer, useHoverCapable } from './cursorShared';
 
 // ---------------------------------------------------------------------------
 // CursorLightField — Active-Theory additive-blend mechanic in Canvas2D.
-// Three damped followers with different lambdas (8 / 5 / 3) trail the pointer
-// at different speeds → an organic light veil instead of a single glow dot.
-// Light blobs are drawn with globalCompositeOperation = 'lighter' (the 2D
-// equivalent of the bundle's blendFunc(ONE, ONE) additive pass) onto a dark
-// decaying buffer; the canvas sits in multiply blend on top of a bright text
-// grid, so the light literally uncovers the content underneath.
+// Three damped followers trail the pointer at different speeds. The expensive
+// radial gradients are pre-rendered once into sprites instead of allocated on
+// every frame, and the canvas loop pauses while the effect is offscreen.
 // ---------------------------------------------------------------------------
 
 export interface CursorLightFieldProps {
@@ -19,6 +16,7 @@ export interface CursorLightFieldProps {
   intensity?: number; // 0.3..1.5 light strength
   trailDecay?: number; // 0.05..0.5 — higher = shorter trail
   palette?: 'nox' | 'ember' | 'mono';
+  dprCap?: number; // 1..2 render-density budget
 }
 
 const PALETTES: Record<string, [string, string, string]> = {
@@ -30,16 +28,35 @@ const PALETTES: Record<string, [string, string, string]> = {
 const LAMBDAS = [8, 5, 3];
 const WORDS = ['FORGE', 'RANK', 'SCAN', 'SIGNAL', 'SYSTEM', 'NODE', 'VOID', 'PULSE'];
 
+function makeGlowSprite(rgb: string, alpha: number) {
+  if (typeof document === 'undefined') return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = 192;
+  canvas.height = 192;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+  const r = canvas.width / 2;
+  const grad = ctx.createRadialGradient(r, r, 0, r, r, r);
+  grad.addColorStop(0, `rgba(${rgb}, ${alpha})`);
+  grad.addColorStop(0.45, `rgba(${rgb}, ${alpha * 0.4})`);
+  grad.addColorStop(1, `rgba(${rgb}, 0)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
 export function CursorLightField({
   lightRadius = 130,
   intensity = 1,
   trailDecay = 0.16,
   palette = 'nox',
+  dprCap = 1.5,
 }: CursorLightFieldProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointer = usePointer(rootRef);
   const reduced = usePrefersReducedMotion();
+  const inView = useInView(rootRef);
   const hoverCapable = useHoverCapable();
   const followers = useRef([
     { x: 0.5, y: 0.5 },
@@ -48,84 +65,88 @@ export function CursorLightField({
   ]);
   const primed = useRef(false);
 
+  const safeRadius = clamp(Number.isFinite(lightRadius) ? lightRadius : 130, 40, 320);
+  const safeIntensity = clamp(Number.isFinite(intensity) ? intensity : 1, 0.1, 2);
+  const safeDecay = clamp(Number.isFinite(trailDecay) ? trailDecay : 0.16, 0.03, 0.6);
+  const safeDpr = clamp(Number.isFinite(dprCap) ? dprCap : 1.5, 1, 2);
   const colors = PALETTES[palette] ?? PALETTES.nox;
+  const running = inView && !reduced;
+
+  const glowSprites = useMemo(
+    () => [
+      makeGlowSprite(colors[0], 0.5 * safeIntensity),
+      makeGlowSprite(colors[1], 0.34 * safeIntensity),
+      makeGlowSprite(colors[2], 0.26 * safeIntensity),
+    ],
+    [colors, safeIntensity],
+  );
+  const coreSprite = useMemo(() => makeGlowSprite('255, 245, 230', 0.55 * safeIntensity), [safeIntensity]);
 
   useCanvas2D(
     canvasRef,
     (ctx, size, dt, elapsed) => {
       const p = pointer.current;
-      if (!reduced && !hoverCapable) driftPointer(p, elapsed);
+      if (running && !hoverCapable) driftPointer(p, elapsed);
 
       if (!primed.current || reduced) {
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = '#0b0b0d';
         ctx.fillRect(0, 0, size.w, size.h);
         primed.current = true;
-      } else {
-        // Decay pass: fade the buffer toward darkness → light leaves a trail.
+      } else if (running) {
         ctx.globalCompositeOperation = 'source-over';
-        ctx.fillStyle = `rgba(11, 11, 13, ${Math.min(0.5, Math.max(0.05, trailDecay))})`;
+        ctx.fillStyle = `rgba(11, 11, 13, ${safeDecay})`;
         ctx.fillRect(0, 0, size.w, size.h);
       }
 
-      // Damped followers — each lambda lags differently (Lusion damp physics).
       for (let i = 0; i < followers.current.length; i++) {
         const f = followers.current[i];
         if (reduced) {
           f.x = 0.5;
           f.y = 0.5;
-        } else {
+        } else if (running) {
           f.x = damp(f.x, p.tx, LAMBDAS[i], dt);
           f.y = damp(f.y, p.ty, LAMBDAS[i], dt);
         }
       }
 
-      // Additive light pass (Active Theory blendFunc(ONE, ONE) analogue).
       ctx.globalCompositeOperation = 'lighter';
       const radii = [1, 0.72, 0.5];
-      const alphas = [0.5, 0.34, 0.26];
       for (let i = 0; i < followers.current.length; i++) {
         const f = followers.current[i];
         const x = f.x * size.w;
         const y = f.y * size.h;
-        const r = Math.max(24, lightRadius * radii[i]);
-        const a = Math.min(1, alphas[i] * intensity);
-        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-        grad.addColorStop(0, `rgba(${colors[i]}, ${a})`);
-        grad.addColorStop(0.45, `rgba(${colors[i]}, ${a * 0.4})`);
-        grad.addColorStop(1, `rgba(${colors[i]}, 0)`);
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fill();
+        const r = Math.max(24, safeRadius * radii[i]);
+        const sprite = glowSprites[i];
+        if (sprite) ctx.drawImage(sprite, x - r, y - r, r * 2, r * 2);
       }
-      // Hot core on the fastest follower.
+
       const lead = followers.current[0];
-      const core = ctx.createRadialGradient(lead.x * size.w, lead.y * size.h, 0, lead.x * size.w, lead.y * size.h, 20);
-      core.addColorStop(0, `rgba(255, 245, 230, ${0.55 * intensity})`);
-      core.addColorStop(1, 'rgba(255, 245, 230, 0)');
-      ctx.fillStyle = core;
-      ctx.beginPath();
-      ctx.arc(lead.x * size.w, lead.y * size.h, 20, 0, Math.PI * 2);
-      ctx.fill();
+      if (coreSprite) {
+        const coreR = Math.max(14, Math.min(24, safeRadius * 0.16));
+        ctx.drawImage(coreSprite, lead.x * size.w - coreR, lead.y * size.h - coreR, coreR * 2, coreR * 2);
+      }
+      ctx.globalCompositeOperation = 'source-over';
     },
-    !reduced,
+    running,
+    safeDpr,
   );
 
   return (
     <div
       ref={rootRef}
+      data-running={running ? 'true' : 'false'}
       style={{
         position: 'absolute',
         inset: 0,
         overflow: 'hidden',
         background: NOX_COLORS.bg,
         isolation: 'isolate',
-        touchAction: 'none',
+        touchAction: 'pan-y',
       }}
     >
-      {/* Content layer — bright, but only visible where the light passes. */}
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
@@ -169,8 +190,11 @@ export function CursorLightField({
           ADDITIVE // ONE + ONE
         </div>
       </div>
-      {/* Light buffer in multiply: dark hides, light reveals. */}
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', mixBlendMode: 'multiply' }} />
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', mixBlendMode: 'multiply', pointerEvents: 'none' }}
+      />
     </div>
   );
 }
