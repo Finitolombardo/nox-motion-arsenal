@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { ChangeEvent, CSSProperties, KeyboardEvent } from 'react';
-import { usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
+import { useInView, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
 import { NOX_COLORS, EASE } from '../../lib/motionPresets';
 
 export type ValidationPulseVariant = 'field' | 'command' | 'checkout';
@@ -23,6 +23,7 @@ export interface ValidationPulseProps {
 type ValidationState = 'idle' | 'error' | 'ok';
 
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
+const finite = (value: number, fallback: number) => (Number.isFinite(value) ? value : fallback);
 
 export function ValidationPulse({
   accent = NOX_COLORS.red,
@@ -42,12 +43,19 @@ export function ValidationPulse({
   const [state, setState] = useState<ValidationState>('idle');
   const [pulseId, setPulseId] = useState(0);
   const [typing, setTyping] = useState(false);
+  const [springActive, setSpringActive] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(rootRef, '140px');
   const fieldRef = useRef<HTMLDivElement>(null);
   const spring = useRef({ t: -1 });
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const autoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const strength = clamp(signalStrength, 0.3, 1.6);
+  const inputId = useId();
+  const statusId = useId();
+  const strength = clamp(finite(signalStrength, 1), 0.3, 1.6);
+  const damping = clamp(finite(springDamping, 6), 1, 18);
+  const frequency = clamp(finite(springFreq, 9), 1, 18);
 
   useEffect(
     () => () => {
@@ -57,39 +65,60 @@ export function ValidationPulse({
     [],
   );
 
+  useEffect(() => {
+    if (!reduced) return;
+    spring.current.t = -1;
+    setSpringActive(false);
+    if (fieldRef.current) fieldRef.current.style.transform = 'translate3d(0,0,0)';
+  }, [reduced]);
+
   useRafLoop(
     (dt) => {
       const oscillator = spring.current;
-      if (oscillator.t < 0) return;
-      oscillator.t += dt;
+      if (oscillator.t < 0) {
+        setSpringActive(false);
+        return;
+      }
+      oscillator.t += Math.min(dt, 0.05);
       const amplitude = 14 * strength;
-      const x = amplitude * Math.exp(-springDamping * oscillator.t) * Math.sin(springFreq * Math.PI * 2 * oscillator.t);
+      const x = amplitude * Math.exp(-damping * oscillator.t) * Math.sin(frequency * Math.PI * 2 * oscillator.t);
       if (fieldRef.current) {
         fieldRef.current.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
       }
-      if (oscillator.t > 1.2) {
+      if (oscillator.t > 1.2 || Math.abs(x) < 0.05) {
         oscillator.t = -1;
+        setSpringActive(false);
         if (fieldRef.current) fieldRef.current.style.transform = 'translate3d(0,0,0)';
       }
     },
-    !reduced,
+    springActive && !reduced && inView,
   );
 
   const validateValue = (candidate = value) => {
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(candidate);
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(candidate.trim());
     setState(ok ? 'ok' : 'error');
     setPulseId((id) => id + 1);
-    if (!ok && !reduced) spring.current.t = 0;
+    if (!ok && !reduced) {
+      spring.current.t = 0;
+      setSpringActive(true);
+    } else {
+      spring.current.t = -1;
+      setSpringActive(false);
+      if (fieldRef.current) fieldRef.current.style.transform = 'translate3d(0,0,0)';
+    }
   };
 
   const onType = (nextValue: string) => {
     setValue(nextValue);
     setState('idle');
     setTyping(true);
+    spring.current.t = -1;
+    setSpringActive(false);
+    if (fieldRef.current) fieldRef.current.style.transform = 'translate3d(0,0,0)';
     if (typingTimer.current) clearTimeout(typingTimer.current);
     if (autoTimer.current) clearTimeout(autoTimer.current);
     typingTimer.current = setTimeout(() => setTyping(false), 560);
-    if (autoValidate && nextValue.length > 4) {
+    if (autoValidate && nextValue.trim().length > 4) {
       autoTimer.current = setTimeout(() => validateValue(nextValue), 760);
     }
   };
@@ -106,7 +135,7 @@ export function ValidationPulse({
   } as CSSProperties;
 
   return (
-    <div className={`nvp-root nvp-${variant}`} style={rootStyle}>
+    <div ref={rootRef} className={`nvp-root nvp-${variant}`} data-paused={!inView || reduced ? 'true' : 'false'} style={rootStyle}>
       <style>{`
         @keyframes nvp-grid { to { background-position:48px 48px,48px 48px; } }
         @keyframes nvp-scan { 0% { transform:translateY(-120%); opacity:0; } 15% { opacity:.7; } 75% { opacity:.22; } 100% { transform:translateY(120%); opacity:0; } }
@@ -133,11 +162,13 @@ export function ValidationPulse({
         .nvp-field-label { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:9px; font:700 9px/1 ui-monospace,monospace; letter-spacing:.2em; color:${NOX_COLORS.textDim}; }
         .nvp-led { display:flex; align-items:center; gap:7px; color:color-mix(in srgb,var(--nvp-border) 75%,white); }
         .nvp-led-dot { width:7px; height:7px; border-radius:50%; background:var(--nvp-border); box-shadow:0 0 10px color-mix(in srgb,var(--nvp-border) 70%,transparent); }
-        .nvp-field-wrap { position:relative; will-change:transform; transform:translate3d(0,0,0); }
+        .nvp-field-wrap { position:relative; transform:translate3d(0,0,0); }
+        .nvp-field-wrap.nvp-springing { will-change:transform; }
         .nvp-field-shell { position:relative; border:1px solid var(--nvp-border); border-radius:15px; background:linear-gradient(180deg,rgba(20,21,29,.96),rgba(12,13,19,.94)); box-shadow:0 16px 36px rgba(0,0,0,.32),0 0 calc(24px * var(--nvp-strength)) color-mix(in srgb,var(--nvp-border) 12%,transparent),inset 0 1px 0 rgba(255,255,255,.05); transition:border-color .25s,box-shadow .25s; }
         .nvp-field-shell::before { content:""; position:absolute; left:14px; right:14px; top:0; height:1px; background:linear-gradient(90deg,transparent,var(--nvp-border),transparent); opacity:.65; }
         .nvp-input { width:100%; box-sizing:border-box; border:0; outline:0; border-radius:inherit; padding:17px 58px 17px 16px; color:${NOX_COLORS.text}; background:transparent; font:600 clamp(13px,2vw,16px)/1.2 ui-monospace,monospace; letter-spacing:.02em; caret-color:var(--nvp-border); }
         .nvp-input::placeholder { color:rgba(225,221,244,.24); }
+        .nvp-input:focus-visible { box-shadow:0 0 0 2px color-mix(in srgb,var(--nvp-border) 78%,white),0 0 24px color-mix(in srgb,var(--nvp-border) 22%,transparent); }
         .nvp-icon { position:absolute; right:15px; top:50%; width:25px; height:25px; transform:translateY(-50%); display:grid; place-items:center; }
         .nvp-orbit { position:absolute; inset:0; border:1px solid color-mix(in srgb,var(--nvp-border) 38%,transparent); border-radius:50%; border-top-color:var(--nvp-border); animation:nvp-orbit 2.4s linear infinite; }
         .nvp-pulse-ring { position:absolute; inset:-3px; border-radius:18px; border:1.5px solid var(--nvp-border); pointer-events:none; }
@@ -153,10 +184,12 @@ export function ValidationPulse({
         .nvp-hint { font:600 8px/1.4 ui-monospace,monospace; letter-spacing:.12em; color:rgba(225,221,244,.28); }
         .nvp-button { min-width:180px; padding:12px 18px; border:1px solid color-mix(in srgb,var(--nvp-accent) 55%,rgba(255,255,255,.14)); border-radius:999px; background:linear-gradient(180deg,color-mix(in srgb,var(--nvp-accent) 16%,rgba(255,255,255,.04)),rgba(255,255,255,.015)); color:${NOX_COLORS.text}; font:750 9px/1 ui-monospace,monospace; letter-spacing:.18em; cursor:pointer; transition:transform .2s,border-color .2s,background .2s; animation:nvp-button 1.9s ease-in-out infinite; }
         .nvp-button:hover { transform:translateY(-2px); border-color:var(--nvp-accent); }
+        .nvp-button:focus-visible { outline:2px solid color-mix(in srgb,var(--nvp-accent) 80%,white); outline-offset:3px; }
+        .nvp-root[data-paused='true']::before,.nvp-root[data-paused='true'] .nvp-scan,.nvp-root[data-paused='true'] .nvp-brand::before,.nvp-root[data-paused='true'] .nvp-led-dot,.nvp-root[data-paused='true'] .nvp-orbit,.nvp-root[data-paused='true'] .nvp-telemetry-fill,.nvp-root[data-paused='true'] .nvp-button,.nvp-root[data-paused='true'] .nvp-pulse-ring,.nvp-root[data-paused='true'] .nvp-particle{animation-play-state:paused!important}
         .nvp-checkout .nvp-panel { max-width:560px; }
         .nvp-field .nvp-panel { max-width:520px; }
         @media(max-width:640px){ .nvp-root{padding:10px}.nvp-panel{padding:17px;border-radius:18px}.nvp-header{margin-bottom:18px}.nvp-brand,.nvp-telemetry,.nvp-hint{display:none}.nvp-feedback{min-height:40px}.nvp-button{width:100%}.nvp-actions{display:block}.nvp-title{font-size:24px} }
-        @media(prefers-reduced-motion:reduce){ .nvp-root::before,.nvp-scan,.nvp-brand::before,.nvp-orbit,.nvp-telemetry-fill,.nvp-button{animation:none!important}.nvp-field-wrap{transform:none!important} }
+        @media(prefers-reduced-motion:reduce){ .nvp-root::before,.nvp-scan,.nvp-brand::before,.nvp-orbit,.nvp-telemetry-fill,.nvp-button,.nvp-pulse-ring,.nvp-particle{animation:none!important}.nvp-field-wrap{transform:none!important;will-change:auto!important} }
       `}</style>
 
       <div className="nvp-aura" />
@@ -170,15 +203,15 @@ export function ValidationPulse({
           <div className="nvp-brand">{brandMark}</div>
         </header>
 
-        <label className="nvp-field-label" htmlFor="nvp-email">
+        <label className="nvp-field-label" htmlFor={inputId}>
           <span>{label}</span>
           <span className="nvp-led">
-            <span className="nvp-led-dot" style={{ animation: typing && !reduced ? 'nvp-led .68s ease-in-out infinite' : undefined }} />
+            <span className="nvp-led-dot" style={{ animation: typing && !reduced && inView ? 'nvp-led .68s ease-in-out infinite' : undefined }} />
             {typing ? 'LIVE' : state === 'ok' ? 'VERIFIED' : state === 'error' ? 'FAULT' : 'IDLE'}
           </span>
         </label>
 
-        <div ref={fieldRef} className="nvp-field-wrap">
+        <div ref={fieldRef} className={`nvp-field-wrap${springActive ? ' nvp-springing' : ''}`}>
           {state !== 'idle' && !reduced && [0, 1, 2].map((ring) => (
             <span
               key={`${pulseId}-${ring}`}
@@ -191,15 +224,18 @@ export function ValidationPulse({
           ))}
           <div className="nvp-field-shell">
             <input
-              id="nvp-email"
+              id={inputId}
               className="nvp-input"
+              type="email"
               value={value}
               onChange={(event: ChangeEvent<HTMLInputElement>) => onType(event.target.value)}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => event.key === 'Enter' && validateValue()}
               placeholder={placeholder}
               inputMode="email"
               autoComplete="email"
+              spellCheck={false}
               aria-invalid={state === 'error'}
+              aria-describedby={statusId}
             />
             <div className="nvp-icon" aria-hidden="true">
               {state === 'ok' ? (
@@ -232,7 +268,7 @@ export function ValidationPulse({
         </div>
 
         <div className="nvp-feedback">
-          <div className="nvp-status">
+          <div id={statusId} className="nvp-status" role="status" aria-live="polite" aria-atomic="true">
             <strong>{statusCopy}</strong>
             <span>{statusDetail}</span>
           </div>
