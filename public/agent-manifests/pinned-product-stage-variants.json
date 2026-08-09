@@ -11,10 +11,20 @@
       "label": "NOX FLOATING CARD OS",
       "coreArtifact": "Five floating card states from signal radar to operator approval.",
       "reference": "motion:scroll-pinned-product-stage@nox-floating-card-os",
-      "bestFor": ["noxlabs.net product stage", "short operator-controlled revenue narrative"],
-      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-floating-card-os\" scrollDriver=\"page\" scrollLength={3} cardStyle=\"glass\" cardScale={1.12} cardTilt={5} cardFloat={8} cardFloatSpeed={0.16} scrollRotationTurns={0.18} morphStrength={0.8} stageSpread={0.9} glow={0.6} bloom={0.35} depth={1} perspective={1100} showHud={false} showVariantSwitcher={false} />",
-      "chapters": ["01 SIGNAL CAPTURE", "02 QUALIFICATION", "03 PITCH MUTATION", "04 AGENT FOLLOW-UP", "05 OPERATOR COMMAND"],
-      "honesty": "System states only; no fabricated outcome claims."
+      "bestFor": [
+        "noxlabs.net product stage",
+        "short operator-controlled revenue narrative"
+      ],
+      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-floating-card-os\" scrollDriver=\"page\" rotationMode=\"depth-flip\" readableAngle={55} stackDrift={16} scrollLength={3} cardStyle=\"glass\" cardScale={1.12} cardTilt={5} cardFloat={8} cardFloatSpeed={0.16} scrollRotationTurns={0.18} morphStrength={0.8} stageSpread={0.9} glow={0.6} bloom={0.35} depth={1} perspective={1100} showHud={false} showVariantSwitcher={false} />",
+      "chapters": [
+        "01 SIGNAL CAPTURE",
+        "02 QUALIFICATION",
+        "03 PITCH MUTATION",
+        "04 AGENT FOLLOW-UP",
+        "05 OPERATOR COMMAND"
+      ],
+      "honesty": "System states only; no fabricated outcome claims.",
+      "rotationMode": "depth-flip"
     },
     {
       "id": "nox-revenue-os",
@@ -25,7 +35,7 @@
         "noxlabs.net Revenue-OS-Sektion",
         "operative Systemerklärung in fünf Stufen"
       ],
-      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-revenue-os\" scrollDriver=\"page\" compactScroll={0.78} visualMode=\"signal-flow\" chrome=\"minimal\" showVariantSwitcher={false} />",
+      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-revenue-os\" scrollDriver=\"page\" rotationMode=\"depth-flip\" readableAngle={55} stackDrift={16} compactScroll={0.78} visualMode=\"signal-flow\" chrome=\"minimal\" showVariantSwitcher={false} />",
       "chapters": [
         "01 SIGNAL CAPTURE",
         "02 QUALIFICATION",
@@ -33,7 +43,8 @@
         "04 AGENT FOLLOW-UP",
         "05 OPERATOR COMMAND"
       ],
-      "honesty": "Chapter stat lines name system states, never results. No customer numbers, no performance claims."
+      "honesty": "Chapter stat lines name system states, never results. No customer numbers, no performance claims.",
+      "rotationMode": "depth-flip"
     },
     {
       "id": "nox-global-sales-os",
@@ -94,10 +105,39 @@
         "operations transformation"
       ],
       "jsx": "<PinnedProductStageCoreSystem variant=\"automation-ops-system\" showVariantSwitcher={false} />"
+    },
+    {
+      "id": "nox-scroll-story",
+      "label": "NOX SCROLL STORY",
+      "coreArtifact": "Eine grosse Revenue-Tafel, die stehen bleibt, waehrend fuenf Kapitel an ihr vorbeiscrollen.",
+      "reference": "motion:scroll-pinned-product-stage@nox-scroll-story",
+      "layoutMode": "sticky-story",
+      "rotationMode": "n/a - sticky-story dreht nicht, es kippt nur dezent (panelTilt)",
+      "bestFor": [
+        "noxlabs.net Revenue-Sektion",
+        "lange Erklaerstrecken ohne Scroll-Sperre"
+      ],
+      "jsx": "<PinnedProductStageCoreSystem variant=\"nox-scroll-story\" layoutMode=\"sticky-story\" chapterHeight={68} stickyOffset={0} activeThreshold={0.42} panelDepth={-30} contentTransition={160} textReveal=\"blur-rise\" mobileStack showVariantSwitcher={false} />",
+      "chapters": [
+        "01 SIGNAL CAPTURE",
+        "02 QUALIFICATION",
+        "03 PITCH MUTATION",
+        "04 AGENT FOLLOW-UP",
+        "05 OPERATOR COMMAND"
+      ],
+      "honesty": "System states only; no fabricated outcome claims."
     }
   ],
   "scrollDrivers": {
     "internal": "Arsenal preview default. The stage owns a scrollport; the wheel is captured inside the box.",
     "page": "Website mode. The stage renders a tall track in the document flow and pins a 100svh stage inside it; the page scroll drives the story and keeps scrolling afterwards."
+  },
+  "rotationModes": {
+    "free-spin": "Default. rotateY waechst monoton: progress x rotationTurns x 360. Richtig fuer abstrakte Kernobjekte, falsch fuer lesbare Tafeln — ab einer Vierteldrehung laeuft die Flaeche durch 90 Grad (Kante) und 180 Grad (Rueckseite).",
+    "depth-flip": "Beschraenkte Choreografie fuer lesbare Tafeln: pro Kapitel dreht das Objekt 0 -> readableAngle -> 0 zurueck und weicht dabei in die Tiefe. Zusaetzlich driftet die Buehne nur stackDrift ueber die gesamte Sektion. Der Winkel bleibt damit unter der 90-Grad-Kante, Rueckseiten werden nie sichtbar. Auf noxlabs.net der Modus fuer die Revenue-Sektion."
+  },
+  "layoutModes": {
+    "pinned-stage": "Default. Eine gepinnte Buehne; der Text wird an Ort und Stelle ausgetauscht. Fuer kurze, gefuehrte Produktdemos.",
+    "sticky-story": "Das Visual klebt links (position:sticky), die fuenf Kapitel scrollen rechts als echter DOM-Content vorbei. Kein Scroll-Gefaengnis, kein Textaustausch am selben Platz, die Seite laeuft danach normal weiter. Auf noxlabs.net der Modus fuer die Revenue-Sektion."
   }
 }
