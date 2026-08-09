@@ -450,4 +450,42 @@ export const BACKGROUNDS_CATALOG: EffectEntry[] = [
     },
     Component: lazy(() => import('./HolographicMaskShader')),
   },
+  {
+    meta: {
+      id: 'bg-bokeh-gold-field',
+      name: 'BokehGoldField',
+      displayName: 'Bokeh Gold Field',
+      category: 'backgrounds',
+      sourceWebsite: 'nox-original',
+      sourceFiles: [
+        'bokeh-depth-field (Bokeh-Scheiben-Optik, eigene NOX-Variante)',
+        'NoxCosmicDepthField.tsx (Blur-Ebenen-Disziplin: filter auf Ebene, nicht pro Element)',
+      ],
+      mode: 'nox-adapted',
+      complexity: 'low',
+      dependencies: [],
+      bestFor: ['Signature-Background für Hero-/CTA-Flächen', 'Login-/Pricing-Sektionen', 'Galerie-Hintergrund ohne Canvas-Last'],
+      performanceNotes:
+        'Komplett CSS-only: drei Blur-Ebenen (filter auf Layer-Container statt pro Scheibe), transform-Keyframes auf dem Compositor, max 16 Scheiben. Kein rAF, kein JS pro Frame.',
+      mobileNotes:
+        'Touch-tauglich; ab 640px wird die Scheiben-Opazität leicht reduziert. Dekorative Layer mit pointer-events: none + aria-hidden.',
+      reducedMotionNotes:
+        'Drift-Animation aus — das statische Bokeh-Feld bleibt sichtbar (deterministisches Layout, kein Layout-Sprung).',
+      description:
+        'Tiefenunscharfe Gold-Kreise (Bokeh) driften in drei Schärfe-Ebenen durch den dunklen Grund — elegante Tiefe für Hero-/CTA-Flächen, ganz ohne Canvas: nur CSS-Filter und transform. Deterministisches Layout aus seededRandom, Pointer-frei.',
+      importPath: '@/motion-arsenal/effects/backgrounds/BokehGoldField',
+      usageJsx: '<BokehGoldField count={10} speed={1} focus={0.5} color="#d4af37" />',
+      props: [
+        { key: 'count', label: 'Kreise', type: 'range', default: 10, min: 4, max: 16, step: 1, group: 'Feld' },
+        { key: 'speed', label: 'Drift-Tempo', type: 'range', default: 1, min: 0.1, max: 3, step: 0.1, group: 'Feld' },
+        { key: 'focus', label: 'Schärfe-Tiefe', type: 'range', default: 0.5, min: 0, max: 1, step: 0.05, group: 'Feld' },
+        { key: 'color', label: 'Farbe', type: 'color', default: '#d4af37', group: 'Feld' },
+        { key: 'seed', label: 'Seed', type: 'range', default: 20260808, min: 1, max: 99999999, step: 1, group: 'Feld' },
+      ],
+      productionSafe: true,
+      status: 'production-safe',
+      fullBleed: true,
+    },
+    Component: lazy(() => import('./BokehGoldField')),
+  },
 ];

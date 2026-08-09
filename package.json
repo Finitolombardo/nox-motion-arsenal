@@ -21,7 +21,7 @@
     "test:previews:smoke": "node scripts/audit-previews.mjs --ids bg-orbital-light-trails,forms-selection-energy-ripple,premium-glass-distortion-cards,premium-signal-particles,premium-data-stream-journey,bg-depth-glow-stack,skilltree-glass-metal-panel,canvasui-particle-reveal,canvasui-shatter-reveal,cursor-magnetic-cta,img2threejs-nox-orbital-station,skilltree-locked-path-shadow,skilltree-svg-energy-lines,scroll-pinned-product-stage,bg-forge-energy-glyphs,hero-object-float,forms-answer-lock-in,forms-validation-pulse,bg-nox-starfield-drift",
     "typecheck:server": "tsc -p tsconfig.server.json",
     "lint": "npm run typecheck && npm run typecheck:server",
-    "test": "node scripts/test-full-catalog-contract.mjs && node scripts/test-contribution-contract.mjs && node scripts/test-locked-path-shadow-contract.mjs && node scripts/test-pinned-product-stage-contract.mjs && node scripts/test-cosmic-depth-field-contract.mjs && node scripts/test-svg-energy-lines-contract.mjs && node scripts/test-forge-energy-glyphs-contract.mjs && node scripts/test-particle-reveal-contract.mjs && node scripts/test-hero-object-float-contract.mjs && node scripts/test-data-stream-journey-contract.mjs && node scripts/test-depth-glow-stack-contract.mjs && node scripts/test-glass-metal-panel-contract.mjs && node scripts/test-glass-distortion-cards-contract.mjs && node scripts/test-signal-particles-contract.mjs && node scripts/test-selection-energy-ripple-contract.mjs && node scripts/test-horizon-rift-contract.mjs && npm run test:foundry && npm run test:section-transitions",
+    "test": "node scripts/test-full-catalog-contract.mjs && node scripts/test-contribution-contract.mjs && node scripts/test-locked-path-shadow-contract.mjs && node scripts/test-pinned-product-stage-contract.mjs && node scripts/test-cosmic-depth-field-contract.mjs && node scripts/test-svg-energy-lines-contract.mjs && node scripts/test-forge-energy-glyphs-contract.mjs && node scripts/test-particle-reveal-contract.mjs && node scripts/test-hero-object-float-contract.mjs && node scripts/test-data-stream-journey-contract.mjs && node scripts/test-depth-glow-stack-contract.mjs && node scripts/test-glass-metal-panel-contract.mjs && node scripts/test-glass-distortion-cards-contract.mjs && node scripts/test-signal-particles-contract.mjs && node scripts/test-selection-energy-ripple-contract.mjs && node scripts/test-bokeh-gold-field-contract.mjs && node scripts/test-star-rating-gold-pop-contract.mjs && node scripts/test-horizon-rift-contract.mjs && npm run test:foundry && npm run test:section-transitions",
     "test:contribution:e2e": "node scripts/test-contribution-e2e.mjs",
     "test:future:community": "npm run test:community && npm run test:community:security",
     "test:community": "node scripts/test-community.mjs",
@@ -30,7 +30,8 @@
     "test:visual-config": "node scripts/test-visual-config-serialization.mjs",
     "test:cosmic-depth-field": "node scripts/test-cosmic-depth-field-contract.mjs",
     "test:product-stage-share": "node scripts/test-product-stage-share-regression.mjs",
-    "test:horizon-rift": "node scripts/test-horizon-rift-contract.mjs"
+    "test:horizon-rift": "node scripts/test-horizon-rift-contract.mjs",
+    "whats-new": "node scripts/whats-new.mjs"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",

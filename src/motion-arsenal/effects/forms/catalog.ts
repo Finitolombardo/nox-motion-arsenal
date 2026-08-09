@@ -118,4 +118,39 @@ export const FORMS_CATALOG: EffectEntry[] = [
     },
     Component: lazy(() => import('./SelectionEnergyRipple')),
   },
+  {
+    meta: {
+      id: 'forms-star-rating-gold-pop',
+      name: 'StarRatingGoldPop',
+      displayName: 'Star Rating Gold Pop',
+      category: 'forms',
+      sourceWebsite: 'nox-original',
+      sourceFiles: ['codepen-star-rating (Pop-/Fill-Demos, eigene NOX-Variante mit echter Radio-Group)'],
+      mode: 'nox-adapted',
+      complexity: 'low',
+      dependencies: [],
+      bestFor: ['Testimonial-/Review-Forms mit Premium-Feedback', 'Produktbewertungen', 'Gamification-Scores'],
+      performanceNotes:
+        'Nur fill/transform-Transitionen, Pop-Animation einmalig bei Auswahl (deterministischer --i-Stagger), Count-up-rAF nur während der Wert-Änderung, stoppt danach. Kein Dauerbetrieb.',
+      mobileNotes:
+        'Touch-Ziele ≥ 44px (size + padding); Hover-Vorlauf entfällt auf Touch (Tap = Auswahl).',
+      reducedMotionNotes:
+        'Kein Pop — Auswahl-Wechsel nur über den fill-Wechsel; Score zusätzlich als Text im aria-label ("n von max").',
+      description:
+        'Sterne-Bewertung mit Pop-Sequenz: Hover-Vorlauf füllt die Sterne, beim Auswählen springen sie nacheinander mit Feder-Bounce auf (cubic-bezier-Overshoot, Stagger über --i) und der Score zählt im Label hoch. Als echte Radio-Group gebaut — Tastatur und Screenreader sehen die Auswahl (fieldset + legend, native inputs).',
+      importPath: '@/motion-arsenal/effects/forms/StarRatingGoldPop',
+      usageJsx: '<StarRatingGoldPop value={3} max={5} size={32} pop color="#d4af37" />',
+      props: [
+        { key: 'value', label: 'Wert', type: 'range', default: 3, min: 0, max: 10, step: 1, group: 'Rating' },
+        { key: 'max', label: 'Sterne', type: 'range', default: 5, min: 3, max: 10, step: 1, group: 'Rating' },
+        { key: 'size', label: 'Größe px', type: 'range', default: 32, min: 16, max: 64, step: 2, group: 'Rating' },
+        { key: 'pop', label: 'Pop-Animation', type: 'boolean', default: true, group: 'Rating' },
+        { key: 'color', label: 'Farbe', type: 'color', default: '#d4af37', group: 'Rating' },
+        { key: 'label', label: 'Label', type: 'text', default: '', group: 'Rating' },
+      ],
+      productionSafe: true,
+      status: 'production-safe',
+    },
+    Component: lazy(() => import('./StarRatingGoldPop')),
+  },
 ];
