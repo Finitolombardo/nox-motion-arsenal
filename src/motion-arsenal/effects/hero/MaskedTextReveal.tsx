@@ -55,9 +55,6 @@ export function MaskedTextReveal({
     ? 'linear-gradient(80deg, transparent 42%, #000 50%, transparent 58%)'
     : 'linear-gradient(100deg, transparent 42%, #000 50%, transparent 58%)';
   const maskStart = isRtl ? '-30% 0' : '130% 0';
-  const maskEnd = isRtl ? '60% 0' : '40% 0';
-  const edgeStart = isRtl ? '-35% 0' : '135% 0';
-  const edgeEnd = isRtl ? '135% 0' : '-35% 0';
   const lift = isRtl ? '-0.45em' : '0.45em';
   const playState = inView ? 'running' : 'paused';
 
@@ -176,8 +173,6 @@ export function MaskedTextReveal({
                     maskSize: '300% 100%',
                     WebkitMaskRepeat: 'no-repeat',
                     maskRepeat: 'no-repeat',
-                    WebkitMaskPosition: edgeStart,
-                    maskPosition: edgeStart,
                     animation: `${edgeAnimationName} ${wipeDur * 1.05}s ${EASE.outQuint} ${delay}s both`,
                     animationPlayState: playState,
                     textShadow: `0 0 18px ${accent}55`,
