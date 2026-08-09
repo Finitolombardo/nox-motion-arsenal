@@ -16,3 +16,4 @@ coverage/
 .env
 .env.*
 !.env.example
+audit_recovery.json
