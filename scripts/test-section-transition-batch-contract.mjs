@@ -16,6 +16,7 @@ function includes(source, token, label) {
 
 const answer = read('src/motion-arsenal/effects/forms/AnswerLockIn.tsx');
 const validation = read('src/motion-arsenal/effects/forms/ValidationPulse.tsx');
+const questionTransition = read('src/motion-arsenal/effects/forms/QuestionTransition.tsx');
 const starfield = read('src/motion-arsenal/effects/backgrounds/NoxStarfieldDrift.tsx');
 const formsCatalog = read('src/motion-arsenal/effects/forms/catalog.ts');
 const batch = parse('batches/motion-batch-section-transitions.json');
@@ -37,6 +38,24 @@ for (const token of [
 ]) includes(validation, token, 'ValidationPulse');
 
 for (const token of [
+  'useInView',
+  'if (inView) return',
+  'clearTimers()',
+  "phaseRef.current !== 'idle'",
+  'Number.isFinite(duration)',
+  'Number.isFinite(blurAmount)',
+  "!autoCycle || !inView || reduced || phase !== 'idle'",
+  'aria-busy={busy}',
+  'aria-live="polite"',
+  'disabled={busy}',
+  '@media (max-width: 440px)',
+  '@media (prefers-reduced-motion: reduce)',
+]) includes(questionTransition, token, 'QuestionTransition');
+
+assert(!questionTransition.includes('requestAnimationFrame'), 'QuestionTransition should remain CSS/timer driven');
+assert(!questionTransition.includes('Math.random'), 'QuestionTransition must remain deterministic');
+
+for (const token of [
   "'deep-drift' | 'section-warp' | 'brand-gateway'",
   "'forward' | 'backward' | 'left' | 'right' | 'up' | 'down'",
   'useScrollProgress',
@@ -50,6 +69,8 @@ for (const token of [
   "default: 'horizontal'",
   "default: 'command'",
   "key: 'signalStrength'",
+  "id: 'forms-question-transition'",
+  "import('./QuestionTransition')",
 ]) includes(formsCatalog, token, 'forms catalog');
 
 assert(batch.schemaVersion === '1.0', 'Batch schema version mismatch');
