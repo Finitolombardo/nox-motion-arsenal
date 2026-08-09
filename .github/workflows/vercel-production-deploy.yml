@@ -1,6 +1,9 @@
 name: Vercel Production Deploy
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/vercel-production-deploy.yml'
   push:
     branches:
       - main
@@ -10,12 +13,29 @@ permissions:
   contents: read
 
 concurrency:
-  group: nox-motion-arsenal-production
+  group: nox-motion-arsenal-production-${{ github.event_name }}
   cancel-in-progress: false
 
 jobs:
+  credentials:
+    name: credentials
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Vercel token is configured
+        shell: bash
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN repository secret is not configured."
+            exit 1
+          fi
+          echo "VERCEL_TOKEN is configured."
+
   deploy:
     name: production
+    if: github.event_name != 'pull_request'
+    needs: credentials
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -28,17 +48,6 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
-
-      - name: Verify Vercel credentials
-        shell: bash
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN repository secret is not configured."
-            exit 1
-          fi
-          echo "VERCEL_TOKEN is configured."
 
       - name: Install dependencies
         run: npm ci
