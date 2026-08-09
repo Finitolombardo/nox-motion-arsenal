@@ -25,7 +25,7 @@ export interface NoxCaseStudyGalleryProps {
 }
 
 const makeArtwork = (label: string, accent: string, secondary: string) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08090d"/><stop offset=".52" stop-color="${accent}" stop-opacity=".72"/><stop offset="1" stop-color="${secondary}" stop-opacity=".9"/></linearGradient><filter id="n"><feTurbulence baseFrequency=".8" numOctaves="3" stitchTiles="stitchTiles"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .12 0"/></filter></defs><rect width="1200" height="800" fill="url(#g)"/><circle cx="920" cy="120" r="310" fill="none" stroke="white" stroke-opacity=".12" stroke-width="2"/><circle cx="920" cy="120" r="220" fill="none" stroke="white" stroke-opacity=".08"/><path d="M-40 640 C260 420 480 760 760 470 S1240 300 1300 560" fill="none" stroke="white" stroke-opacity=".16" stroke-width="5"/><rect x="70" y="70" width="1060" height="660" rx="28" fill="none" stroke="white" stroke-opacity=".12"/><rect width="1200" height="800" filter="url(#n)" opacity=".35"/><text x="82" y="662" fill="white" fill-opacity=".92" font-family="Arial, sans-serif" font-size="58" font-weight="700">${label}</text><text x="86" y="705" fill="white" fill-opacity=".48" font-family="Arial, sans-serif" font-size="18" letter-spacing="7">NOX CASE STUDY</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08090d"/><stop offset=".52" stop-color="${accent}" stop-opacity=".72"/><stop offset="1" stop-color="${secondary}" stop-opacity=".9"/></linearGradient><filter id="n"><feTurbulence baseFrequency=".8" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .12 0"/></filter></defs><rect width="1200" height="800" fill="url(#g)"/><circle cx="920" cy="120" r="310" fill="none" stroke="white" stroke-opacity=".12" stroke-width="2"/><circle cx="920" cy="120" r="220" fill="none" stroke="white" stroke-opacity=".08"/><path d="M-40 640 C260 420 480 760 760 470 S1240 300 1300 560" fill="none" stroke="white" stroke-opacity=".16" stroke-width="5"/><rect x="70" y="70" width="1060" height="660" rx="28" fill="none" stroke="white" stroke-opacity=".12"/><rect width="1200" height="800" filter="url(#n)" opacity=".35"/><text x="82" y="662" fill="white" fill-opacity=".92" font-family="Arial, sans-serif" font-size="58" font-weight="700">${label}</text><text x="86" y="705" fill="white" fill-opacity=".48" font-family="Arial, sans-serif" font-size="18" letter-spacing="7">NOX CASE STUDY</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
 
@@ -169,6 +169,10 @@ export function NoxCaseStudyGallery({
   };
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.classList.contains('ncsg-lightbox')) {
+      pointerStart.current = event.clientX;
+      return;
+    }
     if (layout !== 'carousel') {
       pointerStart.current = event.clientX;
       return;
@@ -209,6 +213,14 @@ export function NoxCaseStudyGallery({
   };
 
   const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.classList.contains('ncsg-lightbox')) {
+      if (pointerStart.current === null) return;
+      const delta = event.clientX - pointerStart.current;
+      pointerStart.current = null;
+      if (Math.abs(delta) < 42) return;
+      delta > 0 ? previous() : next();
+      return;
+    }
     if (layout !== 'carousel') {
       if (pointerStart.current === null) return;
       const delta = event.clientX - pointerStart.current;
