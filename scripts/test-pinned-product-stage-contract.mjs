@@ -39,6 +39,7 @@ for (const contract of [
 const expectedVariants = [
   'nox-floating-card-os',
   'nox-revenue-os',
+  'nox-scroll-story',
   'nox-global-sales-os',
   'project-x-command-center',
   'ai-growth-engine',
@@ -46,11 +47,18 @@ const expectedVariants = [
   'automation-ops-system',
 ];
 
+// `nox-scroll-story` läuft im Layout `sticky-story` und hat deshalb kein
+// semantisches Kernartefakt der gepinnten Bühne — es wird weiter unten gegen
+// den Sticky-Story-Vertrag geprüft.
+const stickyStoryVariants = ['nox-scroll-story'];
+
 for (const id of expectedVariants) {
   const reference = `motion:scroll-pinned-product-stage@${id}`;
   assert.ok(source.includes(reference), `Component missing stable agent reference: ${reference}`);
+  assert.ok(manifest.variants.some((variant) => variant.id === id && variant.reference === reference), `Manifest missing variant: ${id}`);
+  if (stickyStoryVariants.includes(id)) continue;
   assert.ok(coreSystem.includes(`data-product-variant='${id}'`), `Product core missing distinct artifact styling: ${id}`);
-  assert.ok(manifest.variants.some((variant) => variant.id === id && variant.reference === reference && variant.coreArtifact), `Manifest missing semantic core: ${id}`);
+  assert.ok(manifest.variants.some((variant) => variant.id === id && variant.coreArtifact), `Manifest missing semantic core: ${id}`);
 }
 
 for (const semanticCore of ['REVENUE', 'NEXUS', 'SIGNAL', 'CONVERT', 'OPS', 'NOX']) {
@@ -100,8 +108,12 @@ assert.ok(!source.includes('Math.random') && !coreSystem.includes('Math.random')
 // --- Scroll-gekoppelte Eigendrehung ----------------------------------------
 // Die Drehung muss eine reine Funktion des Fortschritts sein. Ein zeitbasierter
 // Term (elapsed) im Winkel würde Rückwärtsscrollen kaputt machen.
-assert.ok(source.includes('const spin = scrollRotationEnabled ? progress * turns * 360 * sign : 0;'),
-  'rotation must be progress * turns * 360 * direction');
+assert.ok(source.includes('progress * turns * 360 * sign'),
+  'free-spin rotation must stay progress * turns * 360 * direction');
+assert.ok(source.includes('(flip * readableAngle + (progress - 0.5) * stackDrift) * sign'),
+  'depth-flip rotation must be readableAngle-bounded and derived from progress only');
+assert.ok(/const flipPhase = timeline - sectionIndex;/.test(source),
+  'depth-flip must derive its phase from the chapter timeline, not from elapsed time');
 assert.ok(source.includes('rot.current.x = damp(rot.current.x, targetX, rotLambda, dt);'),
   'rotation must be damped through its own state (rotationSmoothing)');
 for (const term of ['baseRotationX', 'baseRotationY', 'baseRotationZ', 'stageRotationInfluence']) {
@@ -115,7 +127,8 @@ const stageProps = catalog.slice(catalog.indexOf('props: ['), catalog.indexOf('p
 const REQUIRED_STAGE_CONTROLS = [
   'variant', 'stage', 'autoProgress', 'pageScrollMode', 'showStepNavigation', 'showLabels', 'compactScroll',
   'scrollLength', 'scrollSmoothing', 'stageSnapStrength', 'stageTransitionDuration',
-  'scrollRotationEnabled', 'rotationAxis', 'rotationTurns', 'rotationDirection',
+  'scrollRotationEnabled', 'rotationMode', 'readableAngle', 'stackDrift',
+  'rotationAxis', 'rotationTurns', 'rotationDirection',
   'baseRotationX', 'baseRotationY', 'baseRotationZ', 'stageRotationInfluence', 'rotationSmoothing',
   'objectScale', 'objectDepth', 'perspective', 'cameraDistance', 'objectTilt', 'objectFloat', 'objectFloatSpeed',
   'glow', 'bloom', 'rimLight', 'highlightIntensity', 'shadowIntensity', 'glassOpacity', 'blurStrength',
@@ -151,6 +164,55 @@ assert.equal(Number(defaultOf('perspective')), 1100);
 assert.equal(Number(defaultOf('glow')), 0.6);
 assert.equal(Number(defaultOf('bloom')), 0.35);
 assert.equal(Number(defaultOf('mobileRotationTurns')), 0.25);
+
+// Depth-Flip: die beschränkte Rotationschoreografie für lesbare Tafeln.
+// Der frühere freie Spin drehte das Objekt durch 90° (Kante) und 180°
+// (Rückseite) — dieser Modus muss deshalb existieren, bedienbar sein und
+// unterhalb der 90°-Kante bleiben.
+assert.equal(defaultOf('rotationMode'), 'free-spin');
+assert.equal(Number(defaultOf('readableAngle')), 55);
+assert.equal(Number(defaultOf('stackDrift')), 16);
+assert.ok(source.includes("export type StageRotationMode = 'free-spin' | 'depth-flip'"), 'rotation mode type missing');
+assert.ok(source.includes("rotationMode === 'depth-flip'"), 'depth-flip branch missing in the rAF loop');
+assert.ok(source.includes('flip * readableAngle'), 'depth-flip must bound the angle by readableAngle');
+assert.ok(source.includes("rotationMode === 'depth-flip' ? 0 : timeline * (rotatePerSection - 90)"),
+  'legacy drift must be disabled in depth-flip, otherwise the angle is unbounded again');
+
+const readableAngleMax = Number(stageProps.match(/key: 'readableAngle'[^}]*?max: ([\d.]+)/)[1]);
+assert.ok(readableAngleMax < 90, `readableAngle must stay below the 90° edge, got max ${readableAngleMax}`);
+
+assert.ok(manifest.rotationModes && manifest.rotationModes['depth-flip'], 'manifest must document depth-flip');
+for (const id of ['nox-floating-card-os', 'nox-revenue-os']) {
+  const variant = manifest.variants.find((entry) => entry.id === id);
+  assert.equal(variant.rotationMode, 'depth-flip', `readable-panel variant must default to depth-flip: ${id}`);
+  assert.ok(variant.jsx.includes('rotationMode="depth-flip"'), `variant jsx must show depth-flip: ${id}`);
+}
+
+// --- Sticky Story ----------------------------------------------------------
+// Das Layout darf kein Scroll-Gefängnis bauen und keinen Text am selben Platz
+// austauschen: die Kapitel müssen echter, normal scrollender DOM-Content sein.
+const stickyStory = readFileSync('src/motion-arsenal/effects/scroll/PinnedProductStageStickyStory.tsx', 'utf8');
+for (const contract of [
+  'position:sticky',
+  'pss-chapter',
+  'pss-story',
+  'IntersectionObserver',
+  'offsetTop',
+  "data-layout-mode=\"sticky-story\"",
+]) {
+  assert.ok(stickyStory.includes(contract), `Sticky story contract missing: ${contract}`);
+}
+assert.ok(!/height:\s*100svh[^}]*overflow/.test(stickyStory), 'sticky story must not lock the page scroll');
+assert.ok(!stickyStory.includes('useRafLoop'), 'sticky story must not run a permanent rAF loop');
+assert.ok(stickyStory.includes('chapterHeight = 68'), 'chapter height default must stay below a full viewport');
+assert.ok(coreSystem.includes("motionProps.layoutMode === 'sticky-story'"), 'core system must dispatch the sticky-story layout');
+assert.ok(manifest.layoutModes && manifest.layoutModes['sticky-story'], 'manifest must document the sticky-story layout');
+
+const storyProps = ['layoutMode', 'chapterHeight', 'stickyOffset', 'activeThreshold', 'panelTiltX', 'panelTiltY', 'panelDepth', 'contentTransition', 'textReveal', 'mobileStack'];
+for (const key of storyProps) {
+  assert.ok(stageProps.includes(`key: '${key}'`), `sticky story control missing: ${key}`);
+}
+assert.ok(source.includes('panelTilt?: [number, number]'), 'panelTilt must stay available as a code-level prop');
 
 // Mobile-/Reduced-Motion-Zusagen müssen im Code stehen, nicht nur im Katalog.
 assert.ok(source.includes('disableRotationOnMobile ? 0 : mobileRotationTurns'), 'mobile rotation override missing');
