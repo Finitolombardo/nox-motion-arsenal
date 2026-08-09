@@ -1,17 +1,14 @@
 import { useMemo, useRef } from 'react';
-import { clamp, seededRandom, usePointer, usePrefersReducedMotion } from '../../lib/animationUtils';
+import { clamp, seededRandom, useInView, usePointer, usePrefersReducedMotion } from '../../lib/animationUtils';
 import { useCanvas2D } from '../../lib/canvasUtils';
 import { NOX_COLORS } from '../../lib/motionPresets';
 import { glyphPath } from '../../lib/svgUtils';
 import { driftPointer, useHoverCapable } from './cursorShared';
 
 // ---------------------------------------------------------------------------
-// InteractiveSymbolDrift — Active-Theory emitter/particle pattern on a field
-// of procedural glyphs. Each glyph is a particle with a home position; the
-// pointer applies a radial force (repel OR attract, mode prop) and a spring
-// pulls it back: velocity += (home - pos) * k - vel * damping. Velocity tilts
-// the glyph rotation, a soft double-stroke fakes glow — all Canvas2D, one
-// draw pass, no per-glyph DOM.
+// InteractiveSymbolDrift — spring-return procedural glyph field. The loop now
+// pauses offscreen, clamps malformed controls, reduces the glyph budget on
+// coarse/touch pointers and preserves vertical page scrolling on mobile.
 // ---------------------------------------------------------------------------
 
 export interface InteractiveSymbolDriftProps {
@@ -20,6 +17,7 @@ export interface InteractiveSymbolDriftProps {
   count?: number; // 12..60 glyphs
   colorMode?: 'nox' | 'ember' | 'mono';
   seed?: number;
+  dprCap?: number; // 1..2 render-density budget
 }
 
 const PALETTES: Record<string, string[]> = {
@@ -30,7 +28,7 @@ const PALETTES: Record<string, string[]> = {
 
 interface Glyph {
   path: Path2D;
-  hx: number; // home, normalized 0..1
+  hx: number;
   hy: number;
   x: number;
   y: number;
@@ -47,26 +45,34 @@ export function InteractiveSymbolDrift({
   count = 30,
   colorMode = 'nox',
   seed = 9,
+  dprCap = 1.5,
 }: InteractiveSymbolDriftProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointer = usePointer(rootRef);
   const reduced = usePrefersReducedMotion();
+  const inView = useInView(rootRef);
   const hoverCapable = useHoverCapable();
 
+  const safeRadius = clamp(Number.isFinite(forceRadius) ? forceRadius : 130, 40, 280);
+  const safeCount = clamp(Math.round(Number.isFinite(count) ? count : 30), 12, 60);
+  const budgetedCount = hoverCapable ? safeCount : Math.min(safeCount, 30);
+  const safeSeed = Math.trunc(Number.isFinite(seed) ? seed : 9);
+  const safeDpr = clamp(Number.isFinite(dprCap) ? dprCap : 1.5, 1, 2);
+  const running = inView && !reduced;
+
   const glyphs = useMemo<Glyph[]>(() => {
-    const n = clamp(Math.round(count), 12, 60);
-    const rnd = seededRandom(seed);
+    const rnd = seededRandom(safeSeed);
     const palette = PALETTES[colorMode] ?? PALETTES.nox;
-    const cols = Math.ceil(Math.sqrt(n * 1.7));
-    const rows = Math.ceil(n / cols);
-    return Array.from({ length: n }, (_, i) => {
+    const cols = Math.ceil(Math.sqrt(budgetedCount * 1.7));
+    const rows = Math.ceil(budgetedCount / cols);
+    return Array.from({ length: budgetedCount }, (_, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
       const hx = (col + 0.5) / cols + (rnd() - 0.5) * (0.55 / cols);
       const hy = (row + 0.5) / rows + (rnd() - 0.5) * (0.55 / rows);
       return {
-        path: new Path2D(glyphPath(seed * 101 + i * 17, 26)),
+        path: new Path2D(glyphPath(safeSeed * 101 + i * 17, 26)),
         hx,
         hy,
         x: hx,
@@ -78,50 +84,60 @@ export function InteractiveSymbolDrift({
         color: palette[i % palette.length],
       };
     });
-  }, [count, colorMode, seed]);
+  }, [budgetedCount, colorMode, safeSeed]);
 
   useCanvas2D(
     canvasRef,
     (ctx, size, dt, elapsed) => {
       const p = pointer.current;
-      if (!reduced && !hoverCapable) driftPointer(p, elapsed);
+      if (running && !hoverCapable) driftPointer(p, elapsed);
       const px = p.tx * size.w;
       const py = p.ty * size.h;
 
       ctx.clearRect(0, 0, size.w, size.h);
 
-      const K = 42; // spring stiffness toward home
-      const DAMPING = 5.5;
-      const POWER = mode === 'repel' ? 900 : 640;
+      const spring = 42;
+      const damping = 5.5;
+      const power = mode === 'repel' ? 900 : 640;
 
       for (const g of glyphs) {
         const gx = g.x * size.w;
         const gy = g.y * size.h;
 
-        if (!reduced) {
-          if (p.inside) {
-            const dx = gx - px;
-            const dy = gy - py;
-            const d = Math.hypot(dx, dy);
-            if (d < forceRadius && d > 0.0001) {
-              const s = (1 - d / forceRadius) * POWER;
-              const dir = mode === 'repel' ? 1 : -1;
-              g.vx += ((dx / d) * s * dir * dt) / size.w;
-              g.vy += ((dy / d) * s * dir * dt) / size.h;
-            }
-          }
-          // Spring home + damping: velocity += (home - pos) * k - vel * damping.
-          g.vx += (g.hx - g.x) * K * dt - g.vx * DAMPING * dt;
-          g.vy += (g.hy - g.y) * K * dt - g.vy * DAMPING * dt;
-          g.vx = clamp(g.vx, -1.6, 1.6);
-          g.vy = clamp(g.vy, -1.6, 1.6);
-          g.x += g.vx * dt;
-          g.y += g.vy * dt;
-        } else {
+        if (reduced) {
           g.x = g.hx;
           g.y = g.hy;
           g.vx = 0;
           g.vy = 0;
+        } else if (running) {
+          if (p.inside) {
+            const dx = gx - px;
+            const dy = gy - py;
+            const d2 = dx * dx + dy * dy;
+            const radius2 = safeRadius * safeRadius;
+            if (d2 < radius2 && d2 > 0.0001) {
+              const d = Math.sqrt(d2);
+              const strength = (1 - d / safeRadius) * power;
+              const dir = mode === 'repel' ? 1 : -1;
+              g.vx += ((dx / d) * strength * dir * dt) / size.w;
+              g.vy += ((dy / d) * strength * dir * dt) / size.h;
+            }
+          }
+          g.vx += (g.hx - g.x) * spring * dt - g.vx * damping * dt;
+          g.vy += (g.hy - g.y) * spring * dt - g.vy * damping * dt;
+          g.vx = clamp(g.vx, -1.6, 1.6);
+          g.vy = clamp(g.vy, -1.6, 1.6);
+          g.x += g.vx * dt;
+          g.y += g.vy * dt;
+
+          if (Math.abs(g.vx) < 0.00002 && Math.abs(g.hx - g.x) < 0.00002) {
+            g.vx = 0;
+            g.x = g.hx;
+          }
+          if (Math.abs(g.vy) < 0.00002 && Math.abs(g.hy - g.y) < 0.00002) {
+            g.vy = 0;
+            g.y = g.hy;
+          }
         }
 
         const speed = Math.hypot(g.vx, g.vy);
@@ -133,45 +149,48 @@ export function InteractiveSymbolDrift({
         ctx.translate(-13, -13);
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        // Glow underlay (thick, translucent) — brighter while in motion.
         ctx.strokeStyle = g.color;
         ctx.globalAlpha = 0.1 + excite * 0.3;
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 5;
         ctx.stroke(g.path);
-        // Crisp stroke.
         ctx.globalAlpha = 0.55 + excite * 0.45;
         ctx.lineWidth = 1.6;
         ctx.stroke(g.path);
         ctx.restore();
       }
 
-      // Pointer marker ring.
-      if (!reduced && p.inside) {
-        ctx.globalAlpha = 0.35;
+      if (running && p.inside) {
+        ctx.globalAlpha = 0.28;
         ctx.strokeStyle = mode === 'repel' ? NOX_COLORS.red : NOX_COLORS.gold;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(px, py, forceRadius, 0, Math.PI * 2);
+        ctx.arc(px, py, safeRadius, 0, Math.PI * 2);
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
     },
-    !reduced,
+    running,
+    safeDpr,
   );
 
   return (
     <div
       ref={rootRef}
+      data-running={running ? 'true' : 'false'}
       style={{
         position: 'absolute',
         inset: 0,
         overflow: 'hidden',
         background: `radial-gradient(120% 100% at 50% 0%, #101014 0%, ${NOX_COLORS.bg} 62%)`,
-        touchAction: 'none',
+        touchAction: 'pan-y',
       }}
     >
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }} />
-      <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block', pointerEvents: 'none' }}
+      />
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontFamily: 'var(--mono, monospace)', fontSize: 10, letterSpacing: '0.42em', color: NOX_COLORS.textDim }}>
             EMITTER FIELD // {mode === 'repel' ? 'EVADE' : 'CONVERGE'}
