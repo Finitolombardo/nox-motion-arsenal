@@ -135,6 +135,17 @@ export function SelectionEnergyRippleV2({
     return { ctx, width, height };
   };
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const syncCanvasSize = () => { ensureCanvas(); };
+    syncCanvasSize();
+    const observer = new ResizeObserver(syncCanvasSize);
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
   const runFrame = (now: number) => {
     const surface = ensureCanvas();
     if (!surface) {
