@@ -49,6 +49,11 @@ jobs:
         run: |
           $changes = git status --porcelain -- package-lock.json
           if ($changes) {
+            $repaired = Join-Path $env:RUNNER_TEMP 'package-lock.repaired.json'
+            Copy-Item -LiteralPath package-lock.json -Destination $repaired -Force
+            git fetch origin ${{ github.head_ref }}
+            git checkout -B ${{ github.head_ref }} origin/${{ github.head_ref }}
+            Copy-Item -LiteralPath $repaired -Destination package-lock.json -Force
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add package-lock.json
