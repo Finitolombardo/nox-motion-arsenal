@@ -1,13 +1,15 @@
-import React, { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useCanvas2D } from '../../lib/canvasUtils';
-import { usePrefersReducedMotion, seededRandom, damp } from '../../lib/animationUtils';
+import { clamp, damp, seededRandom, useInView, usePrefersReducedMotion } from '../../lib/animationUtils';
 
 // ---------------------------------------------------------------------------
 // OrbitalLightTrails — NOX Adapted der Active-Theory-Trail-Mechanik.
-// Autonome Licht-Emitter auf elliptischen Lissajous-Orbits schreiben
-// Positions-History-Trails (Decay + Taper, additive Komposition).
-// NOX-Palette (Ember-Rot/Gold/Weißglut), langsamer und atmosphärischer als
-// die Referenz — als Hintergrund hinter Content gedacht.
+//
+// V2 keeps the original autonomous Lissajous-light idea, but turns it into a
+// reusable production background: no hard-coded demo copy, no per-segment
+// stroke loop, no radial-gradient allocation for every orb on every frame.
+// The loop pauses offscreen, pointer input only bends the field subtly, and
+// reduced motion renders a deterministic static composition.
 // ---------------------------------------------------------------------------
 
 export interface OrbitalLightTrailsProps {
@@ -17,8 +19,10 @@ export interface OrbitalLightTrailsProps {
   intensity?: number;
 }
 
+type Point = { x: number; y: number };
+
 interface Orb {
-  hist: Array<{ x: number; y: number }>;
+  hist: Point[];
   x: number;
   y: number;
   color: [number, number, number];
@@ -28,102 +32,243 @@ interface Orb {
   rx: number;
   ry: number;
   lambda: number;
+  depth: number;
+}
+
+interface PointerState {
+  x: number;
+  y: number;
+  tx: number;
+  ty: number;
+  active: boolean;
 }
 
 const NOX_TRAIL_COLORS: Array<[number, number, number]> = [
-  [201, 48, 48], // nox red
-  [212, 162, 74], // gold
-  [255, 120, 60], // ember
-  [240, 236, 228], // white heat
+  [201, 48, 48],
+  [212, 162, 74],
+  [255, 120, 60],
+  [240, 236, 228],
 ];
 
-export function OrbitalLightTrails({ orbCount = 4, trailLength = 60, speed = 1, intensity = 0.85 }: OrbitalLightTrailsProps) {
+const rgb = ([r, g, b]: [number, number, number], alpha: number) =>
+  `rgba(${r}, ${g}, ${b}, ${clamp(alpha, 0, 1).toFixed(3)})`;
+
+function createGlowSprite(color: [number, number, number]) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return canvas;
+
+  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, rgb(color, 0.95));
+  g.addColorStop(0.12, rgb(color, 0.52));
+  g.addColorStop(0.38, rgb(color, 0.18));
+  g.addColorStop(1, rgb(color, 0));
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 128, 128);
+  return canvas;
+}
+
+function traceSmoothPath(ctx: CanvasRenderingContext2D, points: Point[], w: number, h: number) {
+  if (points.length < 2) return false;
+  const first = points[0];
+  ctx.beginPath();
+  ctx.moveTo(first.x * w, first.y * h);
+
+  for (let i = 1; i < points.length - 1; i += 1) {
+    const current = points[i];
+    const next = points[i + 1];
+    const mx = ((current.x + next.x) * 0.5) * w;
+    const my = ((current.y + next.y) * 0.5) * h;
+    ctx.quadraticCurveTo(current.x * w, current.y * h, mx, my);
+  }
+
+  const last = points[points.length - 1];
+  ctx.lineTo(last.x * w, last.y * h);
+  return true;
+}
+
+function orbitPosition(orb: Orb, t: number, pointerX: number, pointerY: number, pointerMix: number): Point {
+  const baseX = 0.5 + Math.sin(t * orb.fx * Math.PI * 2 + orb.phase) * orb.rx;
+  const baseY = 0.5 + Math.sin(t * orb.fy * Math.PI * 2 + orb.phase * 1.7) * orb.ry;
+  const depthInfluence = 0.55 + orb.depth * 0.45;
+  return {
+    x: baseX + (pointerX - 0.5) * pointerMix * depthInfluence,
+    y: baseY + (pointerY - 0.5) * pointerMix * depthInfluence,
+  };
+}
+
+export function OrbitalLightTrails({
+  orbCount = 4,
+  trailLength = 60,
+  speed = 1,
+  intensity = 0.85,
+}: OrbitalLightTrailsProps) {
+  const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const reduced = usePrefersReducedMotion();
+  const inView = useInView(hostRef);
   const orbs = useRef<Orb[] | null>(null);
+  const sprites = useRef<HTMLCanvasElement[] | null>(null);
+  const pointer = useRef<PointerState>({ x: 0.5, y: 0.5, tx: 0.5, ty: 0.5, active: false });
+
+  const safeIntensity = clamp(intensity, 0, 1.5);
+  const safeSpeed = clamp(speed, 0.15, 3);
+  const safeTrailLength = Math.round(clamp(trailLength, 12, 120));
+
+  // The effect itself stays pointer-transparent so it can safely sit behind
+  // real buttons/content. Pointer parallax is sampled passively from window.
+  useEffect(() => {
+    if (reduced) {
+      pointer.current.active = false;
+      return;
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') {
+        pointer.current.active = false;
+        return;
+      }
+      const host = hostRef.current;
+      if (!host) return;
+      const rect = host.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      const inside = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+      pointer.current.active = inside;
+      if (!inside) return;
+      pointer.current.tx = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+      pointer.current.ty = clamp((event.clientY - rect.top) / rect.height, 0, 1);
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onPointerMove);
+  }, [reduced]);
 
   useCanvas2D(
     canvasRef,
     (ctx, size, dt, elapsed) => {
-      const n = Math.max(1, Math.min(8, Math.round(orbCount)));
-      if (!orbs.current || orbs.current.length !== n) {
+      const narrow = size.w < 700;
+      const requested = Math.round(clamp(orbCount, 1, 8));
+      const count = narrow ? Math.min(requested, 5) : requested;
+      const historyLimit = narrow ? Math.min(safeTrailLength, 72) : safeTrailLength;
+
+      if (!orbs.current || orbs.current.length !== count) {
         const rnd = seededRandom(77);
-        orbs.current = Array.from({ length: n }, (_, i) => ({
+        orbs.current = Array.from({ length: count }, (_, i) => ({
           hist: [],
-          x: size.w / 2,
-          y: size.h / 2,
+          x: 0.5,
+          y: 0.5,
           color: NOX_TRAIL_COLORS[i % NOX_TRAIL_COLORS.length],
-          fx: 0.12 + rnd() * 0.22, // Lissajous-Frequenzen
+          fx: 0.12 + rnd() * 0.22,
           fy: 0.09 + rnd() * 0.2,
           phase: rnd() * Math.PI * 2,
-          rx: 0.22 + rnd() * 0.22, // Orbit-Radien relativ zur Fläche
+          rx: 0.22 + rnd() * 0.22,
           ry: 0.18 + rnd() * 0.2,
           lambda: 3 + rnd() * 4,
+          depth: 0.25 + rnd() * 0.75,
         }));
       }
 
+      if (!sprites.current) {
+        sprites.current = NOX_TRAIL_COLORS.map(createGlowSprite);
+      }
+
       ctx.clearRect(0, 0, size.w, size.h);
-      // Hintergrund-Tiefe
-      const bg = ctx.createRadialGradient(size.w / 2, size.h * 1.1, 0, size.w / 2, size.h * 1.1, size.h * 1.4);
-      bg.addColorStop(0, '#170b08');
-      bg.addColorStop(0.55, '#0a0a0b');
-      bg.addColorStop(1, '#08080a');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, size.w, size.h);
-
       ctx.globalCompositeOperation = 'lighter';
-      const t = elapsed * speed;
-      const H = Math.max(12, Math.min(120, Math.round(trailLength)));
 
-      for (const o of orbs.current) {
-        // Lissajous-Ziel + gedämpftes Folgen (AT-Lerp-Mechanik)
-        const tx = size.w * (0.5 + Math.sin(t * o.fx * Math.PI * 2 + o.phase) * o.rx);
-        const ty = size.h * (0.5 + Math.sin(t * o.fy * Math.PI * 2 + o.phase * 1.7) * o.ry);
-        o.x = damp(o.x, tx, o.lambda, dt);
-        o.y = damp(o.y, ty, o.lambda, dt);
-        o.hist.push({ x: o.x, y: o.y });
-        if (o.hist.length > H) o.hist.shift();
+      const p = pointer.current;
+      const pointerLambda = p.active ? 7.5 : 2.4;
+      p.tx = p.active ? p.tx : 0.5;
+      p.ty = p.active ? p.ty : 0.5;
+      p.x = reduced ? 0.5 : damp(p.x, p.tx, pointerLambda, dt);
+      p.y = reduced ? 0.5 : damp(p.y, p.ty, pointerLambda, dt);
 
-        for (let i = 1; i < o.hist.length; i++) {
-          const a = o.hist[i - 1];
-          const b = o.hist[i];
-          const f = i / o.hist.length;
-          ctx.strokeStyle = `rgba(${o.color[0]}, ${o.color[1]}, ${o.color[2]}, ${(f * f * 0.4 * intensity).toFixed(3)})`;
-          ctx.lineWidth = 0.5 + f * 3;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+      const t = elapsed * safeSpeed;
+      const pointerMix = reduced ? 0 : 0.075;
+
+      for (let index = 0; index < orbs.current.length; index += 1) {
+        const orb = orbs.current[index];
+        const target = orbitPosition(orb, t, p.x, p.y, pointerMix);
+
+        if (reduced || dt === 0) {
+          orb.x = target.x;
+          orb.y = target.y;
+          orb.hist = Array.from({ length: Math.min(historyLimit, 34) }, (_, i) => {
+            const age = (Math.min(historyLimit, 34) - 1 - i) * 0.025;
+            return orbitPosition(orb, t - age, 0.5, 0.5, 0);
+          });
+        } else {
+          orb.x = damp(orb.x, target.x, orb.lambda, dt);
+          orb.y = damp(orb.y, target.y, orb.lambda, dt);
+          orb.hist.push({ x: orb.x, y: orb.y });
+          if (orb.hist.length > historyLimit) orb.hist.splice(0, orb.hist.length - historyLimit);
         }
-        const grd = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, 26);
-        grd.addColorStop(0, `rgba(${o.color[0]}, ${o.color[1]}, ${o.color[2]}, ${0.55 * intensity})`);
-        grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grd;
+
+        if (!traceSmoothPath(ctx, orb.hist, size.w, size.h)) continue;
+
+        const depthAlpha = (0.55 + orb.depth * 0.45) * safeIntensity;
+        const depthWidth = 0.85 + orb.depth * 1.55;
+
+        // Two smooth strokes replace the old O(history) per-segment stroke loop.
+        // The broad pass supplies haze; the narrow pass keeps the trail crisp.
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = rgb(orb.color, 0.075 * depthAlpha);
+        ctx.lineWidth = 6.5 * depthWidth;
+        ctx.stroke();
+
+        traceSmoothPath(ctx, orb.hist, size.w, size.h);
+        ctx.strokeStyle = rgb(orb.color, 0.34 * depthAlpha);
+        ctx.lineWidth = 1.15 * depthWidth;
+        ctx.stroke();
+
+        const headX = orb.x * size.w;
+        const headY = orb.y * size.h;
+        const sprite = sprites.current[index % sprites.current.length];
+        const glowSize = (42 + orb.depth * 34) * (narrow ? 0.82 : 1);
+        ctx.globalAlpha = clamp(0.42 * depthAlpha, 0, 1);
+        ctx.drawImage(sprite, headX - glowSize, headY - glowSize, glowSize * 2, glowSize * 2);
+        ctx.globalAlpha = 1;
+
+        ctx.fillStyle = rgb(orb.color, 0.82 * safeIntensity);
         ctx.beginPath();
-        ctx.arc(o.x, o.y, 26, 0, Math.PI * 2);
+        ctx.arc(headX, headY, 0.9 + orb.depth * 1.25, 0, Math.PI * 2);
         ctx.fill();
       }
+
       ctx.globalCompositeOperation = 'source-over';
-      // Vignette, damit Content lesbar bleibt
-      const vg = ctx.createRadialGradient(size.w / 2, size.h * 0.45, 0, size.w / 2, size.h * 0.45, size.w * 0.6);
-      vg.addColorStop(0, 'rgba(10,10,11,0.45)');
-      vg.addColorStop(1, 'rgba(10,10,11,0)');
-      ctx.fillStyle = vg;
-      ctx.fillRect(0, 0, size.w, size.h);
+      ctx.globalAlpha = 1;
     },
-    !reduced,
+    inView && !reduced,
+    1.75,
   );
 
   return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#0a0a0b' }}>
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
-      <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--mono, monospace)', fontSize: 10, letterSpacing: '0.35em', color: '#8a8781' }}>NOX ATMOSPHERE</div>
-          <div style={{ fontSize: 'clamp(26px, 4.5vw, 48px)', fontWeight: 750, color: '#f0ece4' }}>ORBITAL LIGHT TRAILS</div>
-        </div>
-      </div>
+    <div
+      ref={hostRef}
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        background:
+          'radial-gradient(circle at 50% 115%, rgba(74, 26, 12, 0.34), transparent 54%), radial-gradient(circle at 50% 42%, #111116 0%, #09090c 58%, #060608 100%)',
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          background: 'radial-gradient(circle at 50% 45%, transparent 0%, rgba(4,4,7,0.08) 50%, rgba(3,3,5,0.58) 100%)',
+        }}
+      />
     </div>
   );
 }
