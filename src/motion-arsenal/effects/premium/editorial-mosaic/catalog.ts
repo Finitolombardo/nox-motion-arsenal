@@ -1,0 +1,57 @@
+import { lazy } from 'react';
+import type { EffectEntry } from '../../../types';
+
+export const EDITORIAL_MOSAIC_CATALOG: EffectEntry[] = [
+  {
+    meta: {
+      id: 'premium-editorial-mosaic',
+      name: 'NoxEditorialMosaic',
+      displayName: 'NOX Editorial Mosaic',
+      category: 'premium',
+      sourceWebsite: 'nox-original',
+      sourceFiles: ['NAMIÉ customer-build layout pattern, neutralized for Arsenal reuse; no client assets or client copy included'],
+      mode: 'nox-adapted',
+      complexity: 'low',
+      dependencies: [],
+      bestFor: [
+        'Boutique-Wellness- und Studio-Websites',
+        'Hospitality- und Interior-Storytelling',
+        'Fashion- und Brand-World-Sektionen',
+        'Architektur- und Raumkonzepte',
+        'Portfolio- und Launch-Kompositionen',
+      ],
+      performanceNotes: 'DOM/CSS-only. Fünf responsive Bildkacheln, CSS-Grid, einmaliger Reveal und dezenter Hover-Zoom; keine Canvas-, WebGL- oder dauerhaften rAF-Kosten.',
+      mobileNotes: 'Unter 620px wird das Layout zu einer gestaffelten 2-Spalten-Komposition: Hero vollbreit, zwei Detailkacheln, Wide- und Band-Kachel. Keine horizontale Scroll-Abhängigkeit.',
+      reducedMotionNotes: 'Reveal und Hover-Transitionen werden vollständig deaktiviert; Layout, Labels und Wortmarke bleiben unverändert lesbar.',
+      description: 'Editoriales Fünf-Bild-Mosaik mit großer Hero-Kachel, zwei Detailframes, breiter Story-Kachel und Full-Width-Band. Extrahiert aus einem NOX-Kundenbuild, neutralisiert und ohne Kundendaten als wiederverwendbares Premium-Pattern.',
+      currentUsage: ['Pattern source: NAMIÉ boutique studio build; reusable Arsenal version intentionally contains no NAMIÉ/Dilara assets, logo paths, pricing, claims or customer copy.'],
+      technicalBasis: 'Responsive CSS Grid with stable tile geometry, object-fit imagery, optional generic wordmark overlay, CSS-only entrance choreography and reduced-motion fallback.',
+      importPath: '@/motion-arsenal/effects/premium/editorial-mosaic/NoxEditorialMosaic',
+      usageJsx: '<NoxEditorialMosaic variant="atelier" gap={3} radius={0} showWordmark showLabels motion="subtle" />',
+      props: [
+        { key: 'variant', label: 'Visual Preset', type: 'select', default: 'atelier', options: ['atelier', 'hospitality', 'portfolio'], group: 'Content' },
+        { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'BRAND WORLD', group: 'Content' },
+        { key: 'headline', label: 'Headline', type: 'text', default: 'A world in composition.', group: 'Content' },
+        { key: 'wordmark', label: 'Wordmark', type: 'text', default: 'NOX', group: 'Brand' },
+        { key: 'showWordmark', label: 'Show Wordmark', type: 'boolean', default: true, group: 'Brand' },
+        { key: 'showLabels', label: 'Show Labels', type: 'boolean', default: true, group: 'Content' },
+        { key: 'gap', label: 'Tile Gap', type: 'range', default: 3, min: 0, max: 18, step: 1, group: 'Layout' },
+        { key: 'radius', label: 'Corner Radius', type: 'range', default: 0, min: 0, max: 28, step: 1, group: 'Layout' },
+        { key: 'motion', label: 'Motion', type: 'select', default: 'subtle', options: ['subtle', 'still'], group: 'Motion' },
+      ],
+      improvementStatus: 'improved',
+      lastImprovedAt: '2026-08-10T12:45:00.000Z',
+      lastImprovedBy: 'chatgpt-gpt-5.6-sol',
+      improvementVersion: '1.0.0',
+      improvementChangelog: [
+        'Extracted the approved asymmetric five-image mosaic composition from the NAMIÉ customer build into a neutral reusable Arsenal effect.',
+        'Removed all customer-specific assets and copy; added generic generated preview artwork and three reusable content presets.',
+        'Added responsive tablet/mobile compositions, reduced-motion fallback, optional labels and wordmark, plus operator controls for gap and radius.',
+      ],
+      productionSafe: true,
+      status: 'candidate',
+      fullBleed: true,
+    },
+    Component: lazy(() => import('./NoxEditorialMosaic')),
+  },
+];
