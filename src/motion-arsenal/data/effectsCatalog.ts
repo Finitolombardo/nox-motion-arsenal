@@ -10,6 +10,7 @@ import { SYSTEM_CATALOG } from '../effects/system/catalog';
 import { FORMS_CATALOG } from '../effects/forms/catalog';
 import { OVERLAYS_CATALOG } from '../effects/overlays/catalog';
 import { PREMIUM_CATALOG } from '../effects/premium/catalog';
+import { EDITORIAL_MOSAIC_CATALOG } from '../effects/premium/editorial-mosaic/catalog';
 import { SOCIAL_PROOF_CATALOG } from '../effects/premium/socialProofCatalog';
 import { SHOWCASE_CATALOG } from '../effects/premium/showcaseCatalog';
 import { FORGE_SKILLTREE_CATALOG } from '../effects/forge-skilltree/catalog';
@@ -23,6 +24,7 @@ const RAW_EFFECTS_CATALOG: EffectEntry[] = [
   ...SHOWCASE_CATALOG,
   ...SOCIAL_PROOF_CATALOG,
   ...PREMIUM_CATALOG,
+  ...EDITORIAL_MOSAIC_CATALOG,
   ...FORGE_SKILLTREE_CATALOG,
   ...BACKGROUNDS_CATALOG,
   ...HERO_CATALOG,
@@ -105,28 +107,6 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
     improvementVersion: '2.1.0',
     improvementChangelog: [
       'Added Revenue OS, Agent Ops, and Launch Sequence story presets with an optional in-effect variant switcher.',
-      'Added calm, charged, and overdrive energy profiles that tune timeline speed, damping, line weight, and glow without adding runtime dependencies.',
-      'Improved production readability with node detail labels, a moving progress pulse, mobile label fallback, and a complete reduced-motion end state while preserving all legacy props.',
-    ],
-  },
-  'premium-signal-particles': {
-    improvementStatus: 'improved',
-    lastImprovedAt: '2026-07-31T00:09:00.000Z',
-    lastImprovedBy: 'foundry-hourly',
-    improvementVersion: '2.1.0',
-    improvementChangelog: [
-      'Added five production-ready particle narratives: Agent Constellation, Revenue Funnel Flight, Forge Ember Murmuration, Signal Resonance Vortex, and Command Formation.',
-      'Added calm, charged, and overdrive energy profiles plus operator-selectable orbit, swarm, settle, and automatic choreography while preserving the original count, mode, intensity, and sparkSize props.',
-      'Added configurable trail persistence, link distance, variant, energy, and mode switchers with a static reduced-motion presentation and a bounded single-Canvas2D particle budget.',
-    ],
-  },
-  'premium-terminal-scan-reveal': {
-    improvementStatus: 'improved',
-    lastImprovedAt: '2026-07-31T01:08:00.000Z',
-    lastImprovedBy: 'foundry-hourly',
-    improvementVersion: '2.1.0',
-    improvementChangelog: [
-      'Added System Audit, Lead Recovery, and Agent Readiness narratives with scenario-specific terminal copy, modules, and conversion CTAs.',
       'Added calm, charged, and overdrive energy profiles controlling sequence tempo, scan width, caret cadence, and glow while preserving speed, scanDuration, and autoStart.',
       'Added touch-friendly variant and energy switchers, optional replay control, aria-live terminal output, responsive mobile layout, and a complete reduced-motion end state without runtime dependencies.',
     ],
@@ -150,7 +130,7 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
     improvementChangelog: [
       'Added Capability Map, Agent Swarm, and Revenue Orbit narratives with production-oriented labels and node-state sequencing.',
       'Added calm, charged, and overdrive energy profiles that tune float distance, tempo, atmosphere density, and pulse intensity while preserving count, floatDistance, and floatSpeed.',
-      'Added optional labels, deterministic responsive placement, accessible scene labeling, and bounded CSS-only animation without runtime dependencies.',
+      'Added optional labels, deterministic responsive placement, accessible scene labeling, responsive context treatment, and no additional animation loops or runtime dependencies.',
     ],
   },
   'skilltree-active-pulse-ring': {
