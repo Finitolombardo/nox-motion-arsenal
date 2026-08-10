@@ -107,8 +107,8 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
     improvementVersion: '2.1.0',
     improvementChangelog: [
       'Added Revenue OS, Agent Ops, and Launch Sequence story presets with an optional in-effect variant switcher.',
-      'Added calm, charged, and overdrive energy profiles controlling sequence tempo, scan width, caret cadence, and glow while preserving speed, scanDuration, and autoStart.',
-      'Added touch-friendly variant and energy switchers, optional replay control, aria-live terminal output, responsive mobile layout, and a complete reduced-motion end state without runtime dependencies.',
+      'Added calm, charged, and overdrive energy profiles that tune timeline speed, damping, line weight, and glow without adding runtime dependencies.',
+      'Improved production readability with node detail labels, a moving progress pulse, mobile label fallback, and a complete reduced-motion end state while preserving all legacy props.',
     ],
   },
   'premium-signal-particles': {
@@ -152,7 +152,7 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
     improvementChangelog: [
       'Added Capability Map, Agent Swarm, and Revenue Orbit narratives with production-oriented labels and node-state sequencing.',
       'Added calm, charged, and overdrive energy profiles that tune float distance, tempo, atmosphere density, and pulse intensity while preserving count, floatDistance, and floatSpeed.',
-      'Added optional labels, deterministic responsive placement, accessible scene labeling, responsive context treatment, and no additional animation loops or runtime dependencies.',
+      'Added optional labels, deterministic responsive placement, accessible scene labeling, and bounded CSS-only animation without runtime dependencies.',
     ],
   },
   'skilltree-active-pulse-ring': {
