@@ -1,16 +1,13 @@
 import { useRef, type CSSProperties } from 'react';
-import { damp, lerp, usePointer, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
+import { clamp, damp, lerp, useInView, usePointer, usePrefersReducedMotion, useRafLoop } from '../../lib/animationUtils';
 import { NOX_COLORS } from '../../lib/motionPresets';
 import { useTouchMode } from './cardDemoUtils';
 
 // ---------------------------------------------------------------------------
 // TiltParallaxCard — 3D tilt with INNER parallax planes.
-// Follow phase: damped tilt (Lusion damp, lambda = 12) toward the pointer.
-// Inside the card, badge / number / typo / glow float on translateZ steps so
-// perspective produces real parallax between planes. A glare sweep slides
-// with the tilt angle. On pointer leave the card settles via an UNDERDAMPED
-// spring — the KRANK overshoot (cubic-bezier(.3,0,.66,-.3)) as physics, not
-// as CSS: it swings past flat and elastically bounces back.
+// Pointer devices get damped tilt + an underdamped settle. Touch and reduced
+// motion stay static: no decorative perpetual rAF loop. The animation also
+// pauses completely while the preview is outside the viewport.
 // ---------------------------------------------------------------------------
 
 export interface TiltParallaxCardProps {
@@ -31,27 +28,27 @@ export function TiltParallaxCard({
   const pointer = usePointer(rootRef);
   const reduced = usePrefersReducedMotion();
   const touch = useTouchMode();
+  const inView = useInView(rootRef);
 
+  const tilt = clamp(maxTilt, 0, 24);
+  const depthScale = clamp(depth, 0, 2);
+  const glareStrength = clamp(glare, 0, 1);
+  const springiness = clamp(overshoot, 0, 1);
   const anim = useRef({ rx: 0, ry: 0, vx: 0, vy: 0 });
 
   useRafLoop(
-    (dt, t) => {
+    (rawDt) => {
       const el = cardRef.current;
       if (!el) return;
+
+      // Prevent giant spring jumps after tab throttling / debugger pauses.
+      const dt = Math.min(Math.max(rawDt, 0), 1 / 20);
       const p = pointer.current;
       const s = anim.current;
-      const following = touch || p.inside;
-      if (following) {
-        let trx: number;
-        let try_: number;
-        if (touch) {
-          trx = Math.sin(t * 0.75) * maxTilt * 0.7;
-          try_ = Math.cos(t * 0.55) * maxTilt * 0.7;
-        } else {
-          trx = -(p.ty - 0.5) * 2 * maxTilt;
-          try_ = (p.tx - 0.5) * 2 * maxTilt;
-        }
-        // damp lambda = 12 — track velocity so the spring handoff is seamless.
+
+      if (p.inside) {
+        const trx = -(p.ty - 0.5) * 2 * tilt;
+        const try_ = (p.tx - 0.5) * 2 * tilt;
         const nrx = damp(s.rx, trx, 12, dt);
         const nry = damp(s.ry, try_, 12, dt);
         s.vx = (nrx - s.rx) / Math.max(dt, 1e-4);
@@ -61,24 +58,31 @@ export function TiltParallaxCard({
       } else {
         // KRANK-style overshoot settle: underdamped spring toward flat.
         const k = 90;
-        const c = lerp(15, 4.5, overshoot);
+        const c = lerp(15, 4.5, springiness);
         s.vx += (-k * s.rx - c * s.vx) * dt;
         s.vy += (-k * s.ry - c * s.vy) * dt;
         s.rx += s.vx * dt;
         s.ry += s.vy * dt;
+
+        // Snap microscopic residual motion to zero so styles stop changing.
+        if (Math.abs(s.rx) < 0.002 && Math.abs(s.ry) < 0.002 && Math.abs(s.vx) < 0.01 && Math.abs(s.vy) < 0.01) {
+          s.rx = 0;
+          s.ry = 0;
+          s.vx = 0;
+          s.vy = 0;
+        }
       }
+
       el.style.setProperty('--tp-rx', s.rx.toFixed(3));
       el.style.setProperty('--tp-ry', s.ry.toFixed(3));
     },
-    !reduced,
+    inView && !reduced && !touch,
   );
 
   const cardVars = { '--tp-rx': '0', '--tp-ry': '0' } as CSSProperties;
-  const z = (v: number) => `${(v * depth).toFixed(1)}px`;
-  // Inner planes drift slightly opposite to tilt on top of translateZ.
+  const z = (v: number) => `${(v * depthScale).toFixed(1)}px`;
   const plane = (zv: number, driftMul: number): CSSProperties => ({
     transform: `translateZ(${z(zv)}) translate(calc(var(--tp-ry) * ${driftMul}px), calc(var(--tp-rx) * ${-driftMul}px))`,
-    willChange: 'transform',
   });
 
   return (
@@ -99,7 +103,7 @@ export function TiltParallaxCard({
         style={{
           ...cardVars,
           position: 'relative',
-          width: 'min(340px, 74%)',
+          width: 'min(340px, 78%)',
           aspectRatio: '1.55',
           maxHeight: '80%',
           borderRadius: 16,
@@ -108,10 +112,9 @@ export function TiltParallaxCard({
           background: `linear-gradient(158deg, #1b1a1f 0%, ${NOX_COLORS.bgPanel} 52%, #0c0c0f 100%)`,
           border: '1px solid rgba(255,255,255,0.09)',
           boxShadow: '0 26px 60px rgba(0,0,0,0.6)',
-          willChange: 'transform',
+          willChange: inView && !reduced && !touch ? 'transform' : 'auto',
         }}
       >
-        {/* Deep glow plane (lowest z) */}
         <div
           style={{
             position: 'absolute',
@@ -122,7 +125,7 @@ export function TiltParallaxCard({
             ...plane(12, -0.5),
           }}
         />
-        {/* Glare sweep tied to the tilt angle */}
+
         <div
           style={{
             position: 'absolute',
@@ -137,14 +140,14 @@ export function TiltParallaxCard({
             style={{
               position: 'absolute',
               inset: 0,
-              backgroundImage: `linear-gradient(105deg, transparent 34%, rgba(255,255,255,${(0.32 * glare).toFixed(3)}) 47%, rgba(255,255,255,${(0.06 * glare).toFixed(3)}) 52%, transparent 64%)`,
+              backgroundImage: `linear-gradient(105deg, transparent 34%, rgba(255,255,255,${(0.32 * glareStrength).toFixed(3)}) 47%, rgba(255,255,255,${(0.06 * glareStrength).toFixed(3)}) 52%, transparent 64%)`,
               backgroundSize: '240% 100%',
               backgroundPositionX: 'calc(50% + var(--tp-ry) * 3.2%)',
               mixBlendMode: 'screen',
             }}
           />
         </div>
-        {/* Typo plane */}
+
         <div
           style={{
             position: 'absolute',
@@ -165,7 +168,7 @@ export function TiltParallaxCard({
             PARALLAX PLANES Z12–Z70
           </div>
         </div>
-        {/* Big number plane */}
+
         <div
           style={{
             position: 'absolute',
@@ -182,7 +185,7 @@ export function TiltParallaxCard({
         >
           07
         </div>
-        {/* Badge plane (highest z) */}
+
         <div
           style={{
             position: 'absolute',
