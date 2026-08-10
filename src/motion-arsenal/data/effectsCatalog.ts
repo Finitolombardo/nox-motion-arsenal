@@ -111,6 +111,28 @@ const IMPROVEMENT_OVERRIDES: Record<string, Partial<EffectEntry['meta']>> = {
       'Added touch-friendly variant and energy switchers, optional replay control, aria-live terminal output, responsive mobile layout, and a complete reduced-motion end state without runtime dependencies.',
     ],
   },
+  'premium-signal-particles': {
+    improvementStatus: 'improved',
+    lastImprovedAt: '2026-07-31T00:09:00.000Z',
+    lastImprovedBy: 'foundry-hourly',
+    improvementVersion: '2.1.0',
+    improvementChangelog: [
+      'Added five production-ready particle narratives: Agent Constellation, Revenue Funnel Flight, Forge Ember Murmuration, Signal Resonance Vortex, and Command Formation.',
+      'Added calm, charged, and overdrive energy profiles plus operator-selectable orbit, swarm, settle, and automatic choreography while preserving the original count, mode, intensity, and sparkSize props.',
+      'Added configurable trail persistence, link distance, variant, energy, and mode switchers with a static reduced-motion presentation and a bounded single-Canvas2D particle budget.',
+    ],
+  },
+  'premium-terminal-scan-reveal': {
+    improvementStatus: 'improved',
+    lastImprovedAt: '2026-07-31T01:08:00.000Z',
+    lastImprovedBy: 'foundry-hourly',
+    improvementVersion: '2.1.0',
+    improvementChangelog: [
+      'Added System Audit, Lead Recovery, and Agent Readiness narratives with scenario-specific terminal copy, modules, and conversion CTAs.',
+      'Added calm, charged, and overdrive energy profiles controlling sequence tempo, scan width, caret cadence, and glow while preserving speed, scanDuration, and autoStart.',
+      'Added touch-friendly variant and energy switchers, optional replay control, aria-live terminal output, responsive mobile layout, and a complete reduced-motion end state without runtime dependencies.',
+    ],
+  },
   'skilltree-astral-constellation': {
     improvementStatus: 'improved',
     lastImprovedAt: '2026-07-31T02:09:00.000Z',
