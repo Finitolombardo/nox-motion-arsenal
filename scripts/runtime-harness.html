@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NOX Runtime QA Harness</title>
+<link rel="icon" href="data:," />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #05060a; color: #e8e6df; font-family: ui-monospace, monospace; }
+  .qa-block { padding: 32px; min-height: 40vh; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+  /* Beide Effekte liegen beim Laden weit below-fold — der reale Use-Case:
+     Komponente bleibt gemountet, IntersectionObserver meldet isIntersecting=false. */
+  #gauge-block { transform: translateY(260vh); }
+  #gold-block { transform: translateY(340vh); }
+  .qa-block h2 { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; opacity: .5; margin: 0 0 8px; }
+  .qa-stage { width: 100%; }
+</style>
+</head>
+<body>
+  <div id="gauge-block" class="qa-block">
+    <h2>GaugeNeedleSweep — below-fold</h2>
+    <div id="gauge-mount" class="qa-stage"></div>
+  </div>
+  <div id="gold-block" class="qa-block">
+    <h2>GoldOutlineFillText — below-fold</h2>
+    <div id="gold-mount" class="qa-stage"></div>
+  </div>
+
+  <script type="module" src="/scripts/runtime-harness-entry.tsx"></script>
+</body>
+</html>

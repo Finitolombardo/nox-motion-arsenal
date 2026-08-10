@@ -1,6 +1,9 @@
 node_modules/
 dist/
 .vercel/
+
+# Per-Checkout-Ziel (eigener Fork / eigenes Vercel-Projekt).
+.nox/motion-foundry.local.json
 .community-data/
 
 # Local verification output and generated reports stay outside the baseline.
@@ -16,3 +19,12 @@ coverage/
 .env
 .env.*
 !.env.example
+whats-new.html
+audit_recovery.json
+
+.vercel
+.env*
+
+# Vercel lokal (Token! nie committen)
+.env.local
+audit_recovery.json

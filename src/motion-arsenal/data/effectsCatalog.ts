@@ -3,12 +3,12 @@ import effectUpdates from 'virtual:effect-updates';
 import { BACKGROUNDS_CATALOG } from '../effects/backgrounds/catalog';
 import { HERO_CATALOG } from '../effects/hero/catalog';
 import { TRANSITIONS_CATALOG } from '../effects/transitions/catalog';
-import { SCROLL_CATALOG } from '../effects/scroll/catalog';
+import { SCROLL_CATALOG, BATCH6_SCROLL_CATALOG } from '../effects/scroll/catalog';
 import { CURSOR_CATALOG } from '../effects/cursor/catalog';
 import { CARDS_CATALOG } from '../effects/cards/catalog';
-import { SYSTEM_CATALOG } from '../effects/system/catalog';
+import { SYSTEM_CATALOG, BATCH6_SYSTEM_CATALOG } from '../effects/system/catalog';
 import { FORMS_CATALOG } from '../effects/forms/catalog';
-import { OVERLAYS_CATALOG } from '../effects/overlays/catalog';
+import { OVERLAYS_CATALOG, BATCH6_OVERLAYS_CATALOG } from '../effects/overlays/catalog';
 import { PREMIUM_CATALOG } from '../effects/premium/catalog';
 import { SOCIAL_PROOF_CATALOG } from '../effects/premium/socialProofCatalog';
 import { SHOWCASE_CATALOG } from '../effects/premium/showcaseCatalog';
@@ -33,6 +33,7 @@ const RAW_EFFECTS_CATALOG: EffectEntry[] = [
   ...SYSTEM_CATALOG,
   ...FORMS_CATALOG,
   ...OVERLAYS_CATALOG,
+  ...(BATCH6_OVERLAYS_CATALOG as EffectEntry[]),
   ...CANVAS_UI_CATALOG,
   ...IMG2THREEJS_CATALOG,
   ...LAB_CATALOG,

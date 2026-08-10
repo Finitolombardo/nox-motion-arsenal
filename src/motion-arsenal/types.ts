@@ -17,7 +17,7 @@ export type EffectCategory =
   | 'img2threejs'
   | 'concepts';
 
-export type EffectMode = 'reference-lab' | 'nox-adapted' | 'nox-concept';
+export type EffectMode = 'reference-lab' | 'nox-adapted' | 'nox-concept' | 'nox-original';
 export type EffectComplexity = 'low' | 'medium' | 'high' | 'heavy';
 export type EffectImprovementStatus = 'pending' | 'in-progress' | 'improved' | 'needs-review';
 
@@ -48,7 +48,7 @@ export interface EffectMeta {
   displayName?: string;
   category: EffectCategory;
   // Which reference site the mechanic was extracted from (or 'nox-original').
-  sourceWebsite: 'krank-lusion' | 'active-theory' | 'shopify-editions' | 'oryzo-screenshot' | 'nox-original' | 'originkit' | 'canvas-ui' | 'img2threejs';
+  sourceWebsite: 'krank-lusion' | 'active-theory' | 'shopify-editions' | 'oryzo-screenshot' | 'nox-original' | 'originkit' | 'canvas-ui' | 'img2threejs' | 'codrops';
   // Concrete files/anchors in the local reference capture the mechanic came from.
   sourceFiles: string[];
   mode: EffectMode;

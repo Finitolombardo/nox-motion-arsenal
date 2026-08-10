@@ -26,7 +26,28 @@ import {
 // (procedural TS code, not a binary you can drag anywhere).
 // ---------------------------------------------------------------------------
 
-export function NoxOrbitalStation() {
+export interface NoxOrbitalStationProps {
+  // Skilltree-Erweiterungen. Defaults entsprechen exakt der bisherigen Ansicht.
+  lighting?: 'neutral' | 'grazing' | 'reference'; // Look-Dev-Setups der Factory
+  spinDirection?: 'clockwise' | 'counter-clockwise'; // Drehrichtung der Auto-Rotation
+  spinSpeed?: number; // 0..3 — Tempo der Auto-Rotation, 0 haelt sie an
+  azimuth?: number; // -180..180 — horizontaler Kamerawinkel
+  elevation?: number; // -60..60 — vertikaler Kamerawinkel
+  margin?: number; // 1..2.5 — Abstand der Kamera zum Modell
+  exposure?: number; // 0.4..2 — Tone-Mapping-Belichtung
+  backgroundColor?: string; // Hintergrund der Szene
+}
+
+export function NoxOrbitalStation({
+  lighting = 'neutral',
+  spinDirection = 'clockwise',
+  spinSpeed = 0.6,
+  azimuth = 12,
+  elevation = 8,
+  margin = 1.3,
+  exposure = 1.1,
+  backgroundColor = '#05060a',
+}: NoxOrbitalStationProps = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modelRef = useRef<THREE.Group | null>(null);
   const reduced = usePrefersReducedMotion();
@@ -40,26 +61,27 @@ export function NoxOrbitalStation() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMappingExposure = exposure;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x05060a);
+    scene.background = new THREE.Color(backgroundColor);
     scene.environment = createNOXOrbitalStationEnvironment(renderer);
 
     const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
     const model = createNOXOrbitalStationModel({ castShadow: true, receiveShadow: true });
     modelRef.current = model;
     scene.add(model);
-    scene.add(createNOXOrbitalStationLookDevLights('neutral'));
+    scene.add(createNOXOrbitalStationLookDevLights(lighting));
 
-    frameNOXOrbitalStationCamera(camera, model, { margin: 1.3, azimuthDeg: 12, elevationDeg: 8 });
+    frameNOXOrbitalStationCamera(camera, model, { margin, azimuthDeg: azimuth, elevationDeg: elevation });
     const center = new THREE.Box3().setFromObject(model).getCenter(new THREE.Vector3());
 
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.target.copy(center);
-    controls.autoRotate = !reduced;
-    controls.autoRotateSpeed = 0.6;
+    // spinSpeed 0 haelt die Rotation an, ohne die Bedienung per Maus zu sperren.
+    controls.autoRotate = !reduced && spinSpeed > 0;
+    controls.autoRotateSpeed = spinSpeed * (spinDirection === 'counter-clockwise' ? -1 : 1);
 
     const resize = () => {
       const w = Math.max(canvas.clientWidth, 1);
@@ -91,7 +113,7 @@ export function NoxOrbitalStation() {
       renderer.dispose();
       modelRef.current = null;
     };
-  }, [reduced]);
+  }, [reduced, lighting, spinDirection, spinSpeed, azimuth, elevation, margin, exposure, backgroundColor]);
 
   const downloadGlb = () => {
     const model = modelRef.current;

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "round": 1,
+  "doneThisRound": [
+    "bg-holographic-mask-shader",
+    "img2threejs-nox-orbital-station",
+    "skilltree-locked-path-shadow",
+    "canvasui-glitch-burst"
+  ],
+  "effects": {
+    "bg-holographic-mask-shader": {
+      "level": 0,
+      "runs": 1,
+      "lastRun": "2026-08-09"
+    },
+    "img2threejs-nox-orbital-station": {
+      "level": 0,
+      "runs": 1,
+      "lastRun": "2026-08-09"
+    },
+    "skilltree-locked-path-shadow": {
+      "level": 0,
+      "runs": 1,
+      "lastRun": "2026-08-09"
+    },
+    "canvasui-glitch-burst": {
+      "level": 0,
+      "runs": 1,
+      "lastRun": "2026-08-09"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-08-09",
+      "round": 1,
+      "ids": [
+        "bg-holographic-mask-shader",
+        "img2threejs-nox-orbital-station",
+        "skilltree-locked-path-shadow",
+        "canvasui-glitch-burst"
+      ]
+    }
+  ]
+}

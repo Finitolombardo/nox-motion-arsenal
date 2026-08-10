@@ -1,0 +1,14 @@
+import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
+
+export interface CounterPreloaderProps { duration?: number; label?: string; accent?: string; onComplete?: () => void; }
+
+export default function CounterPreloader({ duration = 1800, label = 'LOADING ARSENAL', accent = '#d4a24a', onComplete }: CounterPreloaderProps) {
+  const [value, setValue] = useState(0);
+  useEffect(() => { const start = performance.now(); let frame = 0; const tick = (time: number) => { const progress = Math.min(1, (time - start) / Math.max(200, duration)); const eased = 1 - Math.pow(1 - progress, 3); setValue(Math.round(eased * 100)); if (progress < 1) frame = requestAnimationFrame(tick); else onComplete?.(); }; frame = requestAnimationFrame(tick); return () => cancelAnimationFrame(frame); }, [duration, onComplete]);
+  const style = { '--preload-accent': accent, '--preload-progress': `${value}%` } as CSSProperties;
+  return <div className={`nox-preloader ${value === 100 ? 'is-complete' : ''}`} style={style} role="status" aria-live="polite" aria-label={`${label}: ${value}%`}><div className="nox-preloader__top"><span>NOX / MOTION ARSENAL</span><b>{String(value).padStart(3, '0')}</b></div><div className="nox-preloader__counter">{value}<sup>%</sup></div><div className="nox-preloader__rail"><i /></div><div className="nox-preloader__foot"><span>{label}</span><span>INITIALIZING GOLD SIGNAL</span></div><style>{CSS}</style></div>;
+}
+
+const CSS = `
+.nox-preloader{position:relative;min-height:240px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;background:#090a0e;color:#f7e8a4;border:1px solid #45341f;font:600 10px ui-monospace,monospace;letter-spacing:.12em;clip-path:inset(0)}.nox-preloader.is-complete{animation:noxPreloaderExit .8s .3s both}.nox-preloader__top,.nox-preloader__foot{display:flex;justify-content:space-between;color:#a89b78}.nox-preloader__top b,.nox-preloader__foot span:first-child{color:var(--preload-accent)}.nox-preloader__counter{font:900 clamp(70px,20vw,150px)/.8 Arial,sans-serif;letter-spacing:-.12em;color:var(--preload-accent);text-shadow:0 0 20px #d4a24a55}.nox-preloader__counter sup{font-size:.22em;letter-spacing:0}.nox-preloader__rail{height:3px;background:#ffffff1a;overflow:hidden}.nox-preloader__rail i{display:block;height:100%;width:var(--preload-progress);background:linear-gradient(90deg,var(--preload-accent),#f7e8a4);transform-origin:left;box-shadow:0 0 15px var(--preload-accent);transition:width .08s linear}.nox-preloader:after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,#d4a24a08 4px);mix-blend-mode:screen}@keyframes noxPreloaderExit{to{opacity:0;transform:translateY(-18px);clip-path:inset(0 0 100% 0)}}@media(prefers-reduced-motion:reduce){.nox-preloader__rail i{transition:none}.nox-preloader.is-complete{animation:none}}`;

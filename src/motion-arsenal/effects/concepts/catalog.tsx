@@ -2,43 +2,28 @@ import React from 'react';
 import type { EffectEntry } from '../../types';
 import { ConceptEffectPreview } from './ConceptEffectPreview';
 
-const entries = [
-  ['Bayer Dither Dissolve', 'Bayer-geditherter Abschnittswechsel mit Gold-Kante.', 'Canvas ImageData auf reduzierter Auflösung.'],
-  ['Inverse Glow Cursor', 'Invertierter Cursor-Spot mit nachziehendem Akzent-Ring.', 'CSS mix-blend-mode und transform-only rAF.'],
-  ['Lenticular Tilt', 'Interlaced Multi-Frame-Bild reagiert auf Tilt und Pointer.', 'WebGL Textur-Slices.'],
-  ['Elastic Lag Grid', 'Gestaffeltes Grid folgt der Scrolltiefe mit elastischem Lag.', 'CSS Vars und transform-only rAF.'],
-  ['Glyph Matrix Rain', 'Deterministischer Glyphen-Regen als Terminal-Textur.', 'Canvas-Spalten mit PRNG.'],
-  ['Kinetic Twist Typo', 'Drehende Display-Typografie für große Marken-Statements.', 'SVG-Skeleton, optionaler Shader.'],
-  ['Path-Follow Hero Scroll', 'Hero folgt einer SVG-Kurve durch die Scroll-Choreografie.', 'SVG path lookup und transforms.'],
-  ['Progressive Blur Stack', 'Fokus-Stack mit abgestuften Blur- und Opacity-Ebenen.', 'CSS @property und backdrop-filter.'],
-  ['Magnetic Field Cards', 'Karten ziehen sich in einem begrenzten Feld zum Cursor.', 'Distanz-basierte Transform-Offsets.'],
-  ['Scroll-Synced Typo Background', 'Große Marken-Typografie rotiert subtil mit der Scrolltiefe.', 'CSS Scroll-Driven Animations mit Fallback.'],
-  ['Aurora Borealis Background', 'Ruhige, goldgesäumte Gradient-Atmosphäre ohne Canvas.', 'Transform-animierte Gradient-Blobs.'],
-  ['Scroll-Driven CSS Reveal', 'Progressive In-View-Reveals mit nativen Scroll-Timelines.', 'animation-timeline: view() und IO Fallback.'],
-  ['Lenticular Scroll Image', 'Scroll-synchroner Interlace-Wechsel durch vorbereitete Bildframes.', 'Sprite-Strip und CSS-Maske.'],
-  ['Backdrop Blur Grain Overlay', 'Material-Overlay aus Backdrop Blur, Grain und Goldkante.', 'backdrop-filter mit statischem SVG-Grain.'],
-  ['View Transition API Cross-Fade', 'Dunkelraum-optimierter nativer Crossfade für DOM-Zustände.', 'document.startViewTransition mit Fallback.'],
-  ['GSAP Flip Gallery Morph', 'Galerie-Kachel wächst per FLIP in den Detail-View.', 'FLIP transforms mit Fokus-Dialog-Fallback.'],
-  ['Holographic Type Effect', 'Irideszente Gold-Typografie mit kontrollierter Lichtmaske.', 'background-clip und CSS masks.'],
-  ['Dithered Data Heatmap', 'Dichtebasierte Heatmap im Bayer-Print-Look.', 'DOM-Zellen mit SVG Pattern.'],
-  ['Infinite Parallax Loop', 'Entkoppelter Endlos-Loop mit Parallax-Faktoren.', 'GSAP Observer Proxy-Scroll.'],
-  ['Grid Blind Mask Reveal', 'Gestaffelte Grid-Maske legt die neue Ebene frei.', 'SVG Mask mit deterministischem Stagger.'],
-  ['Polaroid Stack Scroll', 'Gestreute Polaroids ordnen sich zu einem Stack.', 'Transform-, blur- und opacity-Scrub.'],
-  ['Horizontal Pin Gallery', 'Gepinnte horizontale Bilderstrecke mit Fortschrittsrail.', 'ScrollTrigger pin/scrub mit vertikalem Fallback.'],
-  ['Layered Zoom Dolly', 'Mehrere 2D-Ebenen erzeugen eine räumliche Kamerafahrt.', 'CSS perspective und translateZ.'],
-  ['SVG Metric Graph Draw', 'Eine Kennzahlenkurve zeichnet sich beim Scrollen.', 'SVG stroke-dashoffset.'],
-  ['Tumbler Vault OTP', 'Mechanische OTP-Eingabe mit rollenden Ziffern.', 'CSS transform-Räder, Paste und Keyboard Support.'],
-  ['Peel Reveal Modal', 'Eine aufrollende Ecke enthüllt einen Dialog.', 'Gradient-Curl und CSS transforms.'],
-  ['Canvas Line Typography', 'Linien-Ornamente bilden eine technische Marken-Wordmark.', 'Canvas einmalig bei Mount und Resize.'],
-  ['Squiggly Distortion Text', 'Feine SVG-Displacement-Wellen beleben Headlines.', 'feTurbulence und feDisplacementMap.'],
-  ['Dotted World Map Connect', 'Dekorative Punktkarte mit animierten Verbindungspfaden.', 'Vorgerendertes SVG-Punktfeld und CSS Arcs.'],
-] as const;
+// Tupel je Konzept: [Name, Beschreibung, technische Skizze].
+// Der Typ steht explizit da, weil die Liste inzwischen leer ist — alle
+// Konzepte sind in echte Komponenten ueberfuehrt. Ohne die Annotation waere
+// das leere Array `never[]` und die Auswertung unten wuerde nicht mehr
+// typpruefen. Neue Konzepte koennen hier unveraendert wieder eingetragen
+// werden.
+type ConceptEntry = readonly [name: string, description: string, technicalBasis: string];
+
+const entries: readonly ConceptEntry[] = [];
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 /** Provenance for concepts intentionally removed from the visible gallery after consolidation. */
-export const CONSOLIDATED_CONCEPTS: Partial<Record<(typeof entries)[number][0], string>> = {
+export const CONSOLIDATED_CONCEPTS: Record<string, string> = {
   'Magnetic Field Cards': 'cursor-magnetic-cta',
+  'Warp Tunnel Depth': 'bg-nox-starfield-drift (Variante section-warp)',
+  'CRT Screen Text': 'system-crt-screen-text',
+  'Cube Spin Route Transition': 'transitions-cube-spin-route-transition',
+  'Distorted Button Image Reveal': 'originkit-distorted-button-image-reveal',
+  'Dynamic Palette Gradient': 'bg-dynamic-palette-gradient',
+  'Dynamic Tooltip Fragments': 'overlays-dynamic-tooltip-fragments',
+  'Frame Repeat Image Transition': 'transitions-frame-repeat-image-transition',
 };
 
 export const CONCEPTS_CATALOG: EffectEntry[] = entries

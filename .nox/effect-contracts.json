@@ -1,0 +1,8157 @@
+{
+  "schemaVersion": "1.0.0",
+  "capturedAt": "2026-08-09T18:43:24.497Z",
+  "note": "Oeffentlicher Vertrag jedes Effekts. Der Skilltree-Guard prueft Aenderungen dagegen. Nur bewusst und mit Begruendung neu schreiben.",
+  "effects": {
+    "bg-depth-glow-stack": {
+      "id": "bg-depth-glow-stack",
+      "name": "DepthGlowLayerStack",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/DepthGlowLayerStack",
+      "props": [
+        {
+          "key": "layerCount",
+          "type": "range",
+          "default": 6,
+          "min": 3,
+          "max": 9
+        },
+        {
+          "key": "hueMix",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "driftSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "parallax",
+          "type": "range",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.85,
+          "min": 0.2,
+          "max": 1.2
+        }
+      ]
+    },
+    "bg-ember-curl-drift": {
+      "id": "bg-ember-curl-drift",
+      "name": "EmberCurlDrift",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/EmberCurlDrift",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 140,
+          "min": 30,
+          "max": 400
+        },
+        {
+          "key": "updraft",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 2.5
+        },
+        {
+          "key": "turbulence",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        }
+      ]
+    },
+    "bg-forge-energy-glyphs": {
+      "id": "bg-forge-energy-glyphs",
+      "name": "ForgeEnergyGlyphs",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/ForgeEnergyGlyphs",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "forge-ember-runes",
+          "options": [
+            "forge-ember-runes",
+            "command-nexus-sigils",
+            "revenue-ascension-seals",
+            "automation-circuit-glyphs",
+            "signal-growth-constellations"
+          ]
+        },
+        {
+          "key": "stateMode",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "idle",
+            "warming",
+            "charged",
+            "overdrive",
+            "ritual",
+            "stealth"
+          ]
+        },
+        {
+          "key": "glyphCount",
+          "type": "range",
+          "default": 18,
+          "min": 8,
+          "max": 30
+        },
+        {
+          "key": "density",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 1.5
+        },
+        {
+          "key": "glowStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 1.5
+        },
+        {
+          "key": "energyLevel",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 1.5
+        },
+        {
+          "key": "floatSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 2.5
+        },
+        {
+          "key": "rotationSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 2.5
+        },
+        {
+          "key": "rareGlyphChance",
+          "type": "range",
+          "default": 0.18,
+          "min": 0.05,
+          "max": 0.45
+        },
+        {
+          "key": "heatDistortion",
+          "type": "range",
+          "default": 0.55,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "interactionMode",
+          "type": "select",
+          "default": "hybrid",
+          "options": [
+            "none",
+            "pointer",
+            "scroll",
+            "hybrid"
+          ]
+        },
+        {
+          "key": "proximityRadius",
+          "type": "range",
+          "default": 190,
+          "min": 80,
+          "max": 360
+        },
+        {
+          "key": "parallax",
+          "type": "range",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showStateSwitcher",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "bg-holographic-mask-shader": {
+      "id": "bg-holographic-mask-shader",
+      "name": "HolographicMaskShader",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/HolographicMaskShader",
+      "props": [
+        {
+          "key": "palette",
+          "type": "select",
+          "default": "spectrum",
+          "options": [
+            "spectrum",
+            "gold",
+            "ice",
+            "ember",
+            "mono"
+          ]
+        },
+        {
+          "key": "gradientAngle",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "saturation",
+          "type": "range",
+          "default": 60,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "lightness",
+          "type": "range",
+          "default": 55,
+          "min": 20,
+          "max": 80
+        },
+        {
+          "key": "blendMode",
+          "type": "select",
+          "default": "color-dodge",
+          "options": [
+            "color-dodge",
+            "screen",
+            "overlay",
+            "hard-light"
+          ]
+        },
+        {
+          "key": "showNote",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "bg-noise-fog-field": {
+      "id": "bg-noise-fog-field",
+      "name": "NoiseFogField",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/NoiseFogField",
+      "props": [
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.9,
+          "min": 0.2,
+          "max": 1.4
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "emberAmount",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "scale",
+          "type": "range",
+          "default": 2.2,
+          "min": 1,
+          "max": 5
+        }
+      ]
+    },
+    "bg-nox-scribble-field": {
+      "id": "bg-nox-scribble-field",
+      "name": "NoxAdaptedScribbleField",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/NoxAdaptedScribbleField",
+      "props": [
+        {
+          "key": "colorMode",
+          "type": "select",
+          "default": "nox",
+          "options": [
+            "nox",
+            "ember",
+            "mono"
+          ]
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.8,
+          "min": 0.2,
+          "max": 1
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "density",
+          "type": "range",
+          "default": 7,
+          "min": 3,
+          "max": 14
+        },
+        {
+          "key": "blur",
+          "type": "range",
+          "default": 14,
+          "min": 4,
+          "max": 30
+        },
+        {
+          "key": "rotation",
+          "type": "range",
+          "default": 16,
+          "min": 0,
+          "max": 45
+        },
+        {
+          "key": "parallax",
+          "type": "range",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "proximityRadius",
+          "type": "range",
+          "default": 200,
+          "min": 60,
+          "max": 360
+        },
+        {
+          "key": "blendMode",
+          "type": "select",
+          "default": "screen",
+          "options": [
+            "screen",
+            "lighten",
+            "plus-lighter",
+            "normal"
+          ]
+        }
+      ]
+    },
+    "bg-nox-starfield-drift": {
+      "id": "bg-nox-starfield-drift",
+      "name": "NoxStarfieldDrift",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/NoxStarfieldDrift",
+      "props": [
+        {
+          "key": "starCount",
+          "type": "range",
+          "default": 520,
+          "min": 120,
+          "max": 1000
+        },
+        {
+          "key": "driftSpeed",
+          "type": "range",
+          "default": 0.055,
+          "min": 0,
+          "max": 0.18
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.62,
+          "min": 0.2,
+          "max": 1
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 0.72,
+          "min": 0.35,
+          "max": 1
+        },
+        {
+          "key": "twinkle",
+          "type": "range",
+          "default": 0.12,
+          "min": 0,
+          "max": 0.35
+        },
+        {
+          "key": "textSafety",
+          "type": "range",
+          "default": 0.68,
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "bg-orbital-light-trails": {
+      "id": "bg-orbital-light-trails",
+      "name": "OrbitalLightTrails",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/OrbitalLightTrails",
+      "props": [
+        {
+          "key": "orbCount",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "trailLength",
+          "type": "range",
+          "default": 60,
+          "min": 12,
+          "max": 120
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.85,
+          "min": 0.2,
+          "max": 1
+        }
+      ]
+    },
+    "bg-radial-beam-atmosphere": {
+      "id": "bg-radial-beam-atmosphere",
+      "name": "RadialBeamAtmosphere",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/RadialBeamAtmosphere",
+      "props": [
+        {
+          "key": "beamCount",
+          "type": "range",
+          "default": 9,
+          "min": 4,
+          "max": 18
+        },
+        {
+          "key": "rotationSpeed",
+          "type": "range",
+          "default": 60,
+          "min": 20,
+          "max": 160
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "coreGlow",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "originY",
+          "type": "range",
+          "default": 78,
+          "min": 20,
+          "max": 110
+        }
+      ]
+    },
+    "bg-symbol-storm": {
+      "id": "bg-symbol-storm",
+      "name": "BackgroundSymbolStorm",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/BackgroundSymbolStorm",
+      "props": [
+        {
+          "key": "density",
+          "type": "range",
+          "default": 46,
+          "min": 10,
+          "max": 120
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "pointerInfluence",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "canvasui-glass-lens": {
+      "id": "canvasui-glass-lens",
+      "name": "GlassLens",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/GlassLens",
+      "props": [
+        {
+          "key": "lensRadius",
+          "type": "range",
+          "default": 0.16,
+          "min": 0.08,
+          "max": 0.4
+        },
+        {
+          "key": "zoom",
+          "type": "range",
+          "default": 2.2,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "key": "chroma",
+          "type": "range",
+          "default": 0.006,
+          "min": 0,
+          "max": 0.02
+        }
+      ]
+    },
+    "canvasui-glitch-burst": {
+      "id": "canvasui-glitch-burst",
+      "name": "GlitchBurst",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/GlitchBurst",
+      "props": [
+        {
+          "key": "burstIntensity",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "burstFrequency",
+          "type": "range",
+          "default": 1.1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "tearDirection",
+          "type": "select",
+          "default": "horizontal",
+          "options": [
+            "horizontal",
+            "vertical",
+            "both"
+          ]
+        },
+        {
+          "key": "sliceShape",
+          "type": "select",
+          "default": "band",
+          "options": [
+            "band",
+            "wedge",
+            "block"
+          ]
+        },
+        {
+          "key": "scanline",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "splitColorA",
+          "type": "color",
+          "default": "#ff3b3b"
+        },
+        {
+          "key": "splitColorB",
+          "type": "color",
+          "default": "#39d0ff"
+        },
+        {
+          "key": "accentColor",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 19,
+          "min": 1,
+          "max": 99
+        }
+      ]
+    },
+    "canvasui-laser": {
+      "id": "canvasui-laser",
+      "name": "Laser",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/Laser",
+      "props": [
+        {
+          "key": "beamPosition",
+          "type": "range",
+          "default": 0.78,
+          "min": 0.5,
+          "max": 0.95
+        },
+        {
+          "key": "softness",
+          "type": "range",
+          "default": 26,
+          "min": 4,
+          "max": 80
+        }
+      ]
+    },
+    "canvasui-liquid-ripple": {
+      "id": "canvasui-liquid-ripple",
+      "name": "LiquidRipple",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/LiquidRipple",
+      "props": [
+        {
+          "key": "ambientStrength",
+          "type": "range",
+          "default": 2.4,
+          "min": 0,
+          "max": 6
+        },
+        {
+          "key": "rippleStrength",
+          "type": "range",
+          "default": 16,
+          "min": 0,
+          "max": 30
+        }
+      ]
+    },
+    "canvasui-particle-object": {
+      "id": "canvasui-particle-object",
+      "name": "ParticleObject",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/ParticleObject",
+      "props": [
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 2.4,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "key": "springStrength",
+          "type": "range",
+          "default": 14,
+          "min": 4,
+          "max": 30
+        },
+        {
+          "key": "repelRadius",
+          "type": "range",
+          "default": 0.18,
+          "min": 0.08,
+          "max": 0.4
+        }
+      ]
+    },
+    "canvasui-particle-reveal": {
+      "id": "canvasui-particle-reveal",
+      "name": "ParticleReveal",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/ParticleReveal",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "ember-forge-materialize",
+          "options": [
+            "ghost-signal-assembly",
+            "ember-forge-materialize",
+            "plasma-command-interface",
+            "gold-product-blueprint",
+            "overdrive-particle-collapse"
+          ]
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "hybrid",
+          "options": [
+            "cursor",
+            "sweep",
+            "pulse",
+            "hybrid"
+          ]
+        },
+        {
+          "key": "text",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "density",
+          "type": "range",
+          "default": 3800,
+          "min": 800,
+          "max": 6200
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 1.18,
+          "min": 0.55,
+          "max": 2.5
+        },
+        {
+          "key": "cloudScale",
+          "type": "range",
+          "default": 0.93,
+          "min": 0.68,
+          "max": 1.12
+        },
+        {
+          "key": "scatter",
+          "type": "range",
+          "default": 18,
+          "min": 0,
+          "max": 42
+        },
+        {
+          "key": "resolveRadius",
+          "type": "range",
+          "default": 0.245,
+          "min": 0.08,
+          "max": 0.5
+        },
+        {
+          "key": "trailStrength",
+          "type": "range",
+          "default": 0.78,
+          "min": 0,
+          "max": 1.5
+        },
+        {
+          "key": "burstStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "glowStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1.8
+        }
+      ]
+    },
+    "canvasui-shatter-reveal": {
+      "id": "canvasui-shatter-reveal",
+      "name": "ShatterReveal",
+      "category": "canvas-ui",
+      "importPath": "@/motion-arsenal/effects/canvas-ui/ShatterReveal",
+      "props": [
+        {
+          "key": "cols",
+          "type": "range",
+          "default": 8,
+          "min": 4,
+          "max": 12
+        },
+        {
+          "key": "rows",
+          "type": "range",
+          "default": 5,
+          "min": 3,
+          "max": 8
+        },
+        {
+          "key": "liftRadius",
+          "type": "range",
+          "default": 0.32,
+          "min": 0.15,
+          "max": 0.6
+        },
+        {
+          "key": "liftStrength",
+          "type": "range",
+          "default": 46,
+          "min": 0,
+          "max": 60
+        }
+      ]
+    },
+    "cards-border-trace-depth": {
+      "id": "cards-border-trace-depth",
+      "name": "BorderTraceDepth",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/BorderTraceDepth",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "thickness",
+          "type": "range",
+          "default": 2,
+          "min": 1,
+          "max": 5
+        },
+        {
+          "key": "depthOffset",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        }
+      ]
+    },
+    "cards-fold-notch-panel": {
+      "id": "cards-fold-notch-panel",
+      "name": "FoldNotchPanel",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/FoldNotchPanel",
+      "props": [
+        {
+          "key": "notchSize",
+          "type": "range",
+          "default": 22,
+          "min": 10,
+          "max": 40
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2
+        },
+        {
+          "key": "autoCycle",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "cards-glass-metal-panel": {
+      "id": "cards-glass-metal-panel",
+      "name": "GlassMetalPanel",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/GlassMetalPanel",
+      "props": [
+        {
+          "key": "tint",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "blur",
+          "type": "range",
+          "default": 12,
+          "min": 4,
+          "max": 22
+        },
+        {
+          "key": "sheen",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2
+        }
+      ]
+    },
+    "cards-hover-light-refraction": {
+      "id": "cards-hover-light-refraction",
+      "name": "HoverLightRefraction",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/HoverLightRefraction",
+      "props": [
+        {
+          "key": "refraction",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "chroma",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "highlightSize",
+          "type": "range",
+          "default": 160,
+          "min": 80,
+          "max": 280
+        },
+        {
+          "key": "tint",
+          "type": "color",
+          "default": "#d4a24a"
+        }
+      ]
+    },
+    "cards-lock-unlock-scan": {
+      "id": "cards-lock-unlock-scan",
+      "name": "LockUnlockScan",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/LockUnlockScan",
+      "props": [
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "scanSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "autoRelock",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "cards-tilt-parallax": {
+      "id": "cards-tilt-parallax",
+      "name": "TiltParallaxCard",
+      "category": "cards",
+      "importPath": "@/motion-arsenal/effects/cards/TiltParallaxCard",
+      "props": [
+        {
+          "key": "maxTilt",
+          "type": "range",
+          "default": 12,
+          "min": 4,
+          "max": 24
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "glare",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "overshoot",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "cursor-dodge-button": {
+      "id": "cursor-dodge-button",
+      "name": "DodgeButton",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/DodgeButton",
+      "props": [
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "dodgeRadius",
+          "type": "range",
+          "default": 120,
+          "min": 40,
+          "max": 260
+        },
+        {
+          "key": "dodgeDistance",
+          "type": "range",
+          "default": 46,
+          "min": 12,
+          "max": 120
+        },
+        {
+          "key": "maxDodges",
+          "type": "range",
+          "default": 5,
+          "min": 1,
+          "max": 12
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 9,
+          "min": 3,
+          "max": 18
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Fang mich"
+        },
+        {
+          "key": "successLabel",
+          "type": "text",
+          "default": "Gefangen ✓"
+        }
+      ]
+    },
+    "cursor-hover-distortion": {
+      "id": "cursor-hover-distortion",
+      "name": "HoverDistortionShader",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/HoverDistortionShader",
+      "props": [
+        {
+          "key": "strength",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 0.4
+        },
+        {
+          "key": "radius",
+          "type": "range",
+          "default": 0.35,
+          "min": 0.1,
+          "max": 0.9
+        },
+        {
+          "key": "patternScale",
+          "type": "range",
+          "default": 14,
+          "min": 4,
+          "max": 30
+        },
+        {
+          "key": "pattern",
+          "type": "select",
+          "default": "grid",
+          "options": [
+            "grid",
+            "stripes"
+          ]
+        }
+      ]
+    },
+    "cursor-interactive-symbol-drift": {
+      "id": "cursor-interactive-symbol-drift",
+      "name": "InteractiveSymbolDrift",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/InteractiveSymbolDrift",
+      "props": [
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "repel",
+          "options": [
+            "repel",
+            "attract"
+          ]
+        },
+        {
+          "key": "forceRadius",
+          "type": "range",
+          "default": 120,
+          "min": 50,
+          "max": 240
+        },
+        {
+          "key": "count",
+          "type": "range",
+          "default": 36,
+          "min": 12,
+          "max": 60
+        },
+        {
+          "key": "colorMode",
+          "type": "select",
+          "default": "nox",
+          "options": [
+            "nox",
+            "ember",
+            "mono"
+          ]
+        },
+        {
+          "key": "dprCap",
+          "type": "range",
+          "default": 1.5,
+          "min": 1,
+          "max": 2
+        }
+      ]
+    },
+    "cursor-light-field": {
+      "id": "cursor-light-field",
+      "name": "CursorLightField",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/CursorLightField",
+      "props": [
+        {
+          "key": "lightRadius",
+          "type": "range",
+          "default": 140,
+          "min": 60,
+          "max": 260
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 1.5
+        },
+        {
+          "key": "trailDecay",
+          "type": "range",
+          "default": 0.16,
+          "min": 0.05,
+          "max": 0.5
+        },
+        {
+          "key": "palette",
+          "type": "select",
+          "default": "nox",
+          "options": [
+            "nox",
+            "ember",
+            "mono"
+          ]
+        },
+        {
+          "key": "dprCap",
+          "type": "range",
+          "default": 1.5,
+          "min": 1,
+          "max": 2
+        }
+      ]
+    },
+    "cursor-magnetic-cta": {
+      "id": "cursor-magnetic-cta",
+      "name": "MagneticCTA",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/MagneticCTA",
+      "props": [
+        {
+          "key": "attractionRadius",
+          "type": "range",
+          "default": 110,
+          "min": 60,
+          "max": 200
+        },
+        {
+          "key": "pullStrength",
+          "type": "range",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 1
+        },
+        {
+          "key": "labelParallax",
+          "type": "range",
+          "default": 0.4,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "cursor-pointer-parallax-stage": {
+      "id": "cursor-pointer-parallax-stage",
+      "name": "PointerParallaxStage",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/PointerParallaxStage",
+      "props": [
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 30,
+          "min": 8,
+          "max": 60
+        },
+        {
+          "key": "tilt",
+          "type": "range",
+          "default": 7,
+          "min": 0,
+          "max": 16
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 10,
+          "min": 3,
+          "max": 18
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "cursor-spotlight-reveal": {
+      "id": "cursor-spotlight-reveal",
+      "name": "SpotlightReveal",
+      "category": "cursor",
+      "importPath": "@/motion-arsenal/effects/cursor/SpotlightReveal",
+      "props": [
+        {
+          "key": "size",
+          "type": "range",
+          "default": 130,
+          "min": 60,
+          "max": 240
+        },
+        {
+          "key": "haloSize",
+          "type": "range",
+          "default": 210,
+          "min": 100,
+          "max": 360
+        },
+        {
+          "key": "darkness",
+          "type": "range",
+          "default": 0.92,
+          "min": 0.7,
+          "max": 1
+        },
+        {
+          "key": "haloColor",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "forms-answer-lock-in": {
+      "id": "forms-answer-lock-in",
+      "name": "AnswerLockIn",
+      "category": "forms",
+      "importPath": "@/motion-arsenal/effects/forms/AnswerLockIn",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "command-deck",
+          "options": [
+            "assessment",
+            "command-deck",
+            "brand-lock"
+          ]
+        },
+        {
+          "key": "orientation",
+          "type": "select",
+          "default": "horizontal",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        {
+          "key": "accentColor",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "lockDuration",
+          "type": "range",
+          "default": 0.58,
+          "min": 0.2,
+          "max": 1.5
+        },
+        {
+          "key": "dimOpacity",
+          "type": "range",
+          "default": 0.28,
+          "min": 0.1,
+          "max": 0.8
+        },
+        {
+          "key": "energyIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0.25,
+          "max": 1.5
+        },
+        {
+          "key": "showEnergyLine",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showProgressRail",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "forms-fingerprint-scan-submit": {
+      "id": "forms-fingerprint-scan-submit",
+      "name": "FingerprintScanSubmit",
+      "category": "forms",
+      "importPath": "@/motion-arsenal/effects/forms/FingerprintScanSubmit",
+      "props": [
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.1,
+          "max": 3
+        },
+        {
+          "key": "scanDuration",
+          "type": "range",
+          "default": 2.2,
+          "min": 1,
+          "max": 4
+        },
+        {
+          "key": "pulseRings",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 6
+        },
+        {
+          "key": "label",
+          "type": "text",
+          "default": "Fingerprint bestätigen"
+        },
+        {
+          "key": "successLabel",
+          "type": "text",
+          "default": "Verifiziert"
+        },
+        {
+          "key": "autoReset",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "forms-question-transition": {
+      "id": "forms-question-transition",
+      "name": "QuestionTransition",
+      "category": "forms",
+      "importPath": "@/motion-arsenal/effects/forms/QuestionTransition",
+      "props": [
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.9,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "blurAmount",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 16
+        },
+        {
+          "key": "accentColor",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "forward",
+          "options": [
+            "forward",
+            "back"
+          ]
+        },
+        {
+          "key": "autoCycle",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "forms-selection-energy-ripple": {
+      "id": "forms-selection-energy-ripple",
+      "name": "SelectionEnergyRipple",
+      "category": "forms",
+      "importPath": "@/motion-arsenal/effects/forms/SelectionEnergyRippleV2",
+      "props": [
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "sparkCount",
+          "type": "range",
+          "default": 11,
+          "min": 4,
+          "max": 24
+        },
+        {
+          "key": "gravity",
+          "type": "range",
+          "default": 480,
+          "min": 200,
+          "max": 900
+        }
+      ]
+    },
+    "forms-validation-pulse": {
+      "id": "forms-validation-pulse",
+      "name": "ValidationPulse",
+      "category": "forms",
+      "importPath": "@/motion-arsenal/effects/forms/ValidationPulse",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "command",
+          "options": [
+            "field",
+            "command",
+            "checkout"
+          ]
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "successColor",
+          "type": "color",
+          "default": "#39ff8b"
+        },
+        {
+          "key": "springDamping",
+          "type": "range",
+          "default": 6,
+          "min": 2,
+          "max": 14
+        },
+        {
+          "key": "springFreq",
+          "type": "range",
+          "default": 9,
+          "min": 3,
+          "max": 16
+        },
+        {
+          "key": "signalStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 1.6
+        },
+        {
+          "key": "autoValidate",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "showTelemetry",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-angled-gold-strike": {
+      "id": "hero-angled-gold-strike",
+      "name": "Angled Gold Strikethrough",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/AngledGoldStrike",
+      "props": [
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "angle",
+          "type": "range",
+          "default": -7,
+          "min": -20,
+          "max": 20
+        },
+        {
+          "key": "thickness",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.1,
+          "max": 3
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "auto"
+          ]
+        },
+        {
+          "key": "struck",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "hero-blur-to-sharp-boot": {
+      "id": "hero-blur-to-sharp-boot",
+      "name": "Blur-to-Sharp Hero Boot",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/BlurToSharpHeroBoot",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2.5
+        },
+        {
+          "key": "maxBlur",
+          "type": "range",
+          "default": 22,
+          "min": 6,
+          "max": 40
+        },
+        {
+          "key": "overexposure",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#ff4d4d"
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-image-reveal-behind-text": {
+      "id": "hero-image-reveal-behind-text",
+      "name": "Image Reveal Behind Text",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/ImageRevealBehindText",
+      "props": [
+        {
+          "key": "revealRadius",
+          "type": "range",
+          "default": 150,
+          "min": 60,
+          "max": 280
+        },
+        {
+          "key": "sweepSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2.5
+        },
+        {
+          "key": "palette",
+          "type": "select",
+          "default": "ember",
+          "options": [
+            "ember",
+            "gold",
+            "mono"
+          ]
+        },
+        {
+          "key": "autoSweep",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-masked-text-reveal": {
+      "id": "hero-masked-text-reveal",
+      "name": "Masked Text Reveal",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/MaskedTextReveal",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "stagger",
+          "type": "range",
+          "default": 0.09,
+          "min": 0.02,
+          "max": 0.25
+        },
+        {
+          "key": "textColor",
+          "type": "color",
+          "default": "#f0ece4"
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#ff4d4d"
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-massive-typography-reveal": {
+      "id": "hero-massive-typography-reveal",
+      "name": "Massive Typography Reveal",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/MassiveTypographyReveal",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "stagger",
+          "type": "range",
+          "default": 0.14,
+          "min": 0.05,
+          "max": 0.4
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-object-float": {
+      "id": "hero-object-float",
+      "name": "Hero Object Float Lab",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/HeroObjectFloat",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "forge-obsidian-relic",
+          "options": [
+            "nox-floating-card-os",
+            "forge-obsidian-relic",
+            "project-x-nexus-cube",
+            "revenue-ascension-prism",
+            "automation-kernel-chip",
+            "signal-resonance-orb"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "objectScale",
+          "type": "range",
+          "default": 1,
+          "min": 0.7,
+          "max": 1.3
+        },
+        {
+          "key": "amplitude",
+          "type": "range",
+          "default": 18,
+          "min": 4,
+          "max": 42
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2.5
+        },
+        {
+          "key": "tilt",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "orbit",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#ff553d"
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 9,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showEnergySwitcher",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-pointer-text-depth": {
+      "id": "hero-pointer-text-depth",
+      "name": "Pointer Text Depth",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/PointerTextDepth",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "NOX FORGE"
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.1,
+          "max": 3
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "glow",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 7,
+          "min": 1,
+          "max": 20
+        }
+      ]
+    },
+    "hero-split-entrance": {
+      "id": "hero-split-entrance",
+      "name": "Split Hero Entrance",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/SplitHeroEntrance",
+      "props": [
+        {
+          "key": "panels",
+          "type": "range",
+          "default": 3,
+          "min": 2,
+          "max": 3
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "sweep",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "hero-word-letter-cascade": {
+      "id": "hero-word-letter-cascade",
+      "name": "Word Letter Cascade",
+      "category": "hero",
+      "importPath": "@/motion-arsenal/effects/hero/WordLetterCascade",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "waviness",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "rotation",
+          "type": "range",
+          "default": 14,
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#f0ece4"
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 5,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "img2threejs-nox-orbital-station": {
+      "id": "img2threejs-nox-orbital-station",
+      "name": "NoxOrbitalStation",
+      "category": "img2threejs",
+      "importPath": "@/motion-arsenal/effects/img2threejs/NoxOrbitalStation",
+      "props": [
+        {
+          "key": "lighting",
+          "type": "select",
+          "default": "neutral",
+          "options": [
+            "neutral",
+            "grazing",
+            "reference"
+          ]
+        },
+        {
+          "key": "exposure",
+          "type": "range",
+          "default": 1.1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "backgroundColor",
+          "type": "color",
+          "default": "#05060a"
+        },
+        {
+          "key": "spinDirection",
+          "type": "select",
+          "default": "clockwise",
+          "options": [
+            "clockwise",
+            "counter-clockwise"
+          ]
+        },
+        {
+          "key": "spinSpeed",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "azimuth",
+          "type": "range",
+          "default": 12,
+          "min": -180,
+          "max": 180
+        },
+        {
+          "key": "elevation",
+          "type": "range",
+          "default": 8,
+          "min": -60,
+          "max": 60
+        },
+        {
+          "key": "margin",
+          "type": "range",
+          "default": 1.3,
+          "min": 1,
+          "max": 2.5
+        }
+      ]
+    },
+    "lab-active-theory-trails": {
+      "id": "lab-active-theory-trails",
+      "name": "Reference: Active Theory Light Trails",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/lab/reference/ReferenceActiveTheoryTrails",
+      "props": [
+        {
+          "key": "trailCount",
+          "type": "range",
+          "default": 5,
+          "min": 2,
+          "max": 10
+        },
+        {
+          "key": "historyLength",
+          "type": "range",
+          "default": 42,
+          "min": 8,
+          "max": 90
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        }
+      ]
+    },
+    "lab-krank-curl-particles": {
+      "id": "lab-krank-curl-particles",
+      "name": "Reference: KRANK Curl-Noise Particles",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/lab/reference/ReferenceKrankCurlParticles",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 320,
+          "min": 50,
+          "max": 800
+        },
+        {
+          "key": "fieldScale",
+          "type": "range",
+          "default": 2.4,
+          "min": 0.5,
+          "max": 6
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        }
+      ]
+    },
+    "lab-oryzo-scribble-field": {
+      "id": "lab-oryzo-scribble-field",
+      "name": "Reference: ORYZO Scribble Field",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/lab/reference/ReferenceOryzoScribbleField",
+      "props": [
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 0.9,
+          "min": 0.2,
+          "max": 1
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "density",
+          "type": "range",
+          "default": 9,
+          "min": 4,
+          "max": 16
+        },
+        {
+          "key": "parallax",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    "lab-shopify-butterflies": {
+      "id": "lab-shopify-butterflies",
+      "name": "Reference: Shopify Butterflies",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/lab/reference/ReferenceShopifyButterflies",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 48,
+          "min": 8,
+          "max": 96
+        },
+        {
+          "key": "glowIntensity",
+          "type": "range",
+          "default": 1.4,
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        }
+      ]
+    },
+    "lab-shopify-coin-rain": {
+      "id": "lab-shopify-coin-rain",
+      "name": "Reference: Shopify Coin Rain",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/lab/reference/ReferenceShopifyCoinRain",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 150,
+          "min": 20,
+          "max": 300
+        },
+        {
+          "key": "gravity",
+          "type": "range",
+          "default": 4,
+          "min": 0.5,
+          "max": 12
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        }
+      ]
+    },
+    "nox-axiscursor": {
+      "id": "nox-axiscursor",
+      "name": "AxisCursor",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/AxisCursor",
+      "props": [
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 20,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "lineWidth",
+          "type": "range",
+          "default": 1.5,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "showCircle",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "circleRadius",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "opacity",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-blurcarousel": {
+      "id": "nox-blurcarousel",
+      "name": "BlurCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/BlurCarousel",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "blurAmount",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "scale",
+          "type": "range",
+          "default": 0.85,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-boxcarousel": {
+      "id": "nox-boxcarousel",
+      "name": "BoxCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/BoxCarousel",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "blurAmount",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "scale",
+          "type": "range",
+          "default": 0.85,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-buttoncarousel": {
+      "id": "nox-buttoncarousel",
+      "name": "ButtonCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ButtonCarousel",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "autoRotate",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "rotateInterval",
+          "type": "range",
+          "default": 3000,
+          "min": 0,
+          "max": 9000
+        },
+        {
+          "key": "perspective",
+          "type": "range",
+          "default": 900,
+          "min": 0,
+          "max": 2700
+        }
+      ]
+    },
+    "nox-characterwaves": {
+      "id": "nox-characterwaves",
+      "name": "CharacterWaves",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/CharacterWaves",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "WAVES"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 72,
+          "min": 8,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "Inte"
+        },
+        {
+          "key": "fontWeight",
+          "type": "range",
+          "default": 700,
+          "min": 0,
+          "max": 2100
+        },
+        {
+          "key": "amplitude",
+          "type": "range",
+          "default": 25,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30
+        }
+      ]
+    },
+    "nox-clickeffects": {
+      "id": "nox-clickeffects",
+      "name": "ClickEffects",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ClickEffects",
+      "props": [
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 20,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 6,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "burstRadius",
+          "type": "range",
+          "default": 120,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "fadeTime",
+          "type": "range",
+          "default": 800,
+          "min": 0.1,
+          "max": 2400
+        }
+      ]
+    },
+    "nox-coverflowcarousel": {
+      "id": "nox-coverflowcarousel",
+      "name": "CoverflowCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/CoverflowCarousel",
+      "props": [
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 20,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 6,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "burstRadius",
+          "type": "range",
+          "default": 120,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "fadeTime",
+          "type": "range",
+          "default": 800,
+          "min": 0.1,
+          "max": 2400
+        }
+      ]
+    },
+    "nox-coverflowgallery": {
+      "id": "nox-coverflowgallery",
+      "name": "CoverflowGallery",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/CoverflowGallery",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 700,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "visibleItems",
+          "type": "range",
+          "default": 5,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-cursorimagegallery": {
+      "id": "nox-cursorimagegallery",
+      "name": "CursorImageGallery",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/CursorImageGallery",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 800,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 450,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "itemWidth",
+          "type": "range",
+          "default": 280,
+          "min": 0,
+          "max": 840
+        },
+        {
+          "key": "itemHeight",
+          "type": "range",
+          "default": 380,
+          "min": 0,
+          "max": 1140
+        },
+        {
+          "key": "perspective",
+          "type": "range",
+          "default": 1200,
+          "min": 0,
+          "max": 3600
+        },
+        {
+          "key": "visibleCount",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "sideAngle",
+          "type": "range",
+          "default": 45,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "sideScale",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "sideOffset",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "showReflections",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showControls",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "autoPlay",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "autoPlayInterval",
+          "type": "range",
+          "default": 3000,
+          "min": 0,
+          "max": 9000
+        }
+      ]
+    },
+    "nox-curvedmarquee": {
+      "id": "nox-curvedmarquee",
+      "name": "CurvedMarquee",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/CurvedMarquee",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "CURVED MARQUEE • "
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 24,
+          "min": 8,
+          "max": 80
+        },
+        {
+          "key": "radius",
+          "type": "range",
+          "default": 150,
+          "min": 40,
+          "max": 400
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 8,
+          "min": 2,
+          "max": 30
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "clockwise",
+          "options": [
+            "clockwise",
+            "counter-clockwise"
+          ]
+        }
+      ]
+    },
+    "nox-directionhover": {
+      "id": "nox-directionhover",
+      "name": "DirectionHover",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DirectionHover",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "DIRECTION"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "slideDistance",
+          "type": "range",
+          "default": 30,
+          "min": 5,
+          "max": 100
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.35,
+          "min": 0.1,
+          "max": 1
+        }
+      ]
+    },
+    "nox-dotimagereveal": {
+      "id": "nox-dotimagereveal",
+      "name": "DotImageReveal",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DotImageReveal",
+      "props": [
+        {
+          "key": "src",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618172193763-c511deb635ca?w=400"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "Dot reveal"
+        },
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "dotSize",
+          "type": "range",
+          "default": 8,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "gap",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 30
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "auto",
+            "scroll"
+          ]
+        }
+      ]
+    },
+    "nox-draggablegrid": {
+      "id": "nox-draggablegrid",
+      "name": "DraggableGrid",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DraggableGrid",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "columns",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "gap",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-dusttextreveal": {
+      "id": "nox-dusttextreveal",
+      "name": "DustTextReveal",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DustTextReveal",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "DUST"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 200,
+          "min": 50,
+          "max": 800
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 2.5,
+          "min": 0.5,
+          "max": 10
+        },
+        {
+          "key": "particleColor",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "revealDuration",
+          "type": "range",
+          "default": 1.8,
+          "min": 0.5,
+          "max": 5
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "scroll",
+            "auto"
+          ]
+        }
+      ]
+    },
+    "nox-dynamicweight": {
+      "id": "nox-dynamicweight",
+      "name": "DynamicWeight",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DynamicWeight",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "DYNAMIC"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "minWeight",
+          "type": "range",
+          "default": 200,
+          "min": 100,
+          "max": 900
+        },
+        {
+          "key": "maxWeight",
+          "type": "range",
+          "default": 900,
+          "min": 100,
+          "max": 900
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 2,
+          "min": 0.5,
+          "max": 8
+        },
+        {
+          "key": "delayPerChar",
+          "type": "range",
+          "default": 0.15,
+          "min": 0,
+          "max": 0.5
+        }
+      ]
+    },
+    "nox-electricborder": {
+      "id": "nox-electricborder",
+      "name": "ElectricBorder",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ElectricBorder",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "columns",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "gap",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-emojiburst": {
+      "id": "nox-emojiburst",
+      "name": "EmojiBurst",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/EmojiBurst",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 200,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "borderColor",
+          "type": "text",
+          "default": "#4facfe"
+        },
+        {
+          "key": "bgColor",
+          "type": "text",
+          "default": "#0a0a1a"
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 6,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30
+        }
+      ]
+    },
+    "nox-floatingicons": {
+      "id": "nox-floatingicons",
+      "name": "FloatingIcons",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/FloatingIcons",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 250,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "floatAmount",
+          "type": "range",
+          "default": 15,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "floatSpeed",
+          "type": "range",
+          "default": 2,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-fluidimagereveal": {
+      "id": "nox-fluidimagereveal",
+      "name": "FluidImageReveal",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/FluidImageReveal",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 250,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "floatAmount",
+          "type": "range",
+          "default": 15,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "floatSpeed",
+          "type": "range",
+          "default": 2,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-glitchtext": {
+      "id": "nox-glitchtext",
+      "name": "GlitchText",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/GlitchText",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "GLITCH"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "monospace"
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 6,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "rgb-split",
+          "options": [
+            "rgb-split",
+            "slices",
+            "full"
+          ]
+        },
+        {
+          "key": "glitchInterval",
+          "type": "range",
+          "default": 3000,
+          "min": 500,
+          "max": 10000
+        },
+        {
+          "key": "glitchDuration",
+          "type": "range",
+          "default": 200,
+          "min": 50,
+          "max": 1000
+        }
+      ]
+    },
+    "nox-glitterwrap": {
+      "id": "nox-glitterwrap",
+      "name": "GlitterWrap",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/GlitterWrap",
+      "props": [
+        {
+          "key": "src",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "Fluid reveal"
+        },
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "rippleCount",
+          "type": "range",
+          "default": 8,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "revealDuration",
+          "type": "range",
+          "default": 2,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "auto",
+            "scroll"
+          ]
+        }
+      ]
+    },
+    "nox-gravitygallery": {
+      "id": "nox-gravitygallery",
+      "name": "GravityGallery",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/GravityGallery",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "gravityStrength",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-hoverimagereveal": {
+      "id": "nox-hoverimagereveal",
+      "name": "HoverImageReveal",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/HoverImageReveal",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "gravityStrength",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-imagefold": {
+      "id": "nox-imagefold",
+      "name": "ImageFold",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ImageFold",
+      "props": [
+        {
+          "key": "thumbnail",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618172193763-c511deb635ca?w=100&h=100&fit=crop"
+        },
+        {
+          "key": "fullImage",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618172193763-c511deb635ca?w=600"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "Image reveal"
+        },
+        {
+          "key": "width",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "left",
+          "options": [
+            "left",
+            "right",
+            "top",
+            "bottom"
+          ]
+        },
+        {
+          "key": "slideDistance",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 30
+        }
+      ]
+    },
+    "nox-imagegallery": {
+      "id": "nox-imagegallery",
+      "name": "ImageGallery",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ImageGallery",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "slide",
+          "options": [
+            "hover",
+            "auto",
+            "once"
+          ]
+        },
+        {
+          "key": "autoPlay",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "autoPlayInterval",
+          "type": "range",
+          "default": 3000,
+          "min": 0,
+          "max": 9000
+        },
+        {
+          "key": "showControls",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "nox-imageripple": {
+      "id": "nox-imageripple",
+      "name": "ImageRipple",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ImageRipple",
+      "props": [
+        {
+          "key": "src",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "Ripple image"
+        },
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "rippleRadius",
+          "type": "range",
+          "default": 40,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "rippleSpeed",
+          "type": "range",
+          "default": 1.5,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-infinitegallery": {
+      "id": "nox-infinitegallery",
+      "name": "InfiniteGallery",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/InfiniteGallery",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 800,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "itemWidth",
+          "type": "range",
+          "default": 250,
+          "min": 0,
+          "max": 750
+        },
+        {
+          "key": "autoSpeed",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-inkbleed": {
+      "id": "nox-inkbleed",
+      "name": "InkBleed",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/InkBleed",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "INKBLEED"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#1a1a1a"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 72,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "Georgia, serif"
+        },
+        {
+          "key": "bleedAmount",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "blurAmount",
+          "type": "range",
+          "default": 2.5,
+          "min": 0,
+          "max": 10
+        },
+        {
+          "key": "noiseIntensity",
+          "type": "range",
+          "default": 0.15,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "always"
+          ]
+        }
+      ]
+    },
+    "nox-juiceeffect": {
+      "id": "nox-juiceeffect",
+      "name": "JuiceEffect",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/JuiceEffect",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 800,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "itemWidth",
+          "type": "range",
+          "default": 250,
+          "min": 0,
+          "max": 750
+        },
+        {
+          "key": "autoSpeed",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-kineticgrid": {
+      "id": "nox-kineticgrid",
+      "name": "KineticGrid",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/KineticGrid",
+      "props": [
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ff6b6b"
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 80,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "squishAmount",
+          "type": "range",
+          "default": 0.4,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "squishDuration",
+          "type": "range",
+          "default": 150,
+          "min": 0,
+          "max": 450
+        },
+        {
+          "key": "bounceDuration",
+          "type": "range",
+          "default": 400,
+          "min": 0,
+          "max": 1200
+        }
+      ]
+    },
+    "nox-linkpreview": {
+      "id": "nox-linkpreview",
+      "name": "LinkPreview",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/LinkPreview",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "gridSpacing",
+          "type": "range",
+          "default": 30,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "lineColor",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "lineWidth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "responsiveness",
+          "type": "range",
+          "default": 0.4,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-magneticcarousel": {
+      "id": "nox-magneticcarousel",
+      "name": "MagneticCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/MagneticCarousel",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "stiffness",
+          "type": "range",
+          "default": 150,
+          "min": 0,
+          "max": 450
+        }
+      ]
+    },
+    "nox-particlesphere": {
+      "id": "nox-particlesphere",
+      "name": "ParticleSphere",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ParticleSphere",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "stiffness",
+          "type": "range",
+          "default": 150,
+          "min": 0,
+          "max": 450
+        }
+      ]
+    },
+    "nox-pixelateimage": {
+      "id": "nox-pixelateimage",
+      "name": "PixelateImage",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PixelateImage",
+      "props": [
+        {
+          "key": "image",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800"
+        },
+        {
+          "key": "imageWidth",
+          "type": "range",
+          "default": 800,
+          "min": 100,
+          "max": 1600
+        },
+        {
+          "key": "imageHeight",
+          "type": "range",
+          "default": 500,
+          "min": 100,
+          "max": 1000
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 10,
+          "min": 1,
+          "max": 100
+        },
+        {
+          "key": "pixelateMode",
+          "type": "select",
+          "default": "depixelate",
+          "options": [
+            "pixelate",
+            "depixelate"
+          ]
+        },
+        {
+          "key": "animationMode",
+          "type": "select",
+          "default": "enter",
+          "options": [
+            "enter",
+            "hover"
+          ]
+        },
+        {
+          "key": "hoverArea",
+          "type": "range",
+          "default": 100,
+          "min": 10,
+          "max": 100
+        },
+        {
+          "key": "safeArea",
+          "type": "range",
+          "default": 10,
+          "min": 0,
+          "max": 50
+        }
+      ]
+    },
+    "nox-pixelcard": {
+      "id": "nox-pixelcard",
+      "name": "PixelCard",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PixelCard",
+      "props": [
+        {
+          "key": "gap",
+          "type": "range",
+          "default": 6,
+          "min": 3,
+          "max": 20
+        },
+        {
+          "key": "pixelSize",
+          "type": "range",
+          "default": 2,
+          "min": 0.8,
+          "max": 6
+        },
+        {
+          "key": "maxPixels",
+          "type": "range",
+          "default": 6500,
+          "min": 1500,
+          "max": 10000
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#ffffff"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 80,
+          "min": 10,
+          "max": 100
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "hover",
+          "options": [
+            "hover",
+            "default",
+            "enter"
+          ]
+        },
+        {
+          "key": "appearFrom",
+          "type": "select",
+          "default": "middle",
+          "options": [
+            "middle",
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        }
+      ]
+    },
+    "nox-pixeldrift": {
+      "id": "nox-pixeldrift",
+      "name": "PixelDrift",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PixelDrift",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "pixelSize",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "pixelCount",
+          "type": "range",
+          "default": 200,
+          "min": 1,
+          "max": 600
+        }
+      ]
+    },
+    "nox-pixelreveal": {
+      "id": "nox-pixelreveal",
+      "name": "PixelReveal",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PixelReveal",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "pixelSize",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "pixelCount",
+          "type": "range",
+          "default": 200,
+          "min": 1,
+          "max": 600
+        }
+      ]
+    },
+    "nox-pixelunfold": {
+      "id": "nox-pixelunfold",
+      "name": "PixelUnfold",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PixelUnfold",
+      "props": [
+        {
+          "key": "src",
+          "type": "text",
+          "default": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400"
+        },
+        {
+          "key": "alt",
+          "type": "text",
+          "default": "Pixel reveal"
+        },
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "blockSize",
+          "type": "range",
+          "default": 40,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "fade",
+          "options": [
+            "hover",
+            "auto",
+            "once"
+          ]
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.8,
+          "min": 0.1,
+          "max": 30
+        },
+        {
+          "key": "autoPlay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "nox-prismgrid": {
+      "id": "nox-prismgrid",
+      "name": "PrismGrid",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/PrismGrid",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "columns",
+          "type": "range",
+          "default": 3,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "liftHeight",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-randomletterswap": {
+      "id": "nox-randomletterswap",
+      "name": "RandomLetterSwap",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/RandomLetterSwap",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "RANDOM"
+        },
+        {
+          "key": "altText",
+          "type": "text",
+          "default": ""
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "altColor",
+          "type": "text",
+          "default": "#888888"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "staggerDelay",
+          "type": "range",
+          "default": 0.04,
+          "min": 0,
+          "max": 0.3
+        },
+        {
+          "key": "swapDuration",
+          "type": "range",
+          "default": 0.3,
+          "min": 0.1,
+          "max": 1
+        }
+      ]
+    },
+    "nox-reactivegrid": {
+      "id": "nox-reactivegrid",
+      "name": "ReactiveGrid",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ReactiveGrid",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 600,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 500,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "columns",
+          "type": "range",
+          "default": 3,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "liftHeight",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-reactivelines": {
+      "id": "nox-reactivelines",
+      "name": "ReactiveLines",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ReactiveLines",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "rows",
+          "type": "range",
+          "default": 10,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "cols",
+          "type": "range",
+          "default": 15,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "baseColor",
+          "type": "text",
+          "default": "#1a1a2e"
+        },
+        {
+          "key": "activeColor",
+          "type": "text",
+          "default": "#4facfe"
+        },
+        {
+          "key": "fadeSpeed",
+          "type": "range",
+          "default": 0.98,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-roundcarousel": {
+      "id": "nox-roundcarousel",
+      "name": "RoundCarousel",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/RoundCarousel",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "radius",
+          "type": "range",
+          "default": 120,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "autoRotate",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "nox-scrambletext": {
+      "id": "nox-scrambletext",
+      "name": "ScrambleText",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ScrambleText",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "SCRAMBLE"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 48,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "monospace"
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "hover",
+            "once"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 60,
+          "min": 20,
+          "max": 300
+        },
+        {
+          "key": "iterations",
+          "type": "range",
+          "default": 5,
+          "min": 2,
+          "max": 15
+        }
+      ]
+    },
+    "nox-shinypill": {
+      "id": "nox-shinypill",
+      "name": "ShinyPill",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ShinyPill",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "SHINY"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "backgroundColor",
+          "type": "text",
+          "default": "#333333"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 24,
+          "min": 12,
+          "max": 80
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 2.5,
+          "min": 0.5,
+          "max": 8
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "hover"
+          ]
+        }
+      ]
+    },
+    "nox-smokytext": {
+      "id": "nox-smokytext",
+      "name": "SmokyText",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SmokyText",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "SMOKY"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "driftX",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "driftY",
+          "type": "range",
+          "default": -40,
+          "min": -100,
+          "max": 0
+        },
+        {
+          "key": "blurMax",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 30
+        }
+      ]
+    },
+    "nox-snowfall": {
+      "id": "nox-snowfall",
+      "name": "SnowFall",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SnowFall",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 150,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "hoverDispersion",
+          "type": "range",
+          "default": 80,
+          "min": 0,
+          "max": 240
+        }
+      ]
+    },
+    "nox-spinimage": {
+      "id": "nox-spinimage",
+      "name": "SpinImage",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SpinImage",
+      "props": [
+        {
+          "key": "imageWidth",
+          "type": "range",
+          "default": 150,
+          "min": 40,
+          "max": 320
+        },
+        {
+          "key": "imageHeight",
+          "type": "range",
+          "default": 150,
+          "min": 40,
+          "max": 320
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "anticlockwise",
+          "options": [
+            "clockwise",
+            "anticlockwise"
+          ]
+        },
+        {
+          "key": "path",
+          "type": "select",
+          "default": "curved",
+          "options": [
+            "curved",
+            "straight"
+          ]
+        },
+        {
+          "key": "xCurve",
+          "type": "range",
+          "default": -18,
+          "min": -90,
+          "max": 90
+        },
+        {
+          "key": "yCurve",
+          "type": "range",
+          "default": 12,
+          "min": -90,
+          "max": 90
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 3,
+          "min": 0.1,
+          "max": 12
+        },
+        {
+          "key": "rounded",
+          "type": "range",
+          "default": 3,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "orbitWidthPct",
+          "type": "range",
+          "default": 60,
+          "min": 20,
+          "max": 100
+        }
+      ]
+    },
+    "nox-spiralimages": {
+      "id": "nox-spiralimages",
+      "name": "SpiralImages",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SpiralImages",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "starCount",
+          "type": "range",
+          "default": 150,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "starSize",
+          "type": "range",
+          "default": 2,
+          "min": 1,
+          "max": 100
+        },
+        {
+          "key": "twinkleSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "driftSpeed",
+          "type": "range",
+          "default": 0.1,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    "nox-spotlighttext": {
+      "id": "nox-spotlighttext",
+      "name": "SpotlightText",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SpotlightText",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "SPOTLIGHT"
+        },
+        {
+          "key": "spotlightColor",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "dimColor",
+          "type": "text",
+          "default": "#555555"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "spotlightSize",
+          "type": "range",
+          "default": 180,
+          "min": 50,
+          "max": 500
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "cursor",
+          "options": [
+            "cursor",
+            "auto"
+          ]
+        }
+      ]
+    },
+    "nox-stardust": {
+      "id": "nox-stardust",
+      "name": "Stardust",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/Stardust",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 300,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "starCount",
+          "type": "range",
+          "default": 150,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "starSize",
+          "type": "range",
+          "default": 2,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "twinkleSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "driftSpeed",
+          "type": "range",
+          "default": 0.1,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    "nox-svgparticle": {
+      "id": "nox-svgparticle",
+      "name": "SVGParticle",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SVGParticle",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 400,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 20,
+          "min": 4,
+          "max": 80
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 5,
+          "min": 1,
+          "max": 20
+        },
+        {
+          "key": "particleShape",
+          "type": "select",
+          "default": "circle",
+          "options": [
+            "circle",
+            "square"
+          ]
+        },
+        {
+          "key": "particleColor",
+          "type": "select",
+          "default": "original",
+          "options": [
+            "original",
+            "single",
+            "multi"
+          ]
+        },
+        {
+          "key": "singleColor",
+          "type": "color",
+          "default": "#ffffff"
+        },
+        {
+          "key": "hoverEnabled",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "repulsionEnabled",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "nox-swipestack": {
+      "id": "nox-swipestack",
+      "name": "SwipeStack",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/SwipeStack",
+      "props": [
+        {
+          "key": "width",
+          "type": "range",
+          "default": 340,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "height",
+          "type": "range",
+          "default": 460,
+          "min": 50,
+          "max": 1000
+        },
+        {
+          "key": "stackCount",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "stackOffset",
+          "type": "range",
+          "default": 12,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "stackScale",
+          "type": "range",
+          "default": 0.06,
+          "min": 0,
+          "max": 200
+        },
+        {
+          "key": "swipeThreshold",
+          "type": "range",
+          "default": 120,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "rotationFactor",
+          "type": "range",
+          "default": 15,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-textrevealwall": {
+      "id": "nox-textrevealwall",
+      "name": "TextRevealWall",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/TextRevealWall",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "REVEAL"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "secondaryColor",
+          "type": "text",
+          "default": "#333333"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 48,
+          "min": 12,
+          "max": 120
+        },
+        {
+          "key": "gridSize",
+          "type": "range",
+          "default": 7,
+          "min": 3,
+          "max": 20
+        },
+        {
+          "key": "revealMode",
+          "type": "select",
+          "default": "flip",
+          "options": [
+            "flip",
+            "fade",
+            "slide"
+          ]
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "hover",
+            "auto",
+            "once"
+          ]
+        }
+      ]
+    },
+    "nox-textvaporize": {
+      "id": "nox-textvaporize",
+      "name": "TextVaporize",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/TextVaporize",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "VAPORIZE"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 60,
+          "min": 20,
+          "max": 300
+        },
+        {
+          "key": "vaporizeDuration",
+          "type": "range",
+          "default": 600,
+          "min": 200,
+          "max": 2000
+        },
+        {
+          "key": "reassembleDelay",
+          "type": "range",
+          "default": 2,
+          "min": 0.5,
+          "max": 10
+        }
+      ]
+    },
+    "nox-textwave": {
+      "id": "nox-textwave",
+      "name": "TextWave",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/TextWave",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "WAVE"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "amplitude",
+          "type": "range",
+          "default": 12,
+          "min": 2,
+          "max": 40
+        },
+        {
+          "key": "waveLength",
+          "type": "range",
+          "default": 5,
+          "min": 1,
+          "max": 15
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1.5,
+          "min": 0.3,
+          "max": 5
+        },
+        {
+          "key": "trigger",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "hover"
+          ]
+        }
+      ]
+    },
+    "nox-typewriter": {
+      "id": "nox-typewriter",
+      "name": "TypeWriter",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/TypeWriter",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "Hello, World!"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 32,
+          "min": 12,
+          "max": 120
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "monospace"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 80,
+          "min": 20,
+          "max": 500
+        },
+        {
+          "key": "cursor",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "cursorChar",
+          "type": "text",
+          "default": "|"
+        },
+        {
+          "key": "loop",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "forward",
+          "options": [
+            "forward",
+            "forward-back",
+            "random"
+          ]
+        },
+        {
+          "key": "delay",
+          "type": "range",
+          "default": 500,
+          "min": 0,
+          "max": 5000
+        }
+      ]
+    },
+    "nox-usercursor": {
+      "id": "nox-usercursor",
+      "name": "UserCursor",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/UserCursor",
+      "props": [
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 12,
+          "min": 1,
+          "max": 500
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 0.002,
+          "min": 0.1,
+          "max": 30
+        },
+        {
+          "key": "dotColor",
+          "type": "text",
+          "default": "#ff6b6b"
+        },
+        {
+          "key": "trail",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "trailLength",
+          "type": "range",
+          "default": 15,
+          "min": 0,
+          "max": 200
+        }
+      ]
+    },
+    "nox-weighthover": {
+      "id": "nox-weighthover",
+      "name": "WeightHover",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/WeightHover",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "WEIGHT"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "lightWeight",
+          "type": "range",
+          "default": 300,
+          "min": 100,
+          "max": 900
+        },
+        {
+          "key": "heavyWeight",
+          "type": "range",
+          "default": 900,
+          "min": 100,
+          "max": 900
+        },
+        {
+          "key": "stagger",
+          "type": "range",
+          "default": 0.03,
+          "min": 0,
+          "max": 0.2
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 0.4,
+          "min": 0.1,
+          "max": 1.5
+        }
+      ]
+    },
+    "originkit-blackhole": {
+      "id": "originkit-blackhole",
+      "name": "BlackHole",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/BlackHole",
+      "props": [
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 1000,
+          "min": 100,
+          "max": 3000
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 50
+        },
+        {
+          "key": "outerRadius",
+          "type": "range",
+          "default": 70,
+          "min": 10,
+          "max": 100
+        },
+        {
+          "key": "trail",
+          "type": "range",
+          "default": 50,
+          "min": 0,
+          "max": 50
+        },
+        {
+          "key": "tilt",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 90
+        },
+        {
+          "key": "tiltSideway",
+          "type": "range",
+          "default": 160,
+          "min": 0,
+          "max": 360
+        },
+        {
+          "key": "orbitSpeed",
+          "type": "range",
+          "default": 4,
+          "min": 1,
+          "max": 50
+        },
+        {
+          "key": "pullSpeed",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 50
+        },
+        {
+          "key": "showCenter",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "voidRadius",
+          "type": "range",
+          "default": 40,
+          "min": 5,
+          "max": 100
+        },
+        {
+          "key": "voidX",
+          "type": "range",
+          "default": 50,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "voidY",
+          "type": "range",
+          "default": 50,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "colors",
+          "type": "text",
+          "default": "#ffffff"
+        }
+      ]
+    },
+    "originkit-draggablesticker": {
+      "id": "originkit-draggablesticker",
+      "name": "DraggableSticker",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/DraggableSticker",
+      "props": [
+        {
+          "key": "image",
+          "type": "text",
+          "default": "https://imagedelivery.net/IEUjvl3YUlxY-MrTpOAWDQ/3fb4a247-64e9-4c54-2391-86598eebfe00/w=800"
+        },
+        {
+          "key": "imageWidth",
+          "type": "range",
+          "default": 200,
+          "min": 50,
+          "max": 600
+        },
+        {
+          "key": "imageHeight",
+          "type": "range",
+          "default": 200,
+          "min": 50,
+          "max": 600
+        },
+        {
+          "key": "tilt",
+          "type": "range",
+          "default": 6,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "tiltSmoothing",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 50
+        },
+        {
+          "key": "lighting",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "lightingStrength",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 50
+        },
+        {
+          "key": "lightingColor",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "sheenMode",
+          "type": "select",
+          "default": "sheen",
+          "options": [
+            "sheen",
+            "holo"
+          ]
+        },
+        {
+          "key": "elevation",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "staticShadow",
+          "type": "text",
+          "default": "rgba(0,0,0,0.3)"
+        },
+        {
+          "key": "dynamicShadow",
+          "type": "text",
+          "default": "rgba(0,0,0,0.45)"
+        }
+      ]
+    },
+    "originkit-flickertext": {
+      "id": "originkit-flickertext",
+      "name": "FlickerText",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/FlickerText",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "FLICKER"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "monospace"
+        },
+        {
+          "key": "flickerSpeed",
+          "type": "range",
+          "default": 0.08,
+          "min": 0.02,
+          "max": 0.5
+        },
+        {
+          "key": "maxMisses",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "glowColor",
+          "type": "text",
+          "default": "#00ffff"
+        }
+      ]
+    },
+    "originkit-fluidtrail": {
+      "id": "originkit-fluidtrail",
+      "name": "FluidTrail",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/FluidTrail",
+      "props": [
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 300,
+          "min": 0,
+          "max": 1000
+        },
+        {
+          "key": "particleSize",
+          "type": "range",
+          "default": 6,
+          "min": 1,
+          "max": 30
+        },
+        {
+          "key": "colors",
+          "type": "text",
+          "default": "#ff6b6b,#ffd93d,#6bcbff"
+        },
+        {
+          "key": "trailLength",
+          "type": "range",
+          "default": 30,
+          "min": 5,
+          "max": 100
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 0.3,
+          "min": 0.1,
+          "max": 1
+        },
+        {
+          "key": "fadeSpeed",
+          "type": "range",
+          "default": 0.03,
+          "min": 0.01,
+          "max": 0.1
+        }
+      ]
+    },
+    "originkit-globe": {
+      "id": "originkit-globe",
+      "name": "Globe",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/Globe",
+      "props": [
+        {
+          "key": "pointCount",
+          "type": "range",
+          "default": 5000,
+          "min": 500,
+          "max": 30000
+        },
+        {
+          "key": "pointSize",
+          "type": "range",
+          "default": 1.2,
+          "min": 0.1,
+          "max": 5
+        },
+        {
+          "key": "pointColor",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "globeColor",
+          "type": "text",
+          "default": "#1a1a2e"
+        },
+        {
+          "key": "atmosphereColor",
+          "type": "text",
+          "default": "#4facfe"
+        },
+        {
+          "key": "showMarkers",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "markerColor",
+          "type": "text",
+          "default": "#ff6b6b"
+        },
+        {
+          "key": "autoRotateSpeed",
+          "type": "range",
+          "default": 0.5,
+          "min": 0,
+          "max": 5
+        },
+        {
+          "key": "showGrid",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showGlow",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "backgroundColor",
+          "type": "text",
+          "default": "#000011"
+        }
+      ]
+    },
+    "originkit-meshtexthover": {
+      "id": "originkit-meshtexthover",
+      "name": "MeshTextHover",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/MeshTextHover",
+      "props": [
+        {
+          "key": "text",
+          "type": "text",
+          "default": "MESH"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "Inter, sans-serif"
+        },
+        {
+          "key": "gridDensity",
+          "type": "range",
+          "default": 12,
+          "min": 4,
+          "max": 30
+        },
+        {
+          "key": "distortionStrength",
+          "type": "range",
+          "default": 0.03,
+          "min": 0,
+          "max": 0.1
+        }
+      ]
+    },
+    "originkit-textmorph": {
+      "id": "originkit-textmorph",
+      "name": "TextMorph",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/TextMorph",
+      "props": [
+        {
+          "key": "words",
+          "type": "text",
+          "default": "DESIGN\\nCODE\\nMOTION\\nSHIP"
+        },
+        {
+          "key": "color",
+          "type": "text",
+          "default": "#ffffff"
+        },
+        {
+          "key": "fontSize",
+          "type": "range",
+          "default": 64,
+          "min": 16,
+          "max": 200
+        },
+        {
+          "key": "morphDuration",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 3
+        },
+        {
+          "key": "holdDuration",
+          "type": "range",
+          "default": 2,
+          "min": 0.5,
+          "max": 10
+        },
+        {
+          "key": "fontFamily",
+          "type": "text",
+          "default": "Inter"
+        },
+        {
+          "key": "fontWeight",
+          "type": "range",
+          "default": 700,
+          "min": 100,
+          "max": 900
+        },
+        {
+          "key": "textAlign",
+          "type": "select",
+          "default": "center",
+          "options": [
+            "left",
+            "center",
+            "right"
+          ]
+        }
+      ]
+    },
+    "originkit-thunderstrike": {
+      "id": "originkit-thunderstrike",
+      "name": "ThunderStrike",
+      "category": "originkit",
+      "importPath": "@/motion-arsenal/effects/originkit/ThunderStrike",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "classic",
+          "options": [
+            "classic",
+            "nox-horizon-rift"
+          ]
+        },
+        {
+          "key": "progress",
+          "type": "range",
+          "default": 0.55,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "autoDemo",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "ltr",
+          "options": [
+            "ltr",
+            "rtl"
+          ]
+        },
+        {
+          "key": "boltThickness",
+          "type": "range",
+          "default": 2.4,
+          "min": 0.6,
+          "max": 8
+        },
+        {
+          "key": "branchAmount",
+          "type": "range",
+          "default": 6,
+          "min": 0,
+          "max": 24
+        },
+        {
+          "key": "turbulence",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "glow",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "bloom",
+          "type": "range",
+          "default": 0.85,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "flashIntensity",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1.6
+        },
+        {
+          "key": "revealSoftness",
+          "type": "range",
+          "default": 26,
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "distortion",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "sparkAmount",
+          "type": "range",
+          "default": 24,
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "colorStart",
+          "type": "color",
+          "default": "#ff3d6e"
+        },
+        {
+          "key": "colorEnd",
+          "type": "color",
+          "default": "#ff8a4c"
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 7,
+          "min": 1,
+          "max": 40
+        },
+        {
+          "key": "reducedMotionMode",
+          "type": "select",
+          "default": "static-line",
+          "options": [
+            "static-line",
+            "crossfade-only",
+            "hidden"
+          ]
+        },
+        {
+          "key": "lightningColor",
+          "type": "color",
+          "default": "#f57219"
+        },
+        {
+          "key": "backgroundColor",
+          "type": "color",
+          "default": "#000000"
+        },
+        {
+          "key": "xOffset",
+          "type": "range",
+          "default": 1,
+          "min": -50,
+          "max": 50
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 55,
+          "min": 1,
+          "max": 150
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 23,
+          "min": 1,
+          "max": 100
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 50,
+          "min": 1,
+          "max": 100
+        },
+        {
+          "key": "angle",
+          "type": "range",
+          "default": -27,
+          "min": -90,
+          "max": 90
+        }
+      ]
+    },
+    "overlays-glass-sheet": {
+      "id": "overlays-glass-sheet",
+      "name": "GlassSheetOverlay",
+      "category": "overlays",
+      "importPath": "@/motion-arsenal/effects/overlays/GlassSheetOverlay",
+      "props": [
+        {
+          "key": "side",
+          "type": "select",
+          "default": "bottom",
+          "options": [
+            "bottom",
+            "right"
+          ]
+        },
+        {
+          "key": "blur",
+          "type": "range",
+          "default": 14,
+          "min": 4,
+          "max": 24
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        }
+      ]
+    },
+    "overlays-modal-iris-reveal": {
+      "id": "overlays-modal-iris-reveal",
+      "name": "ModalIrisReveal",
+      "category": "overlays",
+      "importPath": "@/motion-arsenal/effects/overlays/ModalIrisReveal",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "blurBackdrop",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 18
+        }
+      ]
+    },
+    "premium-before-after-slider": {
+      "id": "premium-before-after-slider",
+      "name": "NoxBeforeAfterSlider",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxBeforeAfterSlider",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "website-redesign",
+          "options": [
+            "website-redesign",
+            "local-seo",
+            "brand-refresh"
+          ]
+        },
+        {
+          "key": "position",
+          "type": "range",
+          "default": 52,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "orientation",
+          "type": "select",
+          "default": "horizontal",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        {
+          "key": "showLabels",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-bento-hover-showcase": {
+      "id": "premium-bento-hover-showcase",
+      "name": "NoxBentoShowcase",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxBentoShowcase",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "services",
+          "options": [
+            "services",
+            "portfolio",
+            "ai-growth"
+          ]
+        },
+        {
+          "key": "spotlight",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showMetrics",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-case-study-gallery": {
+      "id": "premium-case-study-gallery",
+      "name": "NoxCaseStudyGallery",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxCaseStudyGallery",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "case-studies",
+          "options": [
+            "case-studies",
+            "hospitality",
+            "local-business"
+          ]
+        },
+        {
+          "key": "layout",
+          "type": "select",
+          "default": "editorial",
+          "options": [
+            "editorial",
+            "bento",
+            "carousel"
+          ]
+        },
+        {
+          "key": "showCaptions",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "enableLightbox",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "autoplay",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "autoplayDelay",
+          "type": "range",
+          "default": 5200,
+          "min": 2400,
+          "max": 9000
+        }
+      ]
+    },
+    "premium-data-stream-journey": {
+      "id": "premium-data-stream-journey",
+      "name": "NoxDataStreamJourney",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxDataStreamJourney",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "revenue-river",
+          "options": [
+            "revenue-river",
+            "agent-swarm-routing",
+            "conversion-helix",
+            "signal-storm",
+            "quantum-tunnel"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "particleCount",
+          "type": "range",
+          "default": 70,
+          "min": 20,
+          "max": 140
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 0.8,
+          "min": 0.2,
+          "max": 2
+        },
+        {
+          "key": "disturb",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "progress",
+          "type": "range",
+          "default": -1,
+          "min": -1,
+          "max": 1
+        },
+        {
+          "key": "trailLength",
+          "type": "range",
+          "default": 0.62,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "branchIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "key": "labels",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showEnergySwitcher",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-glass-distortion-cards": {
+      "id": "premium-glass-distortion-cards",
+      "name": "NoxGlassCards",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxGlassCards",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "prism-command-grid",
+          "options": [
+            "prism-command-grid",
+            "liquid-chrome-vault",
+            "obsidian-caustic-deck",
+            "signal-crystal-array",
+            "revenue-amber-monoliths"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "tilt",
+          "type": "range",
+          "default": 9,
+          "min": 0,
+          "max": 14
+        },
+        {
+          "key": "refraction",
+          "type": "range",
+          "default": 0.065,
+          "min": 0,
+          "max": 0.12
+        },
+        {
+          "key": "fresnel",
+          "type": "range",
+          "default": 3.1,
+          "min": 1,
+          "max": 6
+        },
+        {
+          "key": "gridScale",
+          "type": "range",
+          "default": 15,
+          "min": 6,
+          "max": 26
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1.8
+        },
+        {
+          "key": "glassOpacity",
+          "type": "range",
+          "default": 0.86,
+          "min": 0.45,
+          "max": 1
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showEnergySwitcher",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-image-hover-lens": {
+      "id": "premium-image-hover-lens",
+      "name": "NoxImageHoverLens",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxImageHoverLens",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "product-detail",
+          "options": [
+            "product-detail",
+            "architecture",
+            "food"
+          ]
+        },
+        {
+          "key": "zoom",
+          "type": "range",
+          "default": 2.1,
+          "min": 1.2,
+          "max": 4
+        },
+        {
+          "key": "lensSize",
+          "type": "range",
+          "default": 180,
+          "min": 100,
+          "max": 280
+        },
+        {
+          "key": "showHint",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-logo-reference-marquee": {
+      "id": "premium-logo-reference-marquee",
+      "name": "NoxLogoMarquee",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxLogoMarquee",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "clients",
+          "options": [
+            "clients",
+            "partners",
+            "press"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 28,
+          "min": 10,
+          "max": 80
+        },
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "left",
+          "options": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "key": "pauseOnHover",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "fadeEdges",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-metric-proof-strip": {
+      "id": "premium-metric-proof-strip",
+      "name": "NoxMetricProofStrip",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxMetricProofStrip",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "growth",
+          "options": [
+            "growth",
+            "local-business",
+            "hospitality"
+          ]
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 1200,
+          "min": 300,
+          "max": 3000
+        },
+        {
+          "key": "showDetails",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "compact",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    },
+    "premium-signal-particles": {
+      "id": "premium-signal-particles",
+      "name": "NoxSignalParticles",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxSignalParticles",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 42,
+          "min": 12,
+          "max": 90
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "orbit",
+            "swarm",
+            "settle"
+          ]
+        },
+        {
+          "key": "intensity",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 1.5
+        },
+        {
+          "key": "sparkSize",
+          "type": "range",
+          "default": 1.2,
+          "min": 0.6,
+          "max": 2.4
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "agent-constellation",
+          "options": [
+            "agent-constellation",
+            "revenue-funnel-flight",
+            "forge-ember-murmuration",
+            "signal-resonance-vortex",
+            "command-formation"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "trailPersistence",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "linkDistance",
+          "type": "range",
+          "default": 90,
+          "min": 0,
+          "max": 180
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showEnergySwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showModeSwitcher",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-terminal-scan-reveal": {
+      "id": "premium-terminal-scan-reveal",
+      "name": "NoxTerminalScanReveal",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxTerminalScanReveal",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "scanDuration",
+          "type": "range",
+          "default": 1.6,
+          "min": 0.8,
+          "max": 3
+        },
+        {
+          "key": "autoStart",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "system-audit",
+          "options": [
+            "system-audit",
+            "lead-recovery",
+            "agent-readiness"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showEnergySwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-testimonial-slider": {
+      "id": "premium-testimonial-slider",
+      "name": "NoxTestimonialSlider",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxTestimonialSlider",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "nox-clients",
+          "options": [
+            "nox-clients",
+            "local-business",
+            "hospitality"
+          ]
+        },
+        {
+          "key": "autoplay",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "autoplayDelay",
+          "type": "range",
+          "default": 5600,
+          "min": 2600,
+          "max": 10000
+        },
+        {
+          "key": "showRating",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showMetric",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "premium-timeline-orchestrator": {
+      "id": "premium-timeline-orchestrator",
+      "name": "NoxTimelineOrchestrator",
+      "category": "premium",
+      "importPath": "@/motion-arsenal/effects/premium/NoxTimelineOrchestrator",
+      "props": [
+        {
+          "key": "progress",
+          "type": "range",
+          "default": -1,
+          "min": -1,
+          "max": 1
+        },
+        {
+          "key": "playSpeed",
+          "type": "range",
+          "default": 0.16,
+          "min": 0.05,
+          "max": 0.5
+        },
+        {
+          "key": "overshoot",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "revenue-os",
+          "options": [
+            "revenue-os",
+            "agent-ops",
+            "launch-sequence"
+          ]
+        },
+        {
+          "key": "energy",
+          "type": "select",
+          "default": "charged",
+          "options": [
+            "calm",
+            "charged",
+            "overdrive"
+          ]
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showLegend",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "scroll-cosmic-depth-field": {
+      "id": "scroll-cosmic-depth-field",
+      "name": "NoxCosmicDepthField",
+      "category": "backgrounds",
+      "importPath": "@/motion-arsenal/effects/backgrounds/NoxCosmicDepthField",
+      "props": [
+        {
+          "key": "starCount",
+          "type": "range",
+          "default": 520,
+          "min": 60,
+          "max": 1400
+        },
+        {
+          "key": "dustCount",
+          "type": "range",
+          "default": 140,
+          "min": 0,
+          "max": 600
+        },
+        {
+          "key": "foregroundStarRatio",
+          "type": "range",
+          "default": 0.04,
+          "min": 0,
+          "max": 0.3
+        },
+        {
+          "key": "mediumStarRatio",
+          "type": "range",
+          "default": 0.26,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "backgroundStarRatio",
+          "type": "range",
+          "default": 0.7,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "minStarSize",
+          "type": "range",
+          "default": 0.25,
+          "min": 0.1,
+          "max": 2
+        },
+        {
+          "key": "maxStarSize",
+          "type": "range",
+          "default": 1.15,
+          "min": 0.3,
+          "max": 4
+        },
+        {
+          "key": "foregroundMaxSize",
+          "type": "range",
+          "default": 1.8,
+          "min": 0.5,
+          "max": 6
+        },
+        {
+          "key": "dustSize",
+          "type": "range",
+          "default": 0.55,
+          "min": 0.1,
+          "max": 2
+        },
+        {
+          "key": "depthLayers",
+          "type": "range",
+          "default": 5,
+          "min": 1,
+          "max": 12
+        },
+        {
+          "key": "perspectiveDepth",
+          "type": "range",
+          "default": 0.85,
+          "min": 0.2,
+          "max": 2
+        },
+        {
+          "key": "nearPlane",
+          "type": "range",
+          "default": 0.18,
+          "min": 0.05,
+          "max": 0.8
+        },
+        {
+          "key": "farPlane",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2
+        },
+        {
+          "key": "depthDistribution",
+          "type": "range",
+          "default": 0.62,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "atmosphericPerspective",
+          "type": "range",
+          "default": 0.38,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "scrollSpeed",
+          "type": "range",
+          "default": 0.06,
+          "min": 0,
+          "max": 0.6
+        },
+        {
+          "key": "scrollParallax",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 1.2
+        },
+        {
+          "key": "scrollSmoothing",
+          "type": "range",
+          "default": 0.82,
+          "min": 0,
+          "max": 0.98
+        },
+        {
+          "key": "verticalDrift",
+          "type": "range",
+          "default": 0.02,
+          "min": 0,
+          "max": 0.3
+        },
+        {
+          "key": "horizontalDrift",
+          "type": "range",
+          "default": 0.008,
+          "min": 0,
+          "max": 0.1
+        },
+        {
+          "key": "velocityInfluence",
+          "type": "range",
+          "default": 0.25,
+          "min": 0,
+          "max": 1.5
+        },
+        {
+          "key": "bloom",
+          "type": "range",
+          "default": 0.28,
+          "min": 0,
+          "max": 1.2
+        },
+        {
+          "key": "glowRadius",
+          "type": "range",
+          "default": 1.6,
+          "min": 0.2,
+          "max": 5
+        },
+        {
+          "key": "glowIntensity",
+          "type": "range",
+          "default": 0.22,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "coreBrightness",
+          "type": "range",
+          "default": 1.05,
+          "min": 0.2,
+          "max": 1.6
+        },
+        {
+          "key": "haloOpacity",
+          "type": "range",
+          "default": 0.4,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "depthBlur",
+          "type": "range",
+          "default": 0.35,
+          "min": 0,
+          "max": 1.5
+        },
+        {
+          "key": "backgroundBlur",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "foregroundBlur",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "bokehStrength",
+          "type": "range",
+          "default": 0.15,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "focusDepth",
+          "type": "range",
+          "default": 0.55,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "trailLength",
+          "type": "range",
+          "default": 0.08,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "trailOpacity",
+          "type": "range",
+          "default": 0.35,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "motionBlur",
+          "type": "range",
+          "default": 0.2,
+          "min": 0,
+          "max": 0.9
+        },
+        {
+          "key": "smear",
+          "type": "range",
+          "default": 0.12,
+          "min": 0,
+          "max": 0.9
+        },
+        {
+          "key": "starOpacity",
+          "type": "range",
+          "default": 1,
+          "min": 0.1,
+          "max": 1.4
+        },
+        {
+          "key": "dustOpacity",
+          "type": "range",
+          "default": 0.28,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "twinkle",
+          "type": "range",
+          "default": 0.08,
+          "min": 0,
+          "max": 0.6
+        },
+        {
+          "key": "colorTemperature",
+          "type": "range",
+          "default": 0.35,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "vignette",
+          "type": "range",
+          "default": 0.25,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "nebulaOpacity",
+          "type": "range",
+          "default": 0.16,
+          "min": 0,
+          "max": 0.8
+        },
+        {
+          "key": "mobileStarCount",
+          "type": "range",
+          "default": 220,
+          "min": 30,
+          "max": 800
+        },
+        {
+          "key": "mobileScrollSpeed",
+          "type": "range",
+          "default": 0.04,
+          "min": 0,
+          "max": 0.4
+        },
+        {
+          "key": "mobileBloom",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "mobileDpr",
+          "type": "range",
+          "default": 1.5,
+          "min": 1,
+          "max": 2
+        },
+        {
+          "key": "seed",
+          "type": "range",
+          "default": 20260731,
+          "min": 1,
+          "max": 99999999
+        }
+      ]
+    },
+    "scroll-object-transform": {
+      "id": "scroll-object-transform",
+      "name": "ScrollObjectTransform",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/ScrollObjectTransform",
+      "props": [
+        {
+          "key": "stations",
+          "type": "range",
+          "default": 4,
+          "min": 2,
+          "max": 6
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 8,
+          "min": 2,
+          "max": 16
+        },
+        {
+          "key": "spin",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "morph",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "showRail",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "scroll-parallax-symbol-layers": {
+      "id": "scroll-parallax-symbol-layers",
+      "name": "ParallaxSymbolLayers",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/ParallaxSymbolLayers",
+      "props": [
+        {
+          "key": "layers",
+          "type": "range",
+          "default": 4,
+          "min": 3,
+          "max": 4
+        },
+        {
+          "key": "travel",
+          "type": "range",
+          "default": 0.8,
+          "min": 0.3,
+          "max": 1.2
+        },
+        {
+          "key": "blurMax",
+          "type": "range",
+          "default": 5,
+          "min": 0,
+          "max": 10
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 8,
+          "min": 2,
+          "max": 16
+        },
+        {
+          "key": "colorMode",
+          "type": "select",
+          "default": "nox",
+          "options": [
+            "nox",
+            "ember",
+            "mono"
+          ]
+        }
+      ]
+    },
+    "scroll-pinned-product-stage": {
+      "id": "scroll-pinned-product-stage",
+      "name": "PinnedProductStageCoreSystem",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/PinnedProductStageCoreSystem",
+      "props": [
+        {
+          "key": "variant",
+          "type": "select",
+          "default": "nox-global-sales-os",
+          "options": [
+            "nox-floating-card-os",
+            "nox-revenue-os",
+            "nox-scroll-story",
+            "nox-global-sales-os",
+            "project-x-command-center",
+            "ai-growth-engine",
+            "conversion-website-system",
+            "automation-ops-system"
+          ]
+        },
+        {
+          "key": "layoutMode",
+          "type": "select",
+          "default": "pinned-stage",
+          "options": [
+            "pinned-stage",
+            "sticky-story"
+          ]
+        },
+        {
+          "key": "chapterHeight",
+          "type": "range",
+          "default": 68,
+          "min": 45,
+          "max": 100
+        },
+        {
+          "key": "stickyOffset",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 20
+        },
+        {
+          "key": "activeThreshold",
+          "type": "range",
+          "default": 0.42,
+          "min": 0.2,
+          "max": 0.8
+        },
+        {
+          "key": "panelTiltX",
+          "type": "range",
+          "default": 4,
+          "min": 0,
+          "max": 6
+        },
+        {
+          "key": "panelTiltY",
+          "type": "range",
+          "default": -6,
+          "min": -14,
+          "max": 14
+        },
+        {
+          "key": "panelDepth",
+          "type": "range",
+          "default": -30,
+          "min": -80,
+          "max": 0
+        },
+        {
+          "key": "contentTransition",
+          "type": "range",
+          "default": 160,
+          "min": 100,
+          "max": 180
+        },
+        {
+          "key": "textReveal",
+          "type": "select",
+          "default": "blur-rise",
+          "options": [
+            "blur-rise",
+            "fade",
+            "none"
+          ]
+        },
+        {
+          "key": "mobileStack",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showVariantSwitcher",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "chrome",
+          "type": "select",
+          "default": "demo",
+          "options": [
+            "demo",
+            "minimal"
+          ]
+        },
+        {
+          "key": "stage",
+          "type": "range",
+          "default": -1,
+          "min": -1,
+          "max": 4
+        },
+        {
+          "key": "autoProgress",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "autoProgressSpeed",
+          "type": "range",
+          "default": 2.4,
+          "min": 0.6,
+          "max": 8
+        },
+        {
+          "key": "pageScrollMode",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "showStepNavigation",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "showLabels",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "compactScroll",
+          "type": "range",
+          "default": 0.78,
+          "min": 0.55,
+          "max": 1.2
+        },
+        {
+          "key": "scrollDriver",
+          "type": "select",
+          "default": "internal",
+          "options": [
+            "internal",
+            "page"
+          ]
+        },
+        {
+          "key": "scrollLength",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 8
+        },
+        {
+          "key": "scrollSmoothing",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 0.9
+        },
+        {
+          "key": "stageSnapStrength",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "stageTransitionDuration",
+          "type": "range",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 1.6
+        },
+        {
+          "key": "scrollRotationEnabled",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "rotationMode",
+          "type": "select",
+          "default": "free-spin",
+          "options": [
+            "free-spin",
+            "depth-flip"
+          ]
+        },
+        {
+          "key": "readableAngle",
+          "type": "range",
+          "default": 55,
+          "min": 15,
+          "max": 80
+        },
+        {
+          "key": "stackDrift",
+          "type": "range",
+          "default": 16,
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "rotationAxis",
+          "type": "select",
+          "default": "y",
+          "options": [
+            "x",
+            "y",
+            "z",
+            "xy",
+            "xyz"
+          ]
+        },
+        {
+          "key": "rotationTurns",
+          "type": "range",
+          "default": 0.85,
+          "min": 0,
+          "max": 4
+        },
+        {
+          "key": "rotationDirection",
+          "type": "select",
+          "default": "clockwise",
+          "options": [
+            "clockwise",
+            "counter-clockwise"
+          ]
+        },
+        {
+          "key": "baseRotationX",
+          "type": "range",
+          "default": 0,
+          "min": -180,
+          "max": 180
+        },
+        {
+          "key": "baseRotationY",
+          "type": "range",
+          "default": 0,
+          "min": -180,
+          "max": 180
+        },
+        {
+          "key": "baseRotationZ",
+          "type": "range",
+          "default": 0,
+          "min": -180,
+          "max": 180
+        },
+        {
+          "key": "stageRotationInfluence",
+          "type": "range",
+          "default": 0.35,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "rotationSmoothing",
+          "type": "range",
+          "default": 0.12,
+          "min": 0,
+          "max": 0.9
+        },
+        {
+          "key": "objectScale",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "objectDepth",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "perspective",
+          "type": "range",
+          "default": 1100,
+          "min": 400,
+          "max": 2600
+        },
+        {
+          "key": "cameraDistance",
+          "type": "range",
+          "default": 0,
+          "min": -300,
+          "max": 400
+        },
+        {
+          "key": "objectTilt",
+          "type": "range",
+          "default": 6,
+          "min": -30,
+          "max": 30
+        },
+        {
+          "key": "objectFloat",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 40
+        },
+        {
+          "key": "objectFloatSpeed",
+          "type": "range",
+          "default": 0.5,
+          "min": 0.05,
+          "max": 2
+        },
+        {
+          "key": "cardStyle",
+          "type": "select",
+          "default": "glass",
+          "options": [
+            "glass",
+            "obsidian",
+            "signal"
+          ]
+        },
+        {
+          "key": "stageCardVariant",
+          "type": "select",
+          "default": "auto",
+          "options": [
+            "auto",
+            "radar",
+            "score",
+            "mutation",
+            "timeline",
+            "command"
+          ]
+        },
+        {
+          "key": "cardScale",
+          "type": "range",
+          "default": 1.12,
+          "min": 0.6,
+          "max": 1.8
+        },
+        {
+          "key": "cardTilt",
+          "type": "range",
+          "default": 5,
+          "min": -18,
+          "max": 18
+        },
+        {
+          "key": "cardFloat",
+          "type": "range",
+          "default": 8,
+          "min": 0,
+          "max": 24
+        },
+        {
+          "key": "cardFloatSpeed",
+          "type": "range",
+          "default": 0.16,
+          "min": 0.05,
+          "max": 0.8
+        },
+        {
+          "key": "scrollRotationTurns",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "morphStrength",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 1.5
+        },
+        {
+          "key": "stageSpread",
+          "type": "range",
+          "default": 0.9,
+          "min": 0.4,
+          "max": 1.6
+        },
+        {
+          "key": "depth",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 2
+        },
+        {
+          "key": "showHud",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "glow",
+          "type": "range",
+          "default": 0.6,
+          "min": 0,
+          "max": 1.6
+        },
+        {
+          "key": "bloom",
+          "type": "range",
+          "default": 0.35,
+          "min": 0,
+          "max": 1.4
+        },
+        {
+          "key": "rimLight",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1.4
+        },
+        {
+          "key": "highlightIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 3
+        },
+        {
+          "key": "shadowIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "glassOpacity",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 1.4
+        },
+        {
+          "key": "blurStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2.5
+        },
+        {
+          "key": "backgroundIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1.6
+        },
+        {
+          "key": "gridOpacity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "ambientParticles",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "vignette",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "atmosphericGlow",
+          "type": "range",
+          "default": 0,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "visualMode",
+          "type": "select",
+          "default": "shells",
+          "options": [
+            "shells",
+            "signal-flow"
+          ]
+        },
+        {
+          "key": "stageVisualIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "stageMorphStrength",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "stageColorShift",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "stageObjectSpread",
+          "type": "range",
+          "default": 1,
+          "min": 0.2,
+          "max": 2
+        },
+        {
+          "key": "stageSymbolScale",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "mobileRotationTurns",
+          "type": "range",
+          "default": 0.25,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "mobileObjectScale",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 1.6
+        },
+        {
+          "key": "mobileEffectsQuality",
+          "type": "select",
+          "default": "medium",
+          "options": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "key": "disableRotationOnMobile",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "reducedMotionRotation",
+          "type": "select",
+          "default": "static",
+          "options": [
+            "off",
+            "stage-only",
+            "static"
+          ]
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 8,
+          "min": 2,
+          "max": 16
+        },
+        {
+          "key": "rotatePerSection",
+          "type": "range",
+          "default": 90,
+          "min": 20,
+          "max": 180
+        },
+        {
+          "key": "scalePulse",
+          "type": "range",
+          "default": 0.18,
+          "min": 0,
+          "max": 0.4
+        },
+        {
+          "key": "colorShift",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "scroll-section-snap-depth": {
+      "id": "scroll-section-snap-depth",
+      "name": "SectionSnapDepth",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/SectionSnapDepth",
+      "props": [
+        {
+          "key": "sectionCount",
+          "type": "range",
+          "default": 4,
+          "min": 2,
+          "max": 5
+        },
+        {
+          "key": "dimStrength",
+          "type": "range",
+          "default": 0.7,
+          "min": 0.2,
+          "max": 1
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "scroll-timeline-progress-rail": {
+      "id": "scroll-timeline-progress-rail",
+      "name": "TimelineProgressRail",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/TimelineProgressRail",
+      "props": [
+        {
+          "key": "milestones",
+          "type": "range",
+          "default": 5,
+          "min": 3,
+          "max": 6
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 8,
+          "min": 2,
+          "max": 16
+        },
+        {
+          "key": "glow",
+          "type": "range",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "showPercent",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "scroll-velocity-skew": {
+      "id": "scroll-velocity-skew",
+      "name": "ScrollVelocitySkew",
+      "category": "scroll",
+      "importPath": "@/motion-arsenal/effects/scroll/ScrollVelocitySkew",
+      "props": [
+        {
+          "key": "skewMax",
+          "type": "range",
+          "default": 10,
+          "min": 2,
+          "max": 20
+        },
+        {
+          "key": "damping",
+          "type": "range",
+          "default": 9,
+          "min": 3,
+          "max": 16
+        },
+        {
+          "key": "marqueeBase",
+          "type": "range",
+          "default": 40,
+          "min": 0,
+          "max": 120
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "skilltree-active-pulse-ring": {
+      "id": "skilltree-active-pulse-ring",
+      "name": "Active Node Pulse Ring",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/ActiveNodePulseRing",
+      "props": [
+        {
+          "key": "pulseSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2.5
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 64,
+          "min": 40,
+          "max": 90
+        }
+      ]
+    },
+    "skilltree-astral-constellation": {
+      "id": "skilltree-astral-constellation",
+      "name": "Astral Skilltree Constellation",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/AstralSkilltreeConstellation",
+      "props": [
+        {
+          "key": "nodeCount",
+          "type": "range",
+          "default": 6,
+          "min": 1,
+          "max": 6
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        },
+        {
+          "key": "stars",
+          "type": "range",
+          "default": 40,
+          "min": 0,
+          "max": 80
+        },
+        {
+          "key": "showLabels",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "skilltree-border-trace-quest-card": {
+      "id": "skilltree-border-trace-quest-card",
+      "name": "Border Trace Quest Card",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/BorderTraceQuestCard",
+      "props": [
+        {
+          "key": "traceSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#d4af37"
+        }
+      ]
+    },
+    "skilltree-corrupted-risk-glitch": {
+      "id": "skilltree-corrupted-risk-glitch",
+      "name": "Corrupted / Risk Node Glitch",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/CorruptedRiskNodeGlitch",
+      "props": [
+        {
+          "key": "glitchIntensity",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "cycleSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2.5
+        }
+      ]
+    },
+    "skilltree-floating-nodes": {
+      "id": "skilltree-floating-nodes",
+      "name": "Floating Skill Nodes",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/FloatingSkillNodes",
+      "props": [
+        {
+          "key": "count",
+          "type": "range",
+          "default": 5,
+          "min": 2,
+          "max": 8
+        },
+        {
+          "key": "floatDistance",
+          "type": "range",
+          "default": 7,
+          "min": 2,
+          "max": 14
+        },
+        {
+          "key": "floatSpeed",
+          "type": "range",
+          "default": 6,
+          "min": 3,
+          "max": 10
+        }
+      ]
+    },
+    "skilltree-forge-chamber-hard-mode": {
+      "id": "skilltree-forge-chamber-hard-mode",
+      "name": "Forge Chamber Hard Mode Variant",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/ForgeChamberHardMode",
+      "props": [
+        {
+          "key": "embers",
+          "type": "range",
+          "default": 14,
+          "min": 0,
+          "max": 30
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2
+        }
+      ]
+    },
+    "skilltree-glass-metal-panel": {
+      "id": "skilltree-glass-metal-panel",
+      "name": "Glass/Metal Skilltree Panel",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/GlassMetalSkilltreePanel",
+      "props": [
+        {
+          "key": "blur",
+          "type": "range",
+          "default": 9,
+          "min": 0,
+          "max": 18
+        },
+        {
+          "key": "hoverLift",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "skilltree-locked-path-shadow": {
+      "id": "skilltree-locked-path-shadow",
+      "name": "Locked Path Shadow",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/LockedPathShadow",
+      "props": [
+        {
+          "key": "veilStrength",
+          "type": "range",
+          "default": 0.55,
+          "min": 0,
+          "max": 0.85
+        },
+        {
+          "key": "scanDirection",
+          "type": "select",
+          "default": "left-to-right",
+          "options": [
+            "left-to-right",
+            "right-to-left",
+            "top-to-bottom"
+          ]
+        },
+        {
+          "key": "scanSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 2.5
+        },
+        {
+          "key": "nodeShape",
+          "type": "select",
+          "default": "circle",
+          "options": [
+            "circle",
+            "hex",
+            "diamond"
+          ]
+        },
+        {
+          "key": "dustCount",
+          "type": "range",
+          "default": 32,
+          "min": 0,
+          "max": 64
+        },
+        {
+          "key": "shadowColor",
+          "type": "color",
+          "default": "#cb97f2"
+        }
+      ]
+    },
+    "skilltree-particle-atmosphere-light": {
+      "id": "skilltree-particle-atmosphere-light",
+      "name": "Particle Atmosphere Light",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/ParticleAtmosphereLight",
+      "props": [
+        {
+          "key": "particles",
+          "type": "range",
+          "default": 20,
+          "min": 0,
+          "max": 60
+        },
+        {
+          "key": "stars",
+          "type": "range",
+          "default": 30,
+          "min": 0,
+          "max": 80
+        }
+      ]
+    },
+    "skilltree-progress-energy-ring": {
+      "id": "skilltree-progress-energy-ring",
+      "name": "Progress Energy Ring",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/ProgressEnergyRing",
+      "props": [
+        {
+          "key": "value",
+          "type": "range",
+          "default": 65,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "size",
+          "type": "range",
+          "default": 140,
+          "min": 80,
+          "max": 220
+        },
+        {
+          "key": "strokeWidth",
+          "type": "range",
+          "default": 5,
+          "min": 3,
+          "max": 10
+        },
+        {
+          "key": "animateIn",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "skilltree-recommended-focus-ring": {
+      "id": "skilltree-recommended-focus-ring",
+      "name": "Recommended Node Focus Ring",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/RecommendedNodeFocusRing",
+      "props": [
+        {
+          "key": "spinSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "showBadge",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "skilltree-svg-energy-lines": {
+      "id": "skilltree-svg-energy-lines",
+      "name": "SVG Energy Lines Flow",
+      "category": "forge-skilltree",
+      "importPath": "@/motion-arsenal/effects/forge-skilltree/SvgEnergyLinesFlow",
+      "props": [
+        {
+          "key": "lineCount",
+          "type": "range",
+          "default": 5,
+          "min": 2,
+          "max": 9
+        },
+        {
+          "key": "flowSpeed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        }
+      ]
+    },
+    "system-agent-log-stream": {
+      "id": "system-agent-log-stream",
+      "name": "AgentLogStream",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/AgentLogStream",
+      "props": [
+        {
+          "key": "interval",
+          "type": "range",
+          "default": 1.1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "maxVisible",
+          "type": "range",
+          "default": 7,
+          "min": 4,
+          "max": 12
+        }
+      ]
+    },
+    "system-progress-ring-charge": {
+      "id": "system-progress-ring-charge",
+      "name": "ProgressRingCharge",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/ProgressRingCharge",
+      "props": [
+        {
+          "key": "target",
+          "type": "range",
+          "default": 100,
+          "min": 20,
+          "max": 100
+        },
+        {
+          "key": "duration",
+          "type": "range",
+          "default": 3,
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "autoReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "system-rank-reveal": {
+      "id": "system-rank-reveal",
+      "name": "RankRevealSequence",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/RankRevealSequence",
+      "props": [
+        {
+          "key": "rankName",
+          "type": "text",
+          "default": "FORGED"
+        },
+        {
+          "key": "color",
+          "type": "color",
+          "default": "#f0ece4"
+        },
+        {
+          "key": "accentColor",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.4,
+          "max": 2.5
+        },
+        {
+          "key": "autoReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "system-scan-complete-pulse": {
+      "id": "system-scan-complete-pulse",
+      "name": "ScanCompletePulse",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/ScanCompletePulse",
+      "props": [
+        {
+          "key": "segments",
+          "type": "range",
+          "default": 14,
+          "min": 6,
+          "max": 24
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "autoReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "system-terminal-boot-stream": {
+      "id": "system-terminal-boot-stream",
+      "name": "TerminalBootStream",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/TerminalBootStream",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.3,
+          "max": 3
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "flicker",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "autoReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "system-xp-fill-surge": {
+      "id": "system-xp-fill-surge",
+      "name": "XPFillSurge",
+      "category": "system",
+      "importPath": "@/motion-arsenal/effects/system/XPFillSurge",
+      "props": [
+        {
+          "key": "fillDuration",
+          "type": "range",
+          "default": 3.4,
+          "min": 1,
+          "max": 8
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#d4a24a"
+        },
+        {
+          "key": "sparkAmount",
+          "type": "range",
+          "default": 1,
+          "min": 0,
+          "max": 2
+        },
+        {
+          "key": "autoReplay",
+          "type": "boolean",
+          "default": true
+        }
+      ]
+    },
+    "transitions-clip-path-reveal": {
+      "id": "transitions-clip-path-reveal",
+      "name": "ClipPathReveal",
+      "category": "transitions",
+      "importPath": "@/motion-arsenal/effects/transitions/ClipPathReveal",
+      "props": [
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "left",
+          "options": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "notch",
+          "type": "range",
+          "default": 12,
+          "min": 4,
+          "max": 22
+        }
+      ]
+    },
+    "transitions-layered-page-enter": {
+      "id": "transitions-layered-page-enter",
+      "name": "LayeredPageEnter",
+      "category": "transitions",
+      "importPath": "@/motion-arsenal/effects/transitions/LayeredPageEnter",
+      "props": [
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "stepMs",
+          "type": "range",
+          "default": 100,
+          "min": 60,
+          "max": 160
+        },
+        {
+          "key": "parallax",
+          "type": "range",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "transitions-masked-route": {
+      "id": "transitions-masked-route",
+      "name": "MaskedRouteTransition",
+      "category": "transitions",
+      "importPath": "@/motion-arsenal/effects/transitions/MaskedRouteTransition",
+      "props": [
+        {
+          "key": "shape",
+          "type": "select",
+          "default": "circle",
+          "options": [
+            "circle",
+            "diamond"
+          ]
+        },
+        {
+          "key": "origin",
+          "type": "select",
+          "default": "center",
+          "options": [
+            "center",
+            "top-left",
+            "bottom-right"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "transitions-panel-shift": {
+      "id": "transitions-panel-shift",
+      "name": "PanelShiftTransition",
+      "category": "transitions",
+      "importPath": "@/motion-arsenal/effects/transitions/PanelShiftTransition",
+      "props": [
+        {
+          "key": "axis",
+          "type": "select",
+          "default": "horizontal",
+          "options": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        {
+          "key": "strips",
+          "type": "range",
+          "default": 4,
+          "min": 3,
+          "max": 4
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        }
+      ]
+    },
+    "transitions-smooth-section-wipe": {
+      "id": "transitions-smooth-section-wipe",
+      "name": "SmoothSectionWipe",
+      "category": "transitions",
+      "importPath": "@/motion-arsenal/effects/transitions/SmoothSectionWipe",
+      "props": [
+        {
+          "key": "direction",
+          "type": "select",
+          "default": "left",
+          "options": [
+            "left",
+            "right",
+            "up",
+            "down"
+          ]
+        },
+        {
+          "key": "speed",
+          "type": "range",
+          "default": 1,
+          "min": 0.5,
+          "max": 2
+        },
+        {
+          "key": "accent",
+          "type": "color",
+          "default": "#C93030"
+        },
+        {
+          "key": "panelCount",
+          "type": "range",
+          "default": 3,
+          "min": 2,
+          "max": 3
+        }
+      ]
+    }
+  }
+}

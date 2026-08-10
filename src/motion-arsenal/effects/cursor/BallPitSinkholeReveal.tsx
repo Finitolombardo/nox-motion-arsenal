@@ -1,0 +1,17 @@
+import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
+import { clamp, seededRandom, usePrefersReducedMotion } from '../../lib/animationUtils';
+
+export interface BallPitSinkholeRevealProps { balls?: number; holeRadius?: number; sinkSpeed?: number; seed?: number; }
+interface Ball { x:number; y:number; r:number; vx:number; vy:number; hue:number; }
+
+export default function BallPitSinkholeReveal({ balls = 120, holeRadius = 70, sinkSpeed = 1, seed = 17 }: BallPitSinkholeRevealProps) {
+  const canvas = useRef<HTMLCanvasElement>(null); const reduced = usePrefersReducedMotion();
+  const count = clamp(Math.round(balls), 30, 300); const radius = clamp(holeRadius, 30, 150); const speed = clamp(sinkSpeed, .1, 3);
+  const initial = useMemo(() => { const r = seededRandom(seed); return Array.from({length:count}, ():Ball => ({ x:r(), y:r(), r:3+r()*7, vx:0, vy:0, hue:38+r()*22 })); }, [count, seed]);
+  useEffect(() => { const c=canvas.current; if(!c) return; const ctx=c.getContext('2d'); if(!ctx) return; const balls=initial.map(b=>({...b})); let pointer={x:.5,y:.5,active:false}; let raf=0; let last=performance.now();
+    const move=(e:PointerEvent)=>{const box=c.getBoundingClientRect();pointer={x:(e.clientX-box.left)/box.width,y:(e.clientY-box.top)/box.height,active:true};}; const leave=()=>{pointer.active=false};
+    c.addEventListener('pointermove',move); c.addEventListener('pointerleave',leave); const draw=(now:number)=>{const dt=Math.min((now-last)/1000,.05);last=now;const box=c.getBoundingClientRect();const dpr=Math.min(devicePixelRatio||1,2);if(c.width!==box.width*dpr){c.width=box.width*dpr;c.height=box.height*dpr;}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,box.width,box.height);ctx.fillStyle='#0d0e13';ctx.fillRect(0,0,box.width,box.height);const hx=pointer.x*box.width,hy=pointer.y*box.height; const rr=radius;
+      for(const b of balls){const bx=b.x*box.width,by=b.y*box.height,dx=hx-bx,dy=hy-by,dist=Math.hypot(dx,dy)||1; if(pointer.active&&dist<rr*1.7){const force=(1-dist/(rr*1.7))*speed;b.vx-=dx/dist*force*dt*1.8;b.vy-=dy/dist*force*dt*1.8;}b.vx*=.985;b.vy*=.985;b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.x<0||b.x>1)b.vx*=-.7;if(b.y<0||b.y>1)b.vy*=-.7;const sink=pointer.active?clamp((rr-dist)/rr,0,1):0;ctx.globalAlpha=1-sink*.85;ctx.fillStyle=`hsl(${b.hue} 62% ${48+sink*22}%)`;ctx.beginPath();ctx.arc(b.x*box.width,b.y*box.height,b.r*(1-sink*.65),0,Math.PI*2);ctx.fill();}ctx.globalAlpha=1; if(pointer.active){const g=ctx.createRadialGradient(hx,hy,rr*.2,hx,hy,rr);g.addColorStop(0,'#d4a24a');g.addColorStop(.7,'#d4a24a44');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.beginPath();ctx.arc(hx,hy,rr,0,Math.PI*2);ctx.fill();} if(!reduced)raf=requestAnimationFrame(draw);};draw(last);return()=>{cancelAnimationFrame(raf);c.removeEventListener('pointermove',move);c.removeEventListener('pointerleave',leave);};},[initial,radius,speed,reduced]);
+  return <div className="nox-ballpit" tabIndex={0} aria-label="Interactive ball pit sinkhole reveal"><canvas ref={canvas}/><span>MOVE TO REVEAL</span><style>{CSS}</style></div>;
+}
+const CSS=`.nox-ballpit{position:relative;min-height:250px;overflow:hidden;background:#0d0e13;border:1px solid #d4a24a55;touch-action:none}.nox-ballpit canvas{display:block;width:100%;height:250px}.nox-ballpit span{position:absolute;left:16px;bottom:14px;color:#f7e8a4;font:10px ui-monospace;letter-spacing:.18em;pointer-events:none}@media(prefers-reduced-motion:reduce){.nox-ballpit canvas{cursor:crosshair}}`;

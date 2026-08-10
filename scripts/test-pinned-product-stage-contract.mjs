@@ -123,7 +123,8 @@ for (const term of ['baseRotationX', 'baseRotationY', 'baseRotationZ', 'stageRot
 assert.ok(!/const spin[^;]*elapsed/.test(source), 'spin must not depend on elapsed time');
 assert.ok(!/target[XYZ] = [^;]*elapsed/.test(source), 'rotation targets must not depend on elapsed time');
 
-const stageProps = catalog.slice(catalog.indexOf('props: ['), catalog.indexOf('productionSafe'));
+const stageStart = catalog.indexOf("id: 'scroll-pinned-product-stage'");
+const stageProps = catalog.slice(stageStart, catalog.indexOf('productionSafe', stageStart));
 const REQUIRED_STAGE_CONTROLS = [
   'variant', 'stage', 'autoProgress', 'pageScrollMode', 'showStepNavigation', 'showLabels', 'compactScroll',
   'scrollLength', 'scrollSmoothing', 'stageSnapStrength', 'stageTransitionDuration',

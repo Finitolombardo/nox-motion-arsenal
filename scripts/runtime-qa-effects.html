@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Runtime QA — NOX Arsenal Batch (pointer-text-depth · angled-gold-strike)</title>
+  <style>
+    body { margin: 0; background: #0a0a0b; }
+    .qa-block { position: relative; height: 70vh; border-bottom: 1px solid #1c1c1f; }
+    /* Below-fold: transform verschiebt NUR die visuelle Position; layout bleibt oben. */
+    #ptd-block { transform: translateY(260vh); }
+    #ags-block { transform: translateY(340vh); }
+  </style>
+</head>
+<body>
+  <div id="ptd-block" class="qa-block"><div id="ptd-mount" style="position:absolute;inset:0"></div></div>
+  <div id="ags-block" class="qa-block"><div id="ags-mount" style="position:absolute;inset:0"></div></div>
+  <!-- Modul-Skript in eigener .tsx-Datei (Inline-Module werden als html-proxy serviert). -->
+  <script type="module" src="/scripts/runtime-qa-effects-entry.tsx"></script>
+</body>
+</html>
