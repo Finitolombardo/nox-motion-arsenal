@@ -12,11 +12,18 @@ interface Props {
   onToggleArchive: (id: string) => void;
 }
 
-const IMPROVEMENT_LABELS: Record<EffectImprovementStatus, string> = {
-  pending: 'PENDING',
-  'in-progress': 'IN PROGRESS',
-  improved: 'IMPROVED',
-  'needs-review': 'NEEDS REVIEW',
+const VERBESSERUNGS_STATUS: Record<EffectImprovementStatus, string> = {
+  pending: 'OFFEN',
+  'in-progress': 'IN ARBEIT',
+  improved: 'VERBESSERT',
+  'needs-review': 'PRÜFEN',
+};
+
+const KOMPLEXITAET_LABELS: Record<string, string> = {
+  low: 'LEICHT',
+  medium: 'MITTEL',
+  high: 'HOCH',
+  heavy: 'AUFWENDIG',
 };
 
 export function EffectCard({ entry, favorite, archived, onOpen, onToggleFavorite, onToggleArchive }: Props) {
@@ -25,7 +32,7 @@ export function EffectCard({ entry, favorite, archived, onOpen, onToggleFavorite
   const isImproved = improvementStatus === 'improved' && Boolean(m.lastImprovedAt);
   const timestamp = isImproved ? m.lastImprovedAt : m.updatedAt;
   const updated = formatEffectUpdatedAt(timestamp);
-  const timestampLabel = isImproved ? 'IMPROVED' : 'UPDATED';
+  const timestampLabel = isImproved ? 'VERBESSERT' : 'AKTUALISIERT';
   const timestampTitle = isImproved ? 'Zuletzt verbessert' : 'Letzte Code-Aktualisierung';
 
   return (
@@ -85,12 +92,12 @@ export function EffectCard({ entry, favorite, archived, onOpen, onToggleFavorite
         <p className="fx-card-desc">{m.description}</p>
         <div className="badges">
           <span className={`badge improvement-status improvement-${improvementStatus}`}>
-            {IMPROVEMENT_LABELS[improvementStatus]}
+            {VERBESSERUNGS_STATUS[improvementStatus]}
           </span>
           {m.improvementVersion && <span className="badge">v{m.improvementVersion}</span>}
-          <span className={`badge ${m.mode === 'nox-concept' ? 'lab' : 'adapted'}`}>{m.mode === 'nox-concept' ? 'NOX Concept' : 'NOX Adapted'}</span>
-          <span className={`badge ${m.complexity === 'heavy' ? 'heavy' : ''}`}>{m.complexity}</span>
-          {m.productionSafe && <span className="badge prod">production</span>}
+          <span className={`badge ${m.mode === 'nox-concept' ? 'lab' : 'adapted'}`}>{m.mode === 'nox-concept' ? 'NOX KONZEPT' : 'NOX ANGEPASST'}</span>
+          <span className={`badge ${m.complexity === 'heavy' ? 'heavy' : ''}`}>{KOMPLEXITAET_LABELS[m.complexity] ?? String(m.complexity).toUpperCase()}</span>
+          {m.productionSafe && <span className="badge prod">PRODUKTIONSREIF</span>}
           <span className="badge">{m.sourceWebsite}</span>
         </div>
       </div>
