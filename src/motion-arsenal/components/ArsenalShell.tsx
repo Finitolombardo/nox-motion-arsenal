@@ -6,6 +6,7 @@ import { EFFECT_COLLECTIONS } from '../data/collections';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { EffectCard } from './EffectCard';
 import { ConsolidationMigrationCenter } from './ConsolidationMigrationCenter';
+import { ReadinessDashboards } from './ReadinessDashboards';
 
 const EffectDetail = React.lazy(() => import('./EffectDetail').then((module) => ({ default: module.EffectDetail })));
 
@@ -99,6 +100,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
 
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
   const isConsolidationCenter = routePath === '/dashboard/008';
+  const readinessDashboard = (['009', '010', '011', '012'] as const).find((id) => routePath === `/dashboard/${id}`);
   const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
   const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
   const sharedConfig: EffectConfigValues | null = openEntry
@@ -190,6 +192,10 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     return <ConsolidationMigrationCenter catalog={catalog} onBack={() => navigate('/')} />;
   }
 
+  if (readinessDashboard) {
+    return <ReadinessDashboards catalog={catalog} dashboard={readinessDashboard} onBack={() => navigate('/')} />;
+  }
+
   if (openEntry) {
     return (
       <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
@@ -236,6 +242,22 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         <button className="side-link" data-testid="consolidation-dashboard-link" onClick={() => navigate('/dashboard/008')}>
           <span>Consolidation Center</span>
           <span className="side-count">008</span>
+        </button>
+        <button className="side-link" data-testid="dashboard-009-link" onClick={() => navigate('/dashboard/009')}>
+          <span>Niche Readiness</span>
+          <span className="side-count">009</span>
+        </button>
+        <button className="side-link" data-testid="dashboard-010-link" onClick={() => navigate('/dashboard/010')}>
+          <span>Preset Quality</span>
+          <span className="side-count">010</span>
+        </button>
+        <button className="side-link" data-testid="dashboard-011-link" onClick={() => navigate('/dashboard/011')}>
+          <span>Runtime Compatibility</span>
+          <span className="side-count">011</span>
+        </button>
+        <button className="side-link" data-testid="dashboard-012-link" onClick={() => navigate('/dashboard/012')}>
+          <span>Integration Readiness</span>
+          <span className="side-count">012</span>
         </button>
         <div className="side-title">Sammlungen</div>
         {EFFECT_COLLECTIONS.map((c) => (
