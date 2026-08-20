@@ -4,6 +4,28 @@ import type { EffectEntry } from '../../types';
 export const CURSOR_CATALOG: EffectEntry[] = [
   {
     meta: {
+      id: 'cursor-pointer-interaction-field',
+      name: 'PointerInteractionField',
+      displayName: 'Pointer Interaction Field',
+      category: 'cursor',
+      sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['PointerInteractionField.tsx (canonical selector)', 'CursorLightField.tsx', 'HoverDistortionShader.tsx', 'PointerParallaxStage.tsx', 'SpotlightReveal.tsx', 'InteractiveSymbolDrift.tsx'],
+      mode: 'nox-adapted', complexity: 'medium', dependencies: [],
+      bestFor: ['Interactive surface fields', 'Pointer-driven product moments'],
+      performanceNotes: 'Renders exactly one preserved standalone pointer effect at a time; no additional animation loop or dependency.',
+      mobileNotes: 'Delegates each mode to its existing touch-safe fallback.',
+      reducedMotionNotes: 'Delegates each mode to its existing reduced-motion presentation.',
+      description: 'Canonical selector for the Arsenal pointer interaction family: light, distortion, parallax, spotlight, or symbol-field modes.',
+      technicalBasis: 'React composition over preserved standalone cursor effects.',
+      importPath: '@/motion-arsenal/effects/cursor/PointerInteractionField', usageJsx: '<PointerInteractionField mode="light" intensity={1} />',
+      props: [{ key: 'mode', label: 'Interaction Mode', type: 'select', default: 'light', options: ['light', 'distortion', 'parallax', 'spotlight', 'symbols'] }, { key: 'accent', label: 'Accent', type: 'color', default: '#C93030' }, { key: 'intensity', label: 'Intensity', type: 'range', default: 1, min: 0.4, max: 1.5, step: 0.05 }],
+      legacyIds: ['cursor-light-field', 'cursor-hover-distortion', 'cursor-pointer-parallax-stage', 'cursor-spotlight-reveal', 'cursor-interactive-symbol-drift'],
+      supersedes: ['CursorLightField', 'HoverDistortionShader', 'PointerParallaxStage', 'SpotlightReveal', 'InteractiveSymbolDrift'],
+      deprecationNotes: 'Saved legacy IDs resolve here; all standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./PointerInteractionField')),
+  },
+  {
+    meta: {
       id: 'cursor-magnetic-cta',
       name: 'MagneticCTA',
       category: 'cursor',

@@ -4,6 +4,16 @@ import type { EffectEntry } from '../../types';
 export const OVERLAYS_CATALOG: EffectEntry[] = [
   {
     meta: {
+      id: 'overlays-surface-system', name: 'OverlaySurfaceSystem', displayName: 'Overlay Surface System', category: 'overlays', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['OverlaySurfaceSystem.tsx (canonical selector)', 'ModalIrisReveal.tsx', 'GlassSheetOverlay.tsx'], mode: 'nox-adapted', complexity: 'medium', dependencies: [],
+      bestFor: ['Dialogs', 'Mobile sheets', 'Contextual surface overlays'], performanceNotes: 'Renders one preserved overlay implementation; backdrop cost remains owned by the selected mode.', mobileNotes: 'Modal and sheet retain their existing touch patterns.', reducedMotionNotes: 'Delegates to the selected effect\'s existing reduced-motion behavior.',
+      description: 'Canonical selector for modal iris and glass-sheet overlay surfaces.', technicalBasis: 'React composition over preserved standalone overlay effects.', importPath: '@/motion-arsenal/effects/overlays/OverlaySurfaceSystem', usageJsx: '<OverlaySurfaceSystem mode="sheet" blur={12} />',
+      props: [{ key: 'mode', label: 'Surface Mode', type: 'select', default: 'modal', options: ['modal', 'sheet'] }, { key: 'accent', label: 'Accent', type: 'color', default: '#C93030' }, { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.4, max: 2, step: 0.1 }, { key: 'blur', label: 'Backdrop Blur', type: 'range', default: 12, min: 0, max: 24, step: 1 }],
+      legacyIds: ['overlays-modal-iris-reveal', 'overlays-glass-sheet'], supersedes: ['ModalIrisReveal', 'GlassSheetOverlay'], deprecationNotes: 'Saved legacy IDs resolve here; direct standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./OverlaySurfaceSystem')),
+  },
+  {
+    meta: {
       id: 'overlays-modal-iris-reveal',
       name: 'ModalIrisReveal',
       category: 'overlays',

@@ -4,6 +4,16 @@ import type { EffectEntry } from '../../types';
 export const TRANSITIONS_CATALOG: EffectEntry[] = [
   {
     meta: {
+      id: 'transitions-route-system', name: 'RouteTransitionSystem', displayName: 'Route Transition System', category: 'transitions', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['RouteTransitionSystem.tsx (canonical selector)', 'SmoothSectionWipe.tsx', 'MaskedRouteTransition.tsx', 'ClipPathReveal.tsx', 'LayeredPageEnter.tsx', 'PanelShiftTransition.tsx'], mode: 'nox-adapted', complexity: 'medium', dependencies: [],
+      bestFor: ['Route changes', 'Section handoffs', 'App-like navigation moments'], performanceNotes: 'Renders one preserved transition implementation at a time; transforms and clip-path costs remain mode-specific.', mobileNotes: 'All selected modes retain their existing mobile behavior.', reducedMotionNotes: 'Delegates to the selected effect\'s existing reduced-motion state.',
+      description: 'Canonical selector for wipe, masked, clip, layered, and panel route transitions.', technicalBasis: 'React composition over preserved standalone route-transition effects.', importPath: '@/motion-arsenal/effects/transitions/RouteTransitionSystem', usageJsx: '<RouteTransitionSystem mode="masked" speed={1} />',
+      props: [{ key: 'mode', label: 'Transition Mode', type: 'select', default: 'wipe', options: ['wipe', 'masked', 'clip', 'layered', 'panel'] }, { key: 'accent', label: 'Accent', type: 'color', default: '#C93030' }, { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.5, max: 2, step: 0.1 }],
+      legacyIds: ['transitions-smooth-section-wipe', 'transitions-masked-route', 'transitions-clip-path-reveal', 'transitions-layered-page-enter', 'transitions-panel-shift'], supersedes: ['SmoothSectionWipe', 'MaskedRouteTransition', 'ClipPathReveal', 'LayeredPageEnter', 'PanelShiftTransition'], deprecationNotes: 'Saved legacy IDs resolve here; direct standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./RouteTransitionSystem')),
+  },
+  {
+    meta: {
       id: 'transitions-smooth-section-wipe',
       name: 'SmoothSectionWipe',
       category: 'transitions',
