@@ -63,8 +63,9 @@ export const FORMS_CATALOG: EffectEntry[] = [
   },
   {
     meta: {
-      id: 'forms-validation-pulse',
-      name: 'ValidationPulse',
+      id: 'forms-signal-system',
+      legacyIds: ['forms-validation-pulse'],
+      name: 'FormSignalSystem',
       category: 'forms',
       sourceWebsite: 'nox-original',
       sourceFiles: ['Echte Feder-Physik x = A·e^(-λt)·sin(ωt) statt CSS-Shake', 'NOX Signal-Terminal UI System'],
@@ -76,8 +77,8 @@ export const FORMS_CATALOG: EffectEntry[] = [
       mobileNotes: 'Panel und Aktion stapeln sich; Telemetrie wird auf kleinen Viewports ausgeblendet.',
       reducedMotionNotes: 'Farb-, Text-, Check- und Statusfeedback bleiben erhalten; Scan, Orbit, Partikel und Feder stoppen.',
       description: 'Premium Signal Validation Terminal mit echtem gedämpftem Feder-Fehler, dreifachen Pulsringen, Scan-Layer, Erfolgspartikeln, Check-Draw, Live-LED und optionaler Telemetrie. Für Formulare in NOX- und Kundenprojekten konfigurierbar.',
-      importPath: '@/motion-arsenal/effects/forms/ValidationPulse',
-      usageJsx: '<ValidationPulse variant="command" signalStrength={1} showTelemetry />',
+      importPath: '@/motion-arsenal/effects/forms/FormSignalSystem',
+      usageJsx: '<FormSignalSystem variant="command" signalStrength={1} showTelemetry />',
       props: [
         { key: 'variant', label: 'Variant', type: 'select', default: 'command', options: ['field', 'command', 'checkout'] },
         { key: 'accent', label: 'Error Color', type: 'color', default: '#C93030' },
@@ -90,7 +91,7 @@ export const FORMS_CATALOG: EffectEntry[] = [
       ],
       productionSafe: true,
     },
-    Component: lazy(() => import('./ValidationPulse')),
+    Component: lazy(() => import('./FormSignalSystem')),
   },
   {
     meta: {

@@ -16,6 +16,7 @@ function includes(source, token, label) {
 
 const answer = read('src/motion-arsenal/effects/forms/AnswerLockIn.tsx');
 const validation = read('src/motion-arsenal/effects/forms/ValidationPulse.tsx');
+const formSignalSystem = read('src/motion-arsenal/effects/forms/FormSignalSystem.tsx');
 const questionTransition = read('src/motion-arsenal/effects/forms/QuestionTransition.tsx');
 const starfield = read('src/motion-arsenal/effects/backgrounds/NoxStarfieldDrift.tsx');
 const formsCatalog = read('src/motion-arsenal/effects/forms/catalog.ts');
@@ -35,7 +36,9 @@ for (const token of [
   'signalStrength',
   'autoValidate',
   'showTelemetry',
-]) includes(validation, token, 'ValidationPulse');
+]) includes(formSignalSystem, token, 'FormSignalSystem');
+
+includes(validation, 'FormSignalSystem', 'ValidationPulse compatibility wrapper');
 
 for (const token of [
   'useInView',

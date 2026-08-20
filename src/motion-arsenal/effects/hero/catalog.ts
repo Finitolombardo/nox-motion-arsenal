@@ -41,8 +41,9 @@ export const HERO_CATALOG: EffectEntry[] = [
   },
   {
     meta: {
-      id: 'hero-masked-text-reveal',
-      name: 'Masked Text Reveal',
+      id: 'hero-text-reveal',
+      legacyIds: ['hero-masked-text-reveal'],
+      name: 'HeroTextReveal',
       category: 'hero',
       sourceWebsite: 'shopify-editions',
       sourceFiles: [
@@ -59,8 +60,8 @@ export const HERO_CATALOG: EffectEntry[] = [
       reducedMotionNotes: 'Kein mask-image, kein Slide — Text steht sofort vollständig und ruhig da.',
       description:
         'Text-Reveal über ein wanderndes linear-gradient mask-image: eine weiche Licht-Kante wischt Wort für Wort über den Satz (Shopify-Editions-Pattern, exaktes 1.2s-outBack-Timing), mit leichter per-Wort-Verzögerung und einer schmalen Ember-Leading-Edge vor der Wipe-Front.',
-      importPath: '@/motion-arsenal/effects/hero/MaskedTextReveal',
-      usageJsx: '<MaskedTextReveal text="SIGNAL OVER NOISE — THE NOX SYSTEM IS ONLINE" speed={1} stagger={0.09} loop />',
+      importPath: '@/motion-arsenal/effects/hero/HeroTextReveal',
+      usageJsx: '<HeroTextReveal text="SIGNAL OVER NOISE — THE NOX SYSTEM IS ONLINE" speed={1} stagger={0.09} loop />',
       props: [
         { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.4, max: 2, step: 0.1 },
         { key: 'stagger', label: 'Word Stagger (s)', type: 'range', default: 0.09, min: 0.02, max: 0.25, step: 0.01 },
@@ -70,7 +71,7 @@ export const HERO_CATALOG: EffectEntry[] = [
       ],
       productionSafe: true,
     },
-    Component: lazy(() => import('./MaskedTextReveal')),
+    Component: lazy(() => import('./HeroTextReveal')),
   },
   {
     meta: {

@@ -85,8 +85,9 @@ export const CARDS_CATALOG: EffectEntry[] = [
   },
   {
     meta: {
-      id: 'cards-tilt-parallax',
-      name: 'TiltParallaxCard',
+      id: 'cards-interactive-surface-card',
+      legacyIds: ['cards-tilt-parallax'],
+      name: 'InteractiveSurfaceCard',
       category: 'cards',
       sourceWebsite: 'krank-lusion',
       sourceFiles: ['KRANK/src/hoisted.js (damp λ≈12 Pointer-Follow)', 'KRANK/src/index.css (Overshoot-Settle)'],
@@ -98,8 +99,8 @@ export const CARDS_CATALOG: EffectEntry[] = [
       mobileNotes: 'Touch: sanfte Auto-Rotation.',
       reducedMotionNotes: 'Karte flach, Ebenen statisch versetzt.',
       description: '3D-Tilt mit inneren Parallax-Ebenen: Badge, Typo, Zahl und Glow schweben auf translateZ-Stufen, ein Glanz-Sweep läuft mit dem Tilt-Winkel, das Settle federt mit KRANK-Overshoot.',
-      importPath: '@/motion-arsenal/effects/cards/TiltParallaxCard',
-      usageJsx: '<TiltParallaxCard maxTilt={12} depth={1} glare={0.7} />',
+      importPath: '@/motion-arsenal/effects/cards/InteractiveSurfaceCard',
+      usageJsx: '<InteractiveSurfaceCard maxTilt={12} depth={1} glare={0.7} />',
       props: [
         { key: 'maxTilt', label: 'Tilt °', type: 'range', default: 12, min: 4, max: 24, step: 1 },
         { key: 'depth', label: 'Depth', type: 'range', default: 1, min: 0, max: 2, step: 0.1 },
@@ -108,7 +109,7 @@ export const CARDS_CATALOG: EffectEntry[] = [
       ],
       productionSafe: true,
     },
-    Component: lazy(() => import('./TiltParallaxCard')),
+    Component: lazy(() => import('./InteractiveSurfaceCard')),
   },
   {
     meta: {
