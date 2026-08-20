@@ -1,0 +1,1452 @@
+{
+  "schema_version": "1.0",
+  "title": "NOX Arsenal Drive Canon Ledger",
+  "scope": {
+    "product_code_modified": false,
+    "deploy_push_or_external_mutation_performed": false,
+    "noxxrammus_touched": false
+  },
+  "source_read_order": [
+    {
+      "source": "NOX Arsenal — Cumulative Patch.txt",
+      "line_count": 23091,
+      "order": 0
+    },
+    {
+      "source": "NOX Arsenal — Shared State.txt",
+      "line_count": 1806,
+      "order": 1
+    }
+  ],
+  "extraction": {
+    "method": "programmatic full-line chronological scan; explicit FUSION/LEGACY/ABSORB/ACTIVE CORE/KEEP-STANDALONE decision patterns; repository static-catalog reconciliation",
+    "source_lines_scanned": 24897,
+    "explicit_decision_lines": 307,
+    "repository_catalog_files_scanned": 16,
+    "repository_static_ids_discovered": 167
+  },
+  "static_id_ledger": [
+    {
+      "static_id": "bg-atmosphere-field",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "bg-noise-fog-field",
+        "bg-depth-glow-stack",
+        "bg-radial-beam-atmosphere",
+        "NoiseFogField",
+        "DepthGlowLayerStack",
+        "RadialBeamAtmosphere"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 35,
+        "text": "Fusion 002 ergänzt: NoiseFogField + DepthGlowLayerStack + RadialBeamAtmosphere → AtmosphereField. Module/Toggles: fog, glow, beams. 12 Nischen-Presets mit vollständigen Dashboard-Startwerten. Performance-Profile: lite | balanced | cinematic; lite mountet den WebGL-Fog nicht und deckelt Glow/Beam-Dichte. Im aktiven Background-Katalog soll nur AtmosphereField erscheinen; Legacy-IDs und Alt-Komponenten bleiben bis zur späteren Migration erhalten. Syntaxprüfung AtmosphereField + gepatchter Background-Katalog: PASS. Full Repo Build/Typecheck: NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "bg-depth-glow-stack",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "legacy-hidden-from-active",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 1734,
+        "text": "- Legacy-IDs: bg-noise-fog-field, bg-depth-glow-stack, bg-radial-beam-atmosphere."
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "bg-noise-fog-field",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "legacy-hidden-from-active",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 1734,
+        "text": "- Legacy-IDs: bg-noise-fog-field, bg-depth-glow-stack, bg-radial-beam-atmosphere."
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "bg-radial-beam-atmosphere",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "legacy-hidden-from-active",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 1734,
+        "text": "- Legacy-IDs: bg-noise-fog-field, bg-depth-glow-stack, bg-radial-beam-atmosphere."
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "canvasui-glass-lens",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11646,
+        "text": "Standalone preserved: canvasui-particle-object-3d | canvasui-liquid | canvasui-liquid-ripple | canvasui-glitch-burst | canvasui-shatter-reveal | canvasui-glass-lens | canvasui-laser"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "canvasui-glitch-burst",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11646,
+        "text": "Standalone preserved: canvasui-particle-object-3d | canvasui-liquid | canvasui-liquid-ripple | canvasui-glitch-burst | canvasui-shatter-reveal | canvasui-glass-lens | canvasui-laser"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "canvasui-laser",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11646,
+        "text": "Standalone preserved: canvasui-particle-object-3d | canvasui-liquid | canvasui-liquid-ripple | canvasui-glitch-burst | canvasui-shatter-reveal | canvasui-glass-lens | canvasui-laser"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "canvasui-liquid-ripple",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11646,
+        "text": "Standalone preserved: canvasui-particle-object-3d | canvasui-liquid | canvasui-liquid-ripple | canvasui-glitch-burst | canvasui-shatter-reveal | canvasui-glass-lens | canvasui-laser"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "canvasui-particle-field-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "ParticleObject",
+        "ParticleReveal"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 164,
+        "text": "Fusion 010 ergänzt: ParticleObject + ParticleReveal → ParticleFieldSystem. Ein gemeinsamer Canvas2D-Partikelkern mit gemeinsamem UV-Modell, Pointer-Damping und Renderloop; Modi asset | reveal. 12 vollständige Nischen-Presets. Legacy-IDs canvasui-particle-object und canvasui-particle-reveal bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParticleObject3D (Three.js/GLTF/DRACO/WebGL), Liquid, LiquidRipple, GlitchBurst, ShatterReveal, GlassLens und Laser. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Routen, Standalone-Familie erhalten, reduced-motion PASS. Patch SHA-256: 209cbf2f0261bf250f84b61a2522e278d666a6d154515dcb798727e1b3c59bac. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 5
+    },
+    {
+      "static_id": "canvasui-particle-object",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 164,
+        "text": "Fusion 010 ergänzt: ParticleObject + ParticleReveal → ParticleFieldSystem. Ein gemeinsamer Canvas2D-Partikelkern mit gemeinsamem UV-Modell, Pointer-Damping und Renderloop; Modi asset | reveal. 12 vollständige Nischen-Presets. Legacy-IDs canvasui-particle-object und canvasui-particle-reveal bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParticleObject3D (Three.js/GLTF/DRACO/WebGL), Liquid, LiquidRipple, GlitchBurst, ShatterReveal, GlassLens und Laser. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Routen, Standalone-Familie erhalten, reduced-motion PASS. Patch SHA-256: 209cbf2f0261bf250f84b61a2522e278d666a6d154515dcb798727e1b3c59bac. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "canvasui-particle-reveal",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 164,
+        "text": "Fusion 010 ergänzt: ParticleObject + ParticleReveal → ParticleFieldSystem. Ein gemeinsamer Canvas2D-Partikelkern mit gemeinsamem UV-Modell, Pointer-Damping und Renderloop; Modi asset | reveal. 12 vollständige Nischen-Presets. Legacy-IDs canvasui-particle-object und canvasui-particle-reveal bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParticleObject3D (Three.js/GLTF/DRACO/WebGL), Liquid, LiquidRipple, GlitchBurst, ShatterReveal, GlassLens und Laser. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Routen, Standalone-Familie erhalten, reduced-motion PASS. Patch SHA-256: 209cbf2f0261bf250f84b61a2522e278d666a6d154515dcb798727e1b3c59bac. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "canvasui-shatter-reveal",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11646,
+        "text": "Standalone preserved: canvasui-particle-object-3d | canvasui-liquid | canvasui-liquid-ripple | canvasui-glitch-burst | canvasui-shatter-reveal | canvasui-glass-lens | canvasui-laser"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "cursor-pointer-interaction-field",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "CursorLightField",
+        "HoverDistortionShader",
+        "PointerParallaxStage",
+        "SpotlightReveal",
+        "InteractiveSymbolDrift"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1226,
+        "text": "LEGACY = AnswerLockIn | QuestionTransition | ValidationPulse | SelectionEnergyRipple -> FormSignalSystem; MagneticCTA | CursorLightField | PointerParallaxStage | SpotlightReveal -> PointerInteractionField; ModalIrisReveal | GlassSheetOverlay -> OverlaySurfaceSystem."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "nox-dynamicweight",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 701,
+        "text": "- Legacy IDs nox-dynamicweight + nox-weighthover retained as thin wrappers."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "nox-randomletterswap",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 12082,
+        "text": "Standalone preserved: nox-randomletterswap"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "nox-scrambletext",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 180,
+        "text": "Fusion 011 ergänzt: TypeWriter + ScrambleText → TextMutationSystem. Gemeinsamer lokaler Timeout-Scheduler mit sauberem Cleanup; Modi typewriter | scramble, Trigger auto | hover | once, Typewriter-Untermodi forward | forward-back | random. 12 vollständige Nischen-Presets. Legacy-IDs nox-typewriter und nox-scrambletext bleiben über dünne Adapter routbar. RandomLetterSwap bleibt bewusst eigenständig als framer-motion 3D-Hover-Swap. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Adapter, RandomLetterSwap preserved, reduced-motion = sofort lesbarer Zieltext PASS. Patch SHA-256: 2b249fe0a34f225d4c5638100bfead0e2850e338dd2e60fd92cf8d5cc0a61aa4. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "nox-typewriter",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 180,
+        "text": "Fusion 011 ergänzt: TypeWriter + ScrambleText → TextMutationSystem. Gemeinsamer lokaler Timeout-Scheduler mit sauberem Cleanup; Modi typewriter | scramble, Trigger auto | hover | once, Typewriter-Untermodi forward | forward-back | random. 12 vollständige Nischen-Presets. Legacy-IDs nox-typewriter und nox-scrambletext bleiben über dünne Adapter routbar. RandomLetterSwap bleibt bewusst eigenständig als framer-motion 3D-Hover-Swap. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Adapter, RandomLetterSwap preserved, reduced-motion = sofort lesbarer Zieltext PASS. Patch SHA-256: 2b249fe0a34f225d4c5638100bfead0e2850e338dd2e60fd92cf8d5cc0a61aa4. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "nox-weighthover",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 701,
+        "text": "- Legacy IDs nox-dynamicweight + nox-weighthover retained as thin wrappers."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "originkit-particle-text-transformation-system",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "DustTextReveal",
+        "TextVaporize"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 905,
+        "text": "- Legacy routes preserved: `nox-text-vaporize`, `nox-dust-text-reveal`; remove from ACTIVE only after repo integration while keeping wrappers/aliases."
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "originkit-text-mutation-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "ScrambleText",
+        "TypeWriter"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 180,
+        "text": "Fusion 011 ergänzt: TypeWriter + ScrambleText → TextMutationSystem. Gemeinsamer lokaler Timeout-Scheduler mit sauberem Cleanup; Modi typewriter | scramble, Trigger auto | hover | once, Typewriter-Untermodi forward | forward-back | random. 12 vollständige Nischen-Presets. Legacy-IDs nox-typewriter und nox-scrambletext bleiben über dünne Adapter routbar. RandomLetterSwap bleibt bewusst eigenständig als framer-motion 3D-Hover-Swap. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Modi, 2/2 Legacy-Adapter, RandomLetterSwap preserved, reduced-motion = sofort lesbarer Zieltext PASS. Patch SHA-256: 2b249fe0a34f225d4c5638100bfead0e2850e338dd2e60fd92cf8d5cc0a61aa4. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "originkit-text-signal-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "GlitchText",
+        "FlickerText"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 916,
+        "text": "DONE / CANON VERIFIED: `FlickerText + GlitchText -> TextSignalSystem` (`nox-text-signal-system`). Modes `boot|glitch`; triggers `enter|hover|interval|auto`. Consolidates timer/rAF logic into deterministic burst scheduler; removes render-path randomness; adds visibility sleep, Pointer Events and reduced-motion stable fallback. Legacy IDs remain wrappers until final repo migration. KEEP SEPARATE: TextMorph (SVG gooey morph), InkBleed (SVG bleed), ParticleTextTransformationSystem (Canvas text-mask particles). Workers: do not re-audit or duplicate this cluster unless a concrete regression is found. Full repo/browser QA remains NOT VERIFIED."
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "originkit-variable-weight-text",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "WeightHover",
+        "DynamicWeight"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 701,
+        "text": "- Legacy IDs nox-dynamicweight + nox-weighthover retained as thin wrappers."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "overlays-surface-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/overlays/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "ModalIrisReveal",
+        "GlassSheetOverlay"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1226,
+        "text": "LEGACY = AnswerLockIn | QuestionTransition | ValidationPulse | SelectionEnergyRipple -> FormSignalSystem; MagneticCTA | CursorLightField | PointerParallaxStage | SpotlightReveal -> PointerInteractionField; ModalIrisReveal | GlassSheetOverlay -> OverlaySurfaceSystem."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "scroll-object-transform",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 147,
+        "text": "Fusion 009 ergänzt: PinnedProductStage + ScrollObjectTransform → ScrollSceneSystem. Gemeinsame gedämpfte Scroll-Progress-/Station-Interpolation mit zwei Layout-Modi free | pinned. 12 Nischen-Presets; Legacy-IDs scroll-pinned-product-stage und scroll-object-transform bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParallaxSymbolLayers, TimelineProgressRail, ScrollVelocitySkew, SectionSnapDepth. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Layouts, 2/2 Legacy-Routen, 4/4 Standalone-IDs erhalten, reduced-motion PASS. Patch SHA-256: 0807d0ecfd2ae6492207b5697fe17937f827bf32fb201ce786563369af757481. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "scroll-parallax-symbol-layers",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11212,
+        "text": "Standalone preserved: scroll-parallax-symbol-layers | scroll-timeline-progress-rail | scroll-velocity-skew | scroll-section-snap-depth"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "scroll-pinned-product-stage",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 147,
+        "text": "Fusion 009 ergänzt: PinnedProductStage + ScrollObjectTransform → ScrollSceneSystem. Gemeinsame gedämpfte Scroll-Progress-/Station-Interpolation mit zwei Layout-Modi free | pinned. 12 Nischen-Presets; Legacy-IDs scroll-pinned-product-stage und scroll-object-transform bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParallaxSymbolLayers, TimelineProgressRail, ScrollVelocitySkew, SectionSnapDepth. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Layouts, 2/2 Legacy-Routen, 4/4 Standalone-IDs erhalten, reduced-motion PASS. Patch SHA-256: 0807d0ecfd2ae6492207b5697fe17937f827bf32fb201ce786563369af757481. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 2
+    },
+    {
+      "static_id": "scroll-scene-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "ScrollObjectTransform"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 147,
+        "text": "Fusion 009 ergänzt: PinnedProductStage + ScrollObjectTransform → ScrollSceneSystem. Gemeinsame gedämpfte Scroll-Progress-/Station-Interpolation mit zwei Layout-Modi free | pinned. 12 Nischen-Presets; Legacy-IDs scroll-pinned-product-stage und scroll-object-transform bleiben über dünne Wrapper routbar. Bewusst eigenständig erhalten: ParallaxSymbolLayers, TimelineProgressRail, ScrollVelocitySkew, SectionSnapDepth. Verifikation: 4/4 TS/TSX-Syntax PASS, 12/12 Presets, 2/2 Layouts, 2/2 Legacy-Routen, 4/4 Standalone-IDs erhalten, reduced-motion PASS. Patch SHA-256: 0807d0ecfd2ae6492207b5697fe17937f827bf32fb201ce786563369af757481. SINGLE-PATCH-DOC bleibt 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "scroll-section-snap-depth",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11212,
+        "text": "Standalone preserved: scroll-parallax-symbol-layers | scroll-timeline-progress-rail | scroll-velocity-skew | scroll-section-snap-depth"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "scroll-timeline-progress-rail",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11212,
+        "text": "Standalone preserved: scroll-parallax-symbol-layers | scroll-timeline-progress-rail | scroll-velocity-skew | scroll-section-snap-depth"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "scroll-velocity-skew",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 11212,
+        "text": "Standalone preserved: scroll-parallax-symbol-layers | scroll-timeline-progress-rail | scroll-velocity-skew | scroll-section-snap-depth"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "system-progress-feedback",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "ScanCompletePulse",
+        "ProgressRingCharge",
+        "XPFillSurge"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 90,
+        "text": "Fusion 007: ScanCompletePulse + ProgressRingCharge + XPFillSurge → ProgressFeedbackSystem. Modi scan | ring | xp; Threshold-/Completion-State; XP-Canvas nur im XP-Modus; drei Legacy-Wrapper; 12 Nischen-Presets. Worker-QA: Syntax/Presets/Modi/Legacy/reduced-motion PASS; unabhängige QA folgt separat. Full Repo QA bleibt NOT VERIFIED."
+      },
+      "evidence_count": 3
+    },
+    {
+      "static_id": "transitions-clip-path-reveal",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10678,
+        "text": "Legacy IDs: transitions-smooth-section-wipe | transitions-masked-route | transitions-clip-path-reveal | transitions-panel-shift"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "transitions-layered-page-enter",
+      "disposition": "keep-standalone",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10679,
+        "text": "Standalone preserved: transitions-layered-page-enter"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "transitions-masked-route",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10678,
+        "text": "Legacy IDs: transitions-smooth-section-wipe | transitions-masked-route | transitions-clip-path-reveal | transitions-panel-shift"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "transitions-panel-shift",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10678,
+        "text": "Legacy IDs: transitions-smooth-section-wipe | transitions-masked-route | transitions-clip-path-reveal | transitions-panel-shift"
+      },
+      "evidence_count": 1
+    },
+    {
+      "static_id": "transitions-route-system",
+      "disposition": "fusion-core",
+      "repository_state": "active-catalog-entry",
+      "implementation_status": "implemented-in-repo",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [
+        "SmoothSectionWipe",
+        "MaskedRouteTransition",
+        "ClipPathReveal",
+        "LayeredPageEnter",
+        "PanelShiftTransition"
+      ],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 144,
+        "text": "Fusion 008 ergänzt: SmoothSectionWipe + MaskedRouteTransition + ClipPathReveal + PanelShiftTransition → RouteTransitionSystem. Gemeinsame Swap-State-Machine mit vier Render-Modi wipe | mask | clip | strips. LayeredPageEnter bleibt bewusst eigenständig als Entrance-/Parallax-Composer. 12 Nischen-Presets; Legacy-IDs bleiben routbar. Verifikation: 6/6 TS/TSX-Syntax PASS, 12/12 Presets, 4/4 Modi, 4/4 Legacy-Routen, reduced-motion PASS, LayeredPageEnter preserved PASS. Patch SHA-256: 4940c8004f2f3e2a761071980c0477fb13209f99798058bb3a821bf20b2ef07a. Canon bleibt SINGLE-PATCH-DOC 1woMqW1FykhwWmIMlAl_MJuOtFpKyuw0hEPn_Tq1q0wc. Full Repo Typecheck/Build/Browser-QA weiterhin NOT VERIFIED im Drive-only Lauf."
+      },
+      "evidence_count": 4
+    },
+    {
+      "static_id": "transitions-smooth-section-wipe",
+      "disposition": "legacy-alias-wrapper",
+      "repository_state": "source-legacy-but-active-in-repo",
+      "implementation_status": "catalog-drift-needs-integration",
+      "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
+      "source_aliases_or_supersedes": [],
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10678,
+        "text": "Legacy IDs: transitions-smooth-section-wipe | transitions-masked-route | transitions-clip-path-reveal | transitions-panel-shift"
+      },
+      "evidence_count": 1
+    }
+  ],
+  "unresolved_decision_register": [
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 10676,
+        "text": "Active Core ID: transitions-route-transition-system"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 12079,
+        "text": "Active Core ID: nox-text-mutation-system"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 14397,
+        "text": "FUSION = none; inventory evidence still does not prove another same-renderer + same-state/update-loop duplicate. Existing Starfield / OrbitalTrails / InteractiveGlyphField / SymbolStorm / EmberCurl renderer boundaries remain intact."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 14656,
+        "text": "FUSION = none; current fingerprints still do not prove another same-renderer + same-state/update-loop duplicate. NoxStarfieldDrift, OrbitalLightTrails, NoxInteractiveGlyphField, BackgroundSymbolStorm and EmberCurl remain separate renderer identities."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 14664,
+        "text": "LEGACY = aliases/wrappers inherit the same fault boundary, retry budget and fallback chain and may not start independent listeners, rAF loops, renderer contexts or recovery loops."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16511,
+        "text": "- DraggableGrid/InfiniteGallery decision state is now explicit: KEEP_SEPARATE_PENDING_SOURCE for DraggableGrid comparison; InfiniteGallery = STANDALONE_CONFIRMED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16532,
+        "text": "- Mechanism verdict: KEEP SEPARATE. Similar cyber/flicker art direction is not a valid fusion reason; CSS compositor/keyframe text and Canvas2D bitmap slicing have different renderer/resource/state-loop fingerprints."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16596,
+        "text": "nox-bokeh-gold-field uses discrete seeded circle sprites with per-object position/radius/blur and multi-depth drift, mechanically distinct from continuous gradient/blob layers. Keep separate. Harden: stable topology; 12 desktop/7 mobile cap; 3 explicit depth strata; shared CSS keyframes per stratum; copy-safe exclusion zone; reduced-motion static depth composition; offscreen/hidden pause; zero JS rAF. Presets restricted to Hospitality, Beauty, Luxury, Creator."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16704,
+        "text": "Fusion is allowed only when renderer + scheduler + tokenization + trigger/lifecycle materially align AND every material visual distinction can be represented losslessly as a mode/module/parameter. Renderer-family mismatch (for example DOM vs canvas/shader/path) is a hard KEEP_SEPARATE signal unless one implementation is provably only a compatibility wrapper."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16713,
+        "text": "- InfiniteGallery = STANDALONE_CONFIRMED"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 16772,
+        "text": "- RENDERER_MISMATCH => KEEP_SEPARATE unless wrapper proof exists"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 17157,
+        "text": "DECISION 2 — KEEP SEPARATE: ThunderStrike"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 17161,
+        "text": "DECISION 3 — KEEP SEPARATE: GlitterWrap + SVGParticle"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 17190,
+        "text": "ImageGridRevealSystem -> KEEP ACTIVE CORE -> canonical tile/grid reveal family."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 17996,
+        "text": "### KEEP SEPARATE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18226,
+        "text": "### KEEP SEPARATE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18501,
+        "text": "### 4) JUICE EFFECT — KEEP STANDALONE, HARDEN TO PREMIUM IMAGE GOO PARTICLE ENGINE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18520,
+        "text": "### 5) DRAGGABLE STICKER — KEEP STANDALONE WEBGL PEEL ENGINE + GPU HARDENING"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18542,
+        "text": "- `JuiceEffect` -> KEEP standalone; hardening required, no forced fusion."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18543,
+        "text": "- `DraggableSticker` -> KEEP standalone WebGL; GPU hardening required."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18620,
+        "text": "Status: DraggableGrid = ACTIVE / STANDALONE_CONFIRMED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18655,
+        "text": "Keep ACTIVE as a distinct multi-stage ceremony engine: scan-grid build -> seeded character scramble -> lock sequence -> flash/glow -> metric reveal. This is not merely progress feedback or a terminal stream. Reduced-motion path must skip scramble/scan choreography and expose the settled rank/metrics without an idle RAF."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18871,
+        "text": "A Text-Reveal fusion is allowed only when all mandatory fingerprint axes are known for every candidate: renderer (DOM/CSS/SVG/Canvas2D/WebGL), tokenization (line/word/letter/glyph/pixel), state ownership, scheduler (CSS/WAAPI/Framer/rAF/scroll timeline), trigger semantics, layout measurement, lifecycle/cleanup, reduced-motion behavior and semantic-text accessibility. Missing mandatory axes => KEEP_SEPARATE_PENDING_SOURCE. Renderer mismatch or scheduler mismatch => KEEP_SEPARATE unless a common core can isolate the differing runtime behind explicit modules without duplicate loops."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18879,
+        "text": "- InkBleed: STANDALONE_CONFIRMED (SVG displacement/filter family)."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 18880,
+        "text": "- SmokyText: STANDALONE_CONFIRMED (DOM/Framer per-character blur/drift family)."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19044,
+        "text": "- InfiniteGallery = STANDALONE_CONFIRMED / NOT_REOPENED"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19090,
+        "text": "Status: EXACT_SOURCE_FOUND / PRIOR_HOLD_SUPERSEDED / STANDALONE_CONFIRMED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19100,
+        "text": "- Boundary: KEEP SEPARATE from `HeroTextReveal` (flat line/word/letter CSS-keyframe reveal), `ParticleTextTransformationSystem` (Canvas2D text-mask particles), `CharacterHoverSystem` (hover glyph/directional transform) and `TextSignalSystem` (finite signal/glitch bursts). Similar visual intent is not sufficient for fusion because layout topology + scheduler + interaction ownership differ."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19134,
+        "text": "Status: EXACT_SOURCE_FOUND / STANDALONE_CONFIRMED / HARDEN_IN_PLACE."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19142,
+        "text": "- Boundary: KEEP SEPARATE from `HeroTextReveal`, `CharacterHoverSystem`, `TextMutationSystem`, `TextSignalSystem` and Canvas particle-text effects. Curved path geometry is the defining mechanic, so folding it into a generic text core would hide rather than remove runtime complexity."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19178,
+        "text": "Status: EXACT_SOURCE_FOUND / STANDALONE_CONFIRMED / RUNTIME_OWNERSHIP_FIX_REQUIRED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19187,
+        "text": "- Boundary: KEEP SEPARATE from `InfiniteGallery`, `DraggableGrid`, `GravityGallery`, `CoverflowSystem`, Round/Magnetic/Button/Blur carousels. Its defining mechanic is generative timed tile-flow, not drag-world, Matter physics, indexed carousel or continuous strip scrolling."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19245,
+        "text": "### B. FloatingIcons — KEEP STANDALONE / HARDEN IN PLACE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19251,
+        "text": "### C. ParticleSphere — KEEP STANDALONE / GEOMETRY BOUNDARY"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19293,
+        "text": "### CursorImageGallery — KEEP STANDALONE / HARDEN"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19317,
+        "text": "### PrismGrid — KEEP STANDALONE / CSS3D BOUNDARY"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 19645,
+        "text": "DECISION C — TEXTWAVE VS CHARACTERWAVES: KEEP SEPARATE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20090,
+        "text": "- KEEP SEPARATE if CurvedMarquee uses a materially different curve representation, DOM/SVG strategy, scroll/velocity coupling, masking, perspective, or looping topology."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20207,
+        "text": "- InfiniteGallery / Infinity Canvas = STANDALONE_CONFIRMED. Do not reopen as a generic gallery/carousel merge candidate."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20208,
+        "text": "- GravityGallery = STANDALONE_CONFIRMED. Matter.js physics-world identity remains mechanically distinct from ordinary drag/carousel galleries."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20229,
+        "text": "- KEEP SEPARATE if DraggableGrid manipulates a bounded/reorderable grid while Infinity Canvas uses camera-style unbounded/wrapped world coordinates, virtualization, or materially different spatial topology."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20264,
+        "text": "041 — GLSL IMAGE GLITCH: KEEP SEPARATE + HARDEN"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20312,
+        "text": "DECISION 1 — TEXTREVEALWALL: STANDALONE_CONFIRMED + CORE HARDENING"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20313,
+        "text": "Source evidence confirms a Framer Motion character-grid/filler renderer, not a HeroTextReveal duplicate. Keep separate. Required fixes: wire the currently exposed staggerDelay into actual timing; move hover behavior to coherent word/row/group semantics instead of fragmented character hover; decorative filler chars aria-hidden; semantic source text remains accessible; prefers-reduced-motion resolves immediately without stagger/blur/scale. Legacy HOLD caused by missing-source assumption is superseded by this source-backed decision."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20331,
+        "text": "Keep standalone because renderer/state model differs from physics galleries. Source contains GSAP-driven image sequencing and global-timeline interaction. HARD RULE: effect cleanup must never call gsap.globalTimeline.clear() or otherwise mutate global animation ownership. Use gsap.context/local timeline and kill/revert only resources created by this instance. Pause/kill timers when hidden/offscreen; reduced motion resolves to a static/selectable gallery state. This supersedes any implementation that globally clears GSAP state."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20408,
+        "text": "- DraggableGrid: STANDALONE_CONFIRMED. The earlier evidence hold was already resolved in canon; later KEEP_SEPARATE_PENDING_SOURCE wording is SUPERSEDED. Do not reopen against InfiniteGallery without changed exact source."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20409,
+        "text": "- GravityGallery: STANDALONE_CONFIRMED; Matter.js physics-world identity remains distinct."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20410,
+        "text": "- InfiniteGallery: STANDALONE_CONFIRMED; spatial/infinite-world identity remains distinct."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20736,
+        "text": "- ShatterReveal remains DOM-grid perspective physics, not Canvas/WebGL. Keep standalone."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20792,
+        "text": "- Standalone GPU core status: `KEEP_SEPARATE / HIGH-COST / CAPABILITY-GATED` until real implementation + profiling exists."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20874,
+        "text": "Stored controls substantially match the actual gesture stack (`stackCount,stackOffset,stackScale,swipeThreshold,rotationFactor` plus layout). Keep standalone. Add explicit Reduced Motion contract: dismissal state remains functional but spring/rotation travel collapses to short opacity/state transition; keyboard/button alternative must exist for non-drag users; empty-state callback stays generation-safe."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20956,
+        "text": "Stored catalog exposes `width,height,columns,liftHeight`; actual source is a DOM/CSS perspective box grid (`BackgroundBoxes`) driven by `backgroundColor,boxSize,borderWidth,borderColor,rotate,colors` plus style. Keep standalone; it is not ReactiveCanvasField. Target manifest must expose the real box/palette/rotation controls. Runtime/quality fix: source currently chooses hover colors with `Math.random()`; use seeded deterministic color selection per cell/interaction generation when reproducible preview/export is required. Reduced Motion keeps static perspective/color state; no hover choreography dependency."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 20960,
+        "text": "Stored catalog exposes `width,height,stiffness`; actual Canvas2D Fibonacci-sphere source consumes `width,height,particleCount,particleSize,color,speed`. `stiffness` is not consumed. Target manifest must expose the real geometry/density/speed/color controls and remove stiffness. Keep separate from PremiumCanvasField/ReactiveCanvasField because Fibonacci sphere projection + Z sorting is a distinct geometry renderer. Replace random point-size variance with deterministic seeded variance; cap particleCount and DPR for mobile; hidden/offscreen stops RAF; Reduced Motion renders one static projected sphere frame."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21499,
+        "text": "KEEP_STANDALONE. Its Canvas2D destination-out erase mask + pointer/touch input + reveal coverage sampling is mechanically distinct from ImageGridRevealSystem and ordinary image reveals."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21510,
+        "text": "KEEP_STANDALONE as a loading primitive; it is CSS-only and does not belong in numeric progress or transition fusion."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21577,
+        "text": "KEEP_ACTIVE as a reusable UI interaction primitive, but do not route it through the page-level TransitionOrchestrator. Native item snapshot/reorder semantics are local-state ownership, not route ownership."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21705,
+        "text": "Status: KEEP_STANDALONE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21711,
+        "text": "Status: KEEP_STANDALONE / CARD QA"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21717,
+        "text": "Status: KEEP_STANDALONE / DECORATOR CONTRACT"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 21723,
+        "text": "Status: KEEP_STANDALONE"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 22392,
+        "text": "LEGACY = Blurry VHS Image Filter -> MediaAtmosphere(vhs); Ken Burns Cinematic Slideshow -> HeroMediaSequence(ken-burns). No hard delete. Light Leak/Film Burn/Overexposure are recipe aliases only when encountered as the finite CSS/overlay mechanisms described above."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 22510,
+        "text": "DraggableSticker catalog prop fingerprint matches source for image,imageWidth,imageHeight,tilt,tiltSmoothing,lighting,lightingStrength,lightingColor,sheenMode,elevation,staticShadow,dynamicShadow (source also carries style). Keep standalone. Source contains RAF activity and no explicit reduced-motion branch: require pointer-capture/local ownership, RAF only while drag/settle/lighting work exists, reduced-motion disables tilt/inertial settle, coarse-pointer/mobile lighting simplification, cleanup on unmount/visibility. No fusion with DraggableGrid: object-manipulation sticker vs gallery/grid navigation are different state machines."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Cumulative Patch.txt",
+        "line": 22839,
+        "text": "Accordion Cards and Horizontal Accordion Gallery are NOT duplicates despite the name: vertical disclosure changes content visibility/state; horizontal gallery reallocates visual width among media panels. Keep separate public identities."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 190,
+        "text": "LEGACY = TiltParallaxCard + HoverLightRefraction + BorderTraceDepth remain wrappers; no hard deletion"
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 256,
+        "text": "Next candidate: audit remaining SCROLL/TRANSITION/CANVAS aliases by actual renderer/state-loop overlap; keep separate Shader/Fluid pipelines unless proven mechanically subsumable."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 403,
+        "text": "LEGACY = aliases/wrappers inherit lifecycle/budget and may not own global listeners/RAF/renderers; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 445,
+        "text": "LEGACY = covered aliases/wrappers borrow core lifecycle/resources; no parallel global listener/RAF/observer/renderer; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 482,
+        "text": "LEGACY = TiltParallaxCard | HoverLightRefraction | BorderTraceDepth remain InteractiveSurfaceCard wrappers/aliases; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 506,
+        "text": "FUSION = none; no additional same-renderer + same-state-loop duplicate proven. Existing Starfield/Trails/GlyphField/SymbolStorm/EmberCurl boundaries retained."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 524,
+        "text": "LEGACY = mechanically covered scroll/reveal/transition/Canvas2D variants remain aliases/wrappers; no hard delete; distinct Shader/Fluid/Geometry mechanics preserved."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 591,
+        "text": "FUSION = none; no additional same-renderer + same-state/update-loop duplicate proven."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 643,
+        "text": "FUSION = none; no new proven renderer + state/update-loop duplicate."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 755,
+        "text": "LEGACY = TiltParallaxCard | HoverLightRefraction | BorderTraceDepth remain InteractiveSurfaceCard wrappers/aliases; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 824,
+        "text": "FUSION = nox-mesh-gradient-flow + nox-morphing-blob-field → AmbientGradientField(mesh|organic|hybrid); legacy wrappers retained, zero wrapper-owned runtime."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 849,
+        "text": "- No fake fusion: all five Text-Reveal candidates remain KEEP_ACTIVE_PENDING_SOURCE until exact component/source fingerprints exist. InfiniteGallery remains STANDALONE_CONFIRMED; DraggableGrid remains KEEP_SEPARATE_PENDING_SOURCE."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 876,
+        "text": "LEGACY = card/form/cursor/overlay wrappers remain routable; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 906,
+        "text": "- KEEP SEPARATE: SmokyText (DOM/Framer per-character blur/drift) and InkBleed (SVG filter/displacement) due different renderer fingerprints."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 922,
+        "text": "DONE / CANON VERIFIED: `DirectionHover + RandomLetterSwap -> CharacterHoverSystem` (`nox-character-hover-system`), modes `directional-exit|glyph-flip`; deterministic alt glyphs, Pointer Events, four-way direction, configurable stagger direction and reduced-motion stable fallback. CROSS-CATEGORY RESOLVED: `SpotlightText -> PointerInteractionField` as `spotlightTarget='text'` / `spotlightMotion='pointer|sweep'`, eliminating per-pointer React rerenders and duplicate spotlight runtime. `ShinyPill -> InteractiveSurfaceCard` as reusable `sheen` module / `surfaceKind='pill'`, replacing imperative style mutation with premium clipped specular layers and visibility/reduced-motion policy. KEEP STANDALONE: `MeshTextHover` WebGL2 mesh engine. Workers: skip these items unless concrete regression or repo integration conflict appears. Full repo/browser/GPU QA remains NOT VERIFIED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 938,
+        "text": "LEGACY = FadeReveal/BlurReveal/ScaleReveal/ClipReveal/PageFadeTransition/RouteSlideTransition/PixelDrift/Stardust wrappers only when fully covered; no hard delete."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 957,
+        "text": "DONE / CANON READBACK VERIFIED: 5 Originkit effects audited. `ElectricBorder -> InteractiveSurfaceCard(borderFx='electric')` with tiered noise/sample/DPR/FPS budgets, visibility sleep and static reduced-motion fallback. `PixelCard -> InteractiveSurfaceCard(surfaceReveal='pixels')` as local Canvas subrenderer sharing host pointer/resize/lifecycle state. `LinkPreview -> OverlayFocusCore(popoverKind='link-preview') + OverlayTransitionCore`; explicit preview metadata/provider policy, no silent third-party destination screenshot requests by default. KEEP STANDALONE + HARDEN: `JuiceEffect` image-goo particle engine (dt physics, spatial hash, adaptive budgets, sleep) and `DraggableSticker` WebGL peel engine (Pointer Events, GPU lifecycle/context-loss, sleep/tier/reduced-motion). Workers: skip these 5 unless concrete regression/integration conflict is found. Full repo/browser/perf/GPU QA remains NOT VERIFIED."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 984,
+        "text": "- DraggableGrid evidence hold resolved: ACTIVE / STANDALONE_CONFIRMED; explicitly not InfiniteGallery. Next workers should not re-audit this identity question unless source changes."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1065,
+        "text": "- Disposition: DraggableGrid KEEP_SEPARATE_PENDING_SOURCE; GravityGallery and ImageGallery KEEP_ACTIVE_PENDING_SOURCE; InfiniteGallery standalone status not reopened."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1077,
+        "text": "- TextRevealWall exact Originkit source FOUND. Prior KEEP_ACTIVE_PENDING_SOURCE notes are historical/superseded. Current status = STANDALONE_CONFIRMED; keep separate from HeroTextReveal/ParticleTextTransformationSystem/CharacterHoverSystem/TextSignalSystem. Hardening contract added for real staggerDelay, parent-owned hover/reveal state, deterministic filler, reduced motion, accessibility and mobile density."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1078,
+        "text": "- CurvedMarquee exact source FOUND. Status = STANDALONE_CONFIRMED. SVG textPath geometry is unique; hardening contract replaces render-time Math.random ID and double path semantics (textPath + animateMotion) with stable ID + single phase/startOffset motion model; reduced-motion/a11y/mobile rules added."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1079,
+        "text": "- ImageGallery exact source FOUND. Status = STANDALONE_CONFIRMED. Critical runtime ownership debt identified: current source pauses/resumes/clears GSAP globalTimeline and polls spawn eligibility every 20 ms. Canon now requires instance-local GSAP/timer/tile ownership, demand scheduling, generation guards, offscreen sleep and zero globalTimeline mutation."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1118,
+        "text": "- DECISION = KEEP ACTIVE/STANDALONE; HeroTextReveal is candidate fusion target only after E2 parity."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1151,
+        "text": "DECISION_3 = TextWave (DOM/Framer typography) and CharacterWaves (Canvas2D character field) explicitly KEEP SEPARATE; naming overlap is not mechanism overlap."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1301,
+        "text": "- InfiniteGallery / Infinity Canvas = STANDALONE_CONFIRMED; do not re-audit as generic gallery merge candidate."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1302,
+        "text": "- GravityGallery = STANDALONE_CONFIRMED; Matter.js physics identity remains separate."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1336,
+        "text": "DELTA = TextRevealWall source hold resolved -> STANDALONE_CONFIRMED + stagger/reduced-motion/a11y hardening. TextWave + DirectionHover -> shared internal KineticTextKernel while preserving public behaviors. CharacterWaves -> CanvasFieldRuntime consumer. CurvedMarquee -> stable useId/single motion owner. ImageGallery -> local GSAP ownership; globalTimeline.clear forbidden. GravityGallery -> owned Matter lifecycle + visibility/offscreen sleep. DraggableGrid -> standalone drag-grid with pointer-capture/bounds/mobile/reduced-motion contract. FloatingIcons -> shared PointerRuntime consumer."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1351,
+        "text": "AUTHORITATIVE = ClickEffects + EmojiBurst -> existing canonical InteractionBurstSystem; DraggableGrid / GravityGallery / InfiniteGallery = STANDALONE_CONFIRMED; ImageGallery = STANDALONE_CONFIRMED_WITH_RUNTIME_DEBT; StarBurst = KEEP_ACTIVE_PENDING_SOURCE; FloatingIcons / ThunderStrike / GlitterWrap / SVGParticle remain distinct according to mechanism boundaries."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1371,
+        "text": "LEGACY = source-confirmed migration mappings recorded; no source catalog mutation/hard delete until repo reference graph + config round-trip + full typecheck/build/Desktop+390px QA."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1482,
+        "text": "LEGACY = Ken Burns -> HeroMediaSequence(ken-burns); Frame Repeat -> TransitionOrchestrator(image-repeat-flight), both LEGACY_READY_PENDING_REPO with zero wrapper-owned scheduler/decode runtime."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1559,
+        "text": "FUSION DECISION = no forced merge of starfield/cosmic/trails or BackgroundSymbolStorm into glyph core; renderer identity remains separate."
+      }
+    },
+    {
+      "disposition": "review",
+      "implementation_status": "not-identifiable-from-static-catalog",
+      "latest_source_evidence": {
+        "source": "NOX Arsenal — Shared State.txt",
+        "line": 1705,
+        "text": "LEGACY = Blurry VHS -> MediaAtmosphere(vhs); Ken Burns -> HeroMediaSequence(ken-burns). No hard delete."
+      }
+    }
+  ],
+  "limitations": [
+    "A Drive/source disposition is canon evidence, not proof that full-repository typecheck, build, browser QA, or migration parity has run.",
+    "A source name is not converted to a static ID unless a concrete catalog ID or catalog alias/supersedes relationship identifies it."
+  ]
+}
