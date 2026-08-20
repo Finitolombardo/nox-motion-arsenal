@@ -28,6 +28,8 @@ export interface ScribbleFieldProps {
   parallax?: number; // 0..1 Pointer-Parallax-Tiefe
   proximityRadius?: number; // px — Einflussradius der Pointer-Energie
   blendMode?: 'screen' | 'lighten' | 'plus-lighter' | 'normal';
+  /** Canonical field interaction bridge; legacy direct imports retain pointer-attract behavior. */
+  interaction?: 'ambient' | 'pointer-proximity' | 'pointer-attract';
   symbols?: GlyphDef[] | 'procedural-scribbles' | 'nox-runes'; // austauschbares Symbolset
   seed?: number;
 }
@@ -64,6 +66,7 @@ export function NoxAdaptedScribbleField({
   parallax = 0.5,
   proximityRadius = 200,
   blendMode = 'screen',
+  interaction = 'pointer-attract',
   symbols,
   seed = 7,
 }: ScribbleFieldProps) {
@@ -112,10 +115,13 @@ export function NoxAdaptedScribbleField({
       const rect = root.getBoundingClientRect();
 
       // Global damped parallax (Lusion: one physics source drives all layers).
-      par.current.x = damp(par.current.x, (pointer.current.tx - 0.5) * 2, 8, dt);
-      par.current.y = damp(par.current.y, (pointer.current.ty - 0.5) * 2, 8, dt);
+      const pointerActive = interaction !== 'ambient';
+      const targetX = pointerActive ? (pointer.current.tx - 0.5) * 2 : 0;
+      const targetY = pointerActive ? (pointer.current.ty - 0.5) * 2 : 0;
+      par.current.x = damp(par.current.x, targetX, 8, dt);
+      par.current.y = damp(par.current.y, targetY, 8, dt);
 
-      const ptr = pointerPx(rect, pointer.current);
+      const ptr = pointerActive ? pointerPx(rect, pointer.current) : null;
       for (let i = 0; i < objects.length; i++) {
         const o = objects[i];
         // Parallax on the depth wrapper.
@@ -138,7 +144,7 @@ export function NoxAdaptedScribbleField({
           const dist = Math.hypot(dx, dy);
           const e = proximityEnergy(dist, proximityRadius);
           target = Math.max(0.1, e);
-          if (dist > 0.001 && e > 0) {
+          if (interaction === 'pointer-attract' && dist > 0.001 && e > 0) {
             nudgeX = (dx / dist) * e * 9; // drift toward pointer
             nudgeY = (dy / dist) * e * 9;
           }

@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const source = readFileSync('src/motion-arsenal/effects/backgrounds/ForgeEnergyGlyphs.tsx', 'utf8');
+const canonicalSource = readFileSync('src/motion-arsenal/effects/backgrounds/NoxInteractiveGlyphField.tsx', 'utf8');
+const scribbleSource = readFileSync('src/motion-arsenal/effects/backgrounds/NoxAdaptedScribbleField.tsx', 'utf8');
 const data = readFileSync('src/motion-arsenal/effects/backgrounds/forgeEnergyGlyphData.ts', 'utf8');
 const styles = readFileSync('src/motion-arsenal/effects/backgrounds/forgeEnergyGlyphStyles.ts', 'utf8');
 const catalog = readFileSync('src/motion-arsenal/effects/backgrounds/catalog.ts', 'utf8');
@@ -16,6 +18,24 @@ const variants = [
 ];
 const states = ['idle', 'warming', 'charged', 'overdrive', 'ritual', 'stealth'];
 const combined = `${source}\n${data}\n${styles}`;
+
+for (const token of [
+  'NoxInteractiveGlyphField',
+  "'glyphs'",
+  "'scribble'",
+  "'hybrid'",
+  "'ambient'",
+  "'pointer-proximity'",
+  "'pointer-attract'",
+  'ForgeEnergyGlyphs',
+  'NoxAdaptedScribbleField',
+]) {
+  assert.ok(canonicalSource.includes(token), `Canonical glyph field contract missing: ${token}`);
+}
+assert.ok(catalog.includes("id: 'bg-nox-interactive-glyph-field'"), 'Catalog must register the canonical glyph field');
+assert.ok(catalog.includes("legacyIds: ['bg-forge-energy-glyphs', 'bg-nox-scribble-field']"), 'Canonical glyph field must resolve both legacy ids');
+assert.ok(source.includes('export function ForgeEnergyGlyphs'), 'ForgeEnergyGlyphs legacy wrapper must remain importable');
+assert.ok(scribbleSource.includes('export function NoxAdaptedScribbleField'), 'NoxAdaptedScribbleField legacy wrapper must remain importable');
 
 for (const token of [
   ...variants,
