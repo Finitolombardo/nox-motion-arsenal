@@ -40,6 +40,26 @@ export interface EffectPropControl {
   group?: string;
 }
 
+export type EffectPresetPerformanceProfile = 'lite' | 'balanced' | 'cinematic';
+export type EffectPresetMobileProfile = 'compact' | 'balanced' | 'full';
+export type EffectCatalogState = 'active' | 'deprecated' | 'alias';
+export type EffectTemplateSurface = 'website' | 'dashboard';
+export type EffectTemplateRole = 'background' | 'hero' | 'surface' | 'scroll' | 'transition' | 'form' | 'overlay' | 'cursor' | 'system';
+
+export interface EffectNichePreset {
+  id: string;
+  label: string;
+  niche: string;
+  description?: string;
+  props: Record<string, number | string | boolean>;
+  tags?: string[];
+  performanceProfile?: EffectPresetPerformanceProfile;
+  mobileProfile?: EffectPresetMobileProfile;
+  templateSurfaces?: EffectTemplateSurface[];
+  templateRoles?: EffectTemplateRole[];
+  templatePriority?: number;
+}
+
 export interface EffectMeta {
   id: string;
   // Export-/Komponentenname für Copy-Import und interne Wiederverwendung.
@@ -48,7 +68,7 @@ export interface EffectMeta {
   displayName?: string;
   category: EffectCategory;
   // Which reference site the mechanic was extracted from (or 'nox-original').
-  sourceWebsite: 'krank-lusion' | 'active-theory' | 'shopify-editions' | 'oryzo-screenshot' | 'nox-original' | 'originkit' | 'canvas-ui' | 'img2threejs';
+  sourceWebsite: 'krank-lusion' | 'active-theory' | 'shopify-editions' | 'oryzo-screenshot' | 'nox-original' | 'nox-consolidated' | 'originkit' | 'canvas-ui' | 'img2threejs';
   // Concrete files/anchors in the local reference capture the mechanic came from.
   sourceFiles: string[];
   mode: EffectMode;
@@ -76,6 +96,13 @@ export interface EffectMeta {
   improvementVersion?: string;
   improvementChangelog?: string[];
   productionSafe: boolean;
+  presets?: EffectNichePreset[];
+  // Legacy handoff shape; normalized by the dashboard resolver when present.
+  nichePresets?: Array<Record<string, unknown>>;
+  legacyIds?: string[];
+  supersedes?: string[];
+  deprecationNotes?: string;
+  catalogState?: EffectCatalogState;
   // Reifegrad für Design-Entscheidungen: experimental → candidate → production-safe.
   status?: 'experimental' | 'candidate' | 'production-safe';
   // Heavy previews are click-to-run in the gallery instead of auto-mounting.
