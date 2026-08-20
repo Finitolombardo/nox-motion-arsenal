@@ -43,7 +43,7 @@ if (labIds.length !== expectedLabIds.length || expectedLabIds.some((id) => !labI
 
 const originSource = fs.readFileSync(path.join(effectsRoot, 'originkit', 'catalog.ts'), 'utf8');
 const originIds = [...originSource.matchAll(/\bid:\s*['"]([^'"]+)['"]/g)].map((match) => match[1]);
-if (originIds.length !== 67) fail(`expected 67 ORIGINKIT_CATALOG ids, found ${originIds.length}`);
+if (originIds.length !== 71) fail(`expected 71 ORIGINKIT_CATALOG ids, found ${originIds.length}`);
 
 const requiredIds = [
   'premium-data-stream-journey', 'bg-depth-glow-stack', 'skilltree-glass-metal-panel',

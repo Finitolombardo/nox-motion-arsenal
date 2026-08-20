@@ -2042,4 +2042,45 @@ props: [
     },
     Component: lazy(() => import('./UserCursor')),
   },
+  {
+    meta: {
+      id: 'originkit-text-mutation-system', name: 'TextMutationSystem', category: 'originkit', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['TextMutationSystem.tsx', 'TypeWriter.tsx', 'ScrambleText.tsx'], mode: 'nox-adapted', complexity: 'low', dependencies: [], legacyIds: ['nox-scrambletext', 'nox-typewriter'], supersedes: ['ScrambleText', 'TypeWriter'], deprecationNotes: 'Saved legacy IDs resolve to this core; direct standalone imports remain supported.',
+      bestFor: ['Terminal copy', 'Decode headlines'], performanceNotes: 'One bounded timeout chain; no canvas or external runtime.', mobileNotes: 'Works without hover; hover is optional.', reducedMotionNotes: 'Immediately renders the resolved text.',
+      description: 'Source-ready text core for typewriter and deterministic scramble modes, with niche presets and an accessible resolved label.', importPath: '@/motion-arsenal/effects/originkit/TextMutationSystem', usageJsx: '<TextMutationSystem mode="scramble" text="SIGNAL DECODED" />',
+      props: [
+        { key: 'preset', label: 'Preset', type: 'select', default: 'saas', options: ['restaurant', 'beauty', 'fitness', 'local-service', 'real-estate', 'automotive', 'healthcare', 'finance', 'saas', 'ecommerce', 'luxury', 'creator'] },
+        { key: 'mode', label: 'Mode', type: 'select', default: 'scramble', options: ['typewriter', 'scramble'] }, { key: 'text', label: 'Text', type: 'text', default: 'SIGNAL DECODED' }, { key: 'speed', label: 'Speed', type: 'range', default: 46, min: 12, max: 200, step: 2 }, { key: 'trigger', label: 'Trigger', type: 'select', default: 'auto', options: ['auto', 'hover', 'once'] },
+      ], productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./TextMutationSystem')),
+  },
+  {
+    meta: {
+      id: 'originkit-text-signal-system', name: 'TextSignalSystem', category: 'originkit', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['TextSignalSystem.tsx', 'GlitchText.tsx', 'FlickerText.tsx'], mode: 'nox-adapted', complexity: 'medium', dependencies: [], legacyIds: ['nox-glitchtext', 'originkit-flickertext'], supersedes: ['GlitchText', 'FlickerText'], deprecationNotes: 'Saved legacy IDs resolve to this core; direct standalone imports remain supported.',
+      bestFor: ['Signal headlines', 'Boot states'], performanceNotes: 'One rAF burst only while active; interval and visibility cleanup are bounded.', mobileNotes: 'Auto and enter triggers work without hover.', reducedMotionNotes: 'Retains static readable text.',
+      description: 'Source-ready signal-text core with boot and glitch phases, deterministic slices, optional per-letter flicker, and accessible output.', importPath: '@/motion-arsenal/effects/originkit/TextSignalSystem', usageJsx: '<TextSignalSystem text="SIGNAL" mode="glitch" trigger="enter" />',
+      props: [
+        { key: 'text', label: 'Text', type: 'text', default: 'SIGNAL' }, { key: 'mode', label: 'Mode', type: 'select', default: 'glitch', options: ['boot', 'glitch'] }, { key: 'trigger', label: 'Trigger', type: 'select', default: 'auto', options: ['enter', 'hover', 'interval', 'auto'] }, { key: 'intensity', label: 'Intensity', type: 'range', default: 6, min: 1, max: 20, step: 1 },
+      ], productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./TextSignalSystem')),
+  },
+  {
+    meta: {
+      id: 'originkit-particle-text-transformation-system', name: 'ParticleTextTransformationSystem', category: 'originkit', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['ParticleTextTransformationSystem.tsx', 'DustTextReveal.tsx', 'TextVaporize.tsx'], mode: 'nox-adapted', complexity: 'high', dependencies: [], legacyIds: ['nox-dusttextreveal', 'nox-textvaporize'], supersedes: ['DustTextReveal', 'TextVaporize'], deprecationNotes: 'Saved legacy IDs resolve to this core; direct standalone imports remain supported.',
+      bestFor: ['Particle headline reveals', 'Product launches'], performanceNotes: 'Canvas particle work is capped by component density controls.', mobileNotes: 'Uses the core fallback instead of requiring hover.', reducedMotionNotes: 'Displays the settled text composition.',
+      description: 'Source-ready text-to-particle transformation core with deterministic presets and local canvas rendering.', importPath: '@/motion-arsenal/effects/originkit/ParticleTextTransformationSystem', usageJsx: '<ParticleTextTransformationSystem text="NOX" />',
+      props: [{ key: 'text', label: 'Text', type: 'text', default: 'NOX' }, { key: 'density', label: 'Density', type: 'range', default: 800, min: 200, max: 2400, step: 100 }], productionSafe: true, status: 'candidate', clickToRun: true,
+    }, Component: lazy(() => import('./ParticleTextTransformationSystem')),
+  },
+  {
+    meta: {
+      id: 'originkit-variable-weight-text', name: 'VariableWeightText', category: 'originkit', sourceWebsite: 'nox-consolidated',
+      sourceFiles: ['VariableWeightText.tsx', 'WeightHover.tsx', 'DynamicWeight.tsx'], mode: 'nox-adapted', complexity: 'low', dependencies: [], legacyIds: ['nox-weighthover', 'nox-dynamicweight'], supersedes: ['WeightHover', 'DynamicWeight'], deprecationNotes: 'Saved legacy IDs resolve to this core; direct standalone imports remain supported.',
+      bestFor: ['Variable-font headlines', 'Interactive typography'], performanceNotes: 'DOM text only; no canvas or external runtime.', mobileNotes: 'Supports non-hover motion modes.', reducedMotionNotes: 'Uses its readable baseline weight.',
+      description: 'Source-ready variable-weight text core with focused and ambient modes.', importPath: '@/motion-arsenal/effects/originkit/VariableWeightText', usageJsx: '<VariableWeightText text="WEIGHT" />',
+      props: [{ key: 'text', label: 'Text', type: 'text', default: 'WEIGHT' }, { key: 'minWeight', label: 'Minimum Weight', type: 'range', default: 300, min: 100, max: 900, step: 100 }, { key: 'maxWeight', label: 'Maximum Weight', type: 'range', default: 900, min: 100, max: 900, step: 100 }], productionSafe: true, status: 'production-safe',
+    }, Component: lazy(() => import('./VariableWeightText')),
+  },
 ];
