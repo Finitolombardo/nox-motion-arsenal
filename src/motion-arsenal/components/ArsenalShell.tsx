@@ -5,6 +5,7 @@ import { buildEffectAliasIndex, findEffectEntry } from '../data/effectRegistry';
 import { EFFECT_COLLECTIONS } from '../data/collections';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { EffectCard } from './EffectCard';
+import { ConsolidationMigrationCenter } from './ConsolidationMigrationCenter';
 
 const EffectDetail = React.lazy(() => import('./EffectDetail').then((module) => ({ default: module.EffectDetail })));
 
@@ -96,6 +97,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   })();
 
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
+  const isConsolidationCenter = routePath === '/dashboard/008';
   const effectAliases = useMemo(() => buildEffectAliasIndex(catalog), [catalog]);
   const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
   const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
@@ -182,6 +184,10 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     window.scrollTo({ top: 0 });
   }, [openId]);
 
+  if (isConsolidationCenter) {
+    return <ConsolidationMigrationCenter catalog={catalog} onBack={() => navigate('/')} />;
+  }
+
   if (openEntry) {
     return (
       <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
@@ -224,6 +230,11 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         <p className="sub" style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.14em', margin: '4px 0 0' }}>
           INTERNAL EFFECT LIBRARY
         </p>
+        <div className="side-title">Governance</div>
+        <button className="side-link" data-testid="consolidation-dashboard-link" onClick={() => navigate('/dashboard/008')}>
+          <span>Consolidation Center</span>
+          <span className="side-count">008</span>
+        </button>
         <div className="side-title">Sammlungen</div>
         {EFFECT_COLLECTIONS.map((c) => (
           <button
