@@ -27,3 +27,8 @@ declare module 'virtual:community-flags' {
   const communityFlags: Record<string, boolean>;
   export default communityFlags;
 }
+
+declare module 'virtual:drive-canon-ledger' {
+  const ledger: unknown;
+  export default ledger;
+}

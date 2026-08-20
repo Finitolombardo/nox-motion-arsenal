@@ -3,6 +3,7 @@ import type { EffectCategory, EffectEntry } from '../types';
 import { effectUpdatedAtTimestamp } from '../lib/effectDates';
 import { buildEffectAliasIndex, findEffectEntry, matchesEffectSearch, normalizeEffectCollectionIds, normalizeEffectIds } from '../data/effectRegistry';
 import { EFFECT_COLLECTIONS } from '../data/collections';
+import { canonDispositionCounts, canonReviewRows, coreLibraryEntries } from '../data/driveCanonLedger';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { EffectCard } from './EffectCard';
 import { ConsolidationMigrationCenter } from './ConsolidationMigrationCenter';
@@ -37,6 +38,23 @@ const CATEGORY_ORDER: EffectCategory[] = [
 
 type ModeFilter = 'all' | 'nox-adapted' | 'production' | 'heavy' | 'lightweight';
 type MaintenanceSort = 'catalog' | 'newest' | 'oldest';
+type PrimarySection = 'library' | 'templates' | 'niche-packs' | 'compare' | 'governance';
+
+const PRIMARY_NAV: Array<{ id: PrimarySection; label: string; route: string }> = [
+  { id: 'library', label: 'LIBRARY', route: '/' },
+  { id: 'templates', label: 'TEMPLATES', route: '/templates' },
+  { id: 'niche-packs', label: 'NICHE PACKS', route: '/niche-packs' },
+  { id: 'compare', label: 'COMPARE', route: '/compare' },
+  { id: 'governance', label: 'GOVERNANCE', route: '/governance' },
+];
+
+const GOVERNANCE_DASHBOARDS = [
+  { id: '008', label: 'Consolidation Center', route: '/dashboard/008', testId: 'consolidation-dashboard-link' },
+  { id: '009', label: 'Niche Readiness', route: '/dashboard/009', testId: 'dashboard-009-link' },
+  { id: '010', label: 'Preset Quality', route: '/dashboard/010', testId: 'dashboard-010-link' },
+  { id: '011', label: 'Runtime Compatibility', route: '/dashboard/011', testId: 'dashboard-011-link' },
+  { id: '012', label: 'Integration Readiness', route: '/dashboard/012', testId: 'dashboard-012-link' },
+] as const;
 
 const MODE_FILTERS: Array<{ id: ModeFilter; label: string }> = [
   { id: 'all', label: 'ALLE' },
@@ -74,6 +92,39 @@ function readArchived(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<st
   }
 }
 
+function GovernanceHub({ catalog, onNavigate }: { catalog: readonly EffectEntry[]; onNavigate: (route: string) => void }) {
+  const reviewRows = useMemo(() => canonReviewRows(catalog), [catalog]);
+  const dispositionCounts = useMemo(() => canonDispositionCounts(), []);
+
+  return (
+    <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
+      <main className="main governance-hub" data-testid="governance-hub">
+        <nav className="primary-nav" aria-label="Arsenal primary navigation">
+          {PRIMARY_NAV.map((item) => <button key={item.id} className={`chip ${item.id === 'governance' ? 'on' : ''}`} onClick={() => onNavigate(item.route)}>{item.label}</button>)}
+        </nav>
+        <header className="governance-hub__header">
+          <p className="readiness-dashboard__kicker">CORE-FIRST · READ-ONLY GOVERNANCE</p>
+          <h1>Governance</h1>
+          <p>Catalog governance is separated from the production library. Canon review reads the Drive disposition ledger without changing classifications.</p>
+        </header>
+        <section className="governance-hub__dashboards" aria-label="Governance dashboards">
+          <h2>Dashboards</h2>
+          <div className="governance-hub__actions">
+            {GOVERNANCE_DASHBOARDS.map((dashboard) => <button key={dashboard.id} className="side-link" data-testid={dashboard.testId} onClick={() => onNavigate(dashboard.route)}><span>{dashboard.label}</span><span className="side-count">{dashboard.id}</span></button>)}
+          </div>
+        </section>
+        <section className="governance-hub__canon-review">
+          <div className="readiness-dashboard__panel-heading"><div><p className="readiness-dashboard__kicker">CANON REVIEW</p><h2>Excluded from the core Library</h2></div><span className="readiness-dashboard__operator">READ-ONLY LEDGER</span></div>
+          <p>{(dispositionCounts.ACTIVE_CANONICAL ?? 0) + (dispositionCounts.ACTIVE_STANDALONE ?? 0)} approved core entries · {reviewRows.length} entries retained for governance, aliases, modes, runtime, or source review.</p>
+          <ul className="readiness-dashboard__list" data-testid="canon-review-list">
+            {reviewRows.map((row) => <li key={row.static_id}><code>{row.static_id}</code><span>{row.disposition} · {row.name}</span></li>)}
+          </ul>
+        </section>
+      </main>
+    </div>
+  );
+}
+
 export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   const [route, navigate] = useHashRoute();
   const effectAliases = useMemo(() => buildEffectAliasIndex(catalog), [catalog]);
@@ -99,6 +150,11 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   })();
 
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
+  const primarySection: PrimarySection = routePath === '/templates' ? 'templates'
+    : routePath === '/niche-packs' ? 'niche-packs'
+      : routePath === '/compare' ? 'compare'
+        : routePath === '/governance' ? 'governance'
+          : 'library';
   const isConsolidationCenter = routePath === '/dashboard/008';
   const readinessDashboard = (['009', '010', '011', '012'] as const).find((id) => routePath === `/dashboard/${id}`);
   const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
@@ -108,11 +164,18 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     : null;
   const sharedContext = openEntry ? decodeShareContext(sharedParam) : null;
 
+  const coreCatalog = useMemo(() => coreLibraryEntries(catalog), [catalog]);
+  const scopedCatalog = useMemo(() => {
+    if (primarySection === 'templates') return coreCatalog.filter((entry) => entry.meta.presets?.some((preset) => preset.templateSurfaces?.length));
+    if (primarySection === 'niche-packs') return coreCatalog.filter((entry) => Boolean(entry.meta.presets?.length));
+    return coreCatalog;
+  }, [coreCatalog, primarySection]);
+
   const counts = useMemo(() => {
     const c = new Map<EffectCategory, number>();
-    for (const e of catalog) c.set(e.meta.category, (c.get(e.meta.category) ?? 0) + 1);
+    for (const e of scopedCatalog) c.set(e.meta.category, (c.get(e.meta.category) ?? 0) + 1);
     return c;
-  }, [catalog]);
+  }, [scopedCatalog]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -122,7 +185,8 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
       ? normalizeEffectCollectionIds(activeCollection.effectIds, effectAliases)
           .map((id) => catalog.find((e) => e.meta.id === id))
           .filter((e): e is EffectEntry => Boolean(e))
-      : catalog;
+          .filter((e) => scopedCatalog.includes(e))
+      : scopedCatalog;
     const entries = source.filter((e) => {
       const m = e.meta;
       if (archivedOnly ? !archived.has(m.id) : archived.has(m.id)) return false;
@@ -142,7 +206,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         (effectUpdatedAtTimestamp(a.meta.updatedAt) - effectUpdatedAtTimestamp(b.meta.updatedAt)) *
         direction,
     );
-  }, [catalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection, effectAliases]);
+  }, [catalog, scopedCatalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection, effectAliases]);
 
   useEffect(() => {
     setFavorites((current) => normalizeEffectIds(current, effectAliases));
@@ -189,11 +253,15 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   }, [openId]);
 
   if (isConsolidationCenter) {
-    return <ConsolidationMigrationCenter catalog={catalog} onBack={() => navigate('/')} />;
+    return <ConsolidationMigrationCenter catalog={catalog} onBack={() => navigate('/governance')} />;
   }
 
   if (readinessDashboard) {
-    return <ReadinessDashboards catalog={catalog} dashboard={readinessDashboard} onBack={() => navigate('/')} />;
+    return <ReadinessDashboards catalog={catalog} dashboard={readinessDashboard} onBack={() => navigate('/governance')} />;
+  }
+
+  if (primarySection === 'governance') {
+    return <GovernanceHub catalog={catalog} onNavigate={navigate} />;
   }
 
   if (openEntry) {
@@ -238,27 +306,14 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         <p className="sub" style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.14em', margin: '4px 0 0' }}>
           INTERNAL EFFECT LIBRARY
         </p>
-        <div className="side-title">Governance</div>
-        <button className="side-link" data-testid="consolidation-dashboard-link" onClick={() => navigate('/dashboard/008')}>
-          <span>Consolidation Center</span>
-          <span className="side-count">008</span>
-        </button>
-        <button className="side-link" data-testid="dashboard-009-link" onClick={() => navigate('/dashboard/009')}>
-          <span>Niche Readiness</span>
-          <span className="side-count">009</span>
-        </button>
-        <button className="side-link" data-testid="dashboard-010-link" onClick={() => navigate('/dashboard/010')}>
-          <span>Preset Quality</span>
-          <span className="side-count">010</span>
-        </button>
-        <button className="side-link" data-testid="dashboard-011-link" onClick={() => navigate('/dashboard/011')}>
-          <span>Runtime Compatibility</span>
-          <span className="side-count">011</span>
-        </button>
-        <button className="side-link" data-testid="dashboard-012-link" onClick={() => navigate('/dashboard/012')}>
-          <span>Integration Readiness</span>
-          <span className="side-count">012</span>
-        </button>
+        <div className="side-title">Primary</div>
+        <nav className="primary-nav primary-nav--sidebar" aria-label="Arsenal primary navigation">
+          {PRIMARY_NAV.map((item) => (
+            <button key={item.id} className={`side-link ${primarySection === item.id ? 'active' : ''}`} data-testid={`primary-nav-${item.id}`} onClick={() => navigate(item.route)}>
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </nav>
         <div className="side-title">Sammlungen</div>
         {EFFECT_COLLECTIONS.map((c) => (
           <button
@@ -335,6 +390,13 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
       </aside>
 
       <main className="main">
+        {primarySection !== 'library' && (
+          <header className="library-section-header">
+            <p className="readiness-dashboard__kicker">CORE LIBRARY</p>
+            <h2>{primarySection === 'templates' ? 'Templates' : primarySection === 'niche-packs' ? 'Niche Packs' : 'Compare'}</h2>
+            <p>{primarySection === 'templates' ? 'Core effects with registered template surface metadata.' : primarySection === 'niche-packs' ? 'Core effects with registered niche preset metadata.' : 'Use the core Library to open two approved effects in separate tabs for a factual side-by-side review.'}</p>
+          </header>
+        )}
         <div className="topbar">
           <input
             type="search"
@@ -373,7 +435,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           </label>
         </div>
         <p className="result-count">
-          {filtered.length} / {catalog.length} EFFEKTE
+          {filtered.length} / {scopedCatalog.length} CORE EFFECTS
           {activeCollection ? ` · SAMMLUNG: ${activeCollection.label.toUpperCase()}` : ''}
           {favoritesOnly ? ` · ${favorites.size} FAVORITEN GESPEICHERT` : ''}
           {archivedOnly ? ` · ${archived.size} ARCHIVIERT` : ''}
