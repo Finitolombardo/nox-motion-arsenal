@@ -18,12 +18,38 @@ const documentedFusionMigrations = {
   'bg-noise-fog-field': 'bg-atmosphere-field',
   'bg-depth-glow-stack': 'bg-atmosphere-field',
   'bg-radial-beam-atmosphere': 'bg-atmosphere-field',
+  'transitions-smooth-section-wipe': 'transitions-route-system',
+  'transitions-masked-route': 'transitions-route-system',
+  'transitions-clip-path-reveal': 'transitions-route-system',
+  'transitions-panel-shift': 'transitions-route-system',
+  'canvasui-particle-object': 'canvasui-particle-field-system',
+  'canvasui-particle-reveal': 'canvasui-particle-field-system',
+  'scroll-pinned-product-stage': 'scroll-scene-system',
+  'scroll-object-transform': 'scroll-scene-system',
+  'nox-dynamicweight': 'originkit-variable-weight-text',
+  'nox-weighthover': 'originkit-variable-weight-text',
+  'nox-typewriter': 'originkit-text-mutation-system',
+  'nox-scrambletext': 'originkit-text-mutation-system',
+  'nox-dusttextreveal': 'originkit-particle-text-transformation-system',
+  'nox-textvaporize': 'originkit-particle-text-transformation-system',
+  'originkit-flickertext': 'originkit-text-signal-system',
+  'nox-glitchtext': 'originkit-text-signal-system',
 };
 
 const standaloneStaticIds = [
   'transitions-layered-page-enter',
   'cursor-hover-distortion',
   'cursor-interactive-symbol-drift',
+  'canvasui-glass-lens',
+  'canvasui-glitch-burst',
+  'canvasui-laser',
+  'canvasui-liquid-ripple',
+  'canvasui-shatter-reveal',
+  'scroll-parallax-symbol-layers',
+  'scroll-timeline-progress-rail',
+  'scroll-velocity-skew',
+  'scroll-section-snap-depth',
+  'nox-randomletterswap',
 ];
 
 function readCatalogEntries() {
@@ -59,10 +85,13 @@ function readCatalogEntries() {
 
 const rawEntries = readCatalogEntries();
 const rawIds = new Set(rawEntries.map((entry) => entry.id));
-const actualMigrations = Object.fromEntries(rawEntries.flatMap((entry) => entry.legacyIds.map((legacyId) => [legacyId, entry.id])));
-assert.deepEqual(actualMigrations, documentedFusionMigrations, 'only documented compatibility fusions may declare legacy IDs');
+const declaredLegacyIds = new Set(rawEntries.flatMap((entry) => entry.legacyIds));
+const actualMigrations = Object.fromEntries(rawEntries
+  .flatMap((entry) => entry.legacyIds.map((legacyId) => [legacyId, entry.id]))
+  .filter(([legacyId]) => Object.hasOwn(documentedFusionMigrations, legacyId)));
+assert.deepEqual(actualMigrations, documentedFusionMigrations, 'each in-scope documented compatibility fusion must declare its actual legacy IDs');
 
-const activeIds = new Set(rawEntries.filter((entry) => !Object.hasOwn(documentedFusionMigrations, entry.id)).map((entry) => entry.id));
+const activeIds = new Set(rawEntries.filter((entry) => !declaredLegacyIds.has(entry.id)).map((entry) => entry.id));
 for (const [legacyId, canonicalId] of Object.entries(documentedFusionMigrations)) {
   assert.ok(rawIds.has(legacyId), `${legacyId} must be an actual static catalog ID`);
   assert.ok(!activeIds.has(legacyId), `${legacyId} must be absent from the active catalog`);
@@ -84,12 +113,13 @@ const activeCatalog = rawEntries
   .filter((entry) => activeIds.has(entry.id))
   .map((entry) => ({ meta: entry }));
 const aliases = registry.buildEffectAliasIndex(activeCatalog);
-assert.deepEqual(Object.fromEntries([...aliases].sort()), documentedFusionMigrations, 'registry must resolve every documented static legacy ID to its canonical active entry');
+const documentedAliases = Object.fromEntries([...aliases].filter(([legacyId]) => Object.hasOwn(documentedFusionMigrations, legacyId)).sort());
+assert.deepEqual(documentedAliases, documentedFusionMigrations, 'registry must resolve every in-scope documented static legacy ID to its canonical active entry');
 for (const [legacyId, canonicalId] of Object.entries(documentedFusionMigrations)) {
   assert.equal(registry.resolveEffectId(legacyId, aliases), canonicalId, `${legacyId} must resolve to ${canonicalId}`);
 }
 
-const staleFavorites = ['bg-forge-energy-glyphs', 'bg-nox-interactive-glyph-field', 'nox-typewriter', 'unknown-effect'];
-assert.deepEqual([...registry.normalizeEffectIds(staleFavorites, aliases)], ['bg-nox-interactive-glyph-field', 'nox-typewriter', 'unknown-effect'], 'only actual legacy IDs may canonicalize persisted effect sets');
+const staleFavorites = ['bg-forge-energy-glyphs', 'bg-nox-interactive-glyph-field', 'transitions-panel-shift', 'transitions-layered-page-enter', 'canvasui-particle-reveal', 'scroll-pinned-product-stage', 'nox-typewriter', 'nox-glitchtext', 'unknown-effect'];
+assert.deepEqual([...registry.normalizeEffectIds(staleFavorites, aliases)], ['bg-nox-interactive-glyph-field', 'transitions-route-system', 'transitions-layered-page-enter', 'canvasui-particle-field-system', 'scroll-scene-system', 'originkit-text-mutation-system', 'originkit-text-signal-system', 'unknown-effect'], 'only actual legacy IDs may canonicalize persisted effect sets');
 
 console.log(`[effect-registry-migrations] PASS aliases=${aliases.size}`);

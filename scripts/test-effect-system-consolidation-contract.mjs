@@ -27,6 +27,7 @@ const systems = [
     catalog: 'src/motion-arsenal/effects/transitions/catalog.ts',
     id: 'transitions-route-system',
     name: 'RouteTransitionSystem',
+    legacyIds: ['transitions-smooth-section-wipe', 'transitions-masked-route', 'transitions-clip-path-reveal', 'transitions-panel-shift'],
   },
 ];
 
@@ -37,7 +38,13 @@ for (const system of systems) {
   assert.match(source, /export default/, `${system.name} must expose a default export for lazy catalog loading`);
   assert.ok(catalog.includes(`id: '${system.id}'`), `${system.name} canonical catalog id missing`);
   assert.ok(catalog.includes(`name: '${system.name}'`), `${system.name} canonical catalog entry missing`);
-  assert.doesNotMatch(catalog, /legacyIds:/, `${system.name} is a selector and must not hide standalone effects as legacy aliases`);
+  if (system.legacyIds) {
+    for (const legacyId of system.legacyIds) {
+      assert.match(catalog, new RegExp(`legacyIds:\\s*\\[[^\\]]*'${legacyId}'`), `${system.name} must declare the ledger-backed legacy ID ${legacyId}`);
+    }
+  } else {
+    assert.doesNotMatch(catalog, /legacyIds:/, `${system.name} is a selector and must not hide standalone effects as legacy aliases`);
+  }
 }
 
 const effectsCatalog = read('src/motion-arsenal/data/effectsCatalog.ts');
