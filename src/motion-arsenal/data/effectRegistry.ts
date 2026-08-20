@@ -33,6 +33,38 @@ export function resolveEffectId(requestedId: string, aliases: EffectAliasIndex):
   return aliases.get(requestedId) ?? requestedId;
 }
 
+/**
+ * Migrates an ID-bearing persisted value to its active catalog identity. Unknown
+ * IDs are intentionally retained: a future catalog entry may restore them.
+ */
+export function normalizeEffectIds(ids: Iterable<string>, aliases: EffectAliasIndex): Set<string> {
+  const normalized = new Set<string>();
+  for (const id of ids) normalized.add(resolveEffectId(id, aliases));
+  return normalized;
+}
+
+/** Preserve collection order while collapsing legacy/canonical duplicates. */
+export function normalizeEffectCollectionIds(ids: readonly string[], aliases: EffectAliasIndex): string[] {
+  return [...normalizeEffectIds(ids, aliases)];
+}
+
+/** Search both active metadata and every legacy identity that can appear in a saved deep link. */
+export function matchesEffectSearch(entry: EffectEntry, query: string): boolean {
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) return true;
+  const meta = entry.meta;
+  const haystack = [
+    meta.id,
+    ...(meta.legacyIds ?? []),
+    meta.name,
+    meta.displayName ?? '',
+    meta.description,
+    ...(meta.bestFor ?? []),
+    meta.sourceWebsite,
+  ].join(' ').toLowerCase();
+  return haystack.includes(normalizedQuery);
+}
+
 export function isLegacyEffectId(requestedId: string, aliases: EffectAliasIndex): boolean {
   return aliases.has(requestedId);
 }

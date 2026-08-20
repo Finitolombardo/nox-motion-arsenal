@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { EffectCategory, EffectEntry } from '../types';
 import { effectUpdatedAtTimestamp } from '../lib/effectDates';
-import { buildEffectAliasIndex, findEffectEntry } from '../data/effectRegistry';
+import { buildEffectAliasIndex, findEffectEntry, matchesEffectSearch, normalizeEffectCollectionIds, normalizeEffectIds } from '../data/effectRegistry';
 import { EFFECT_COLLECTIONS } from '../data/collections';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { EffectCard } from './EffectCard';
@@ -55,19 +55,19 @@ function useHashRoute(): [string, (h: string) => void] {
   return [hash, (h: string) => (window.location.hash = h)];
 }
 
-function readFavorites(): Set<string> {
+function readFavorites(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<string> {
   try {
     const stored = JSON.parse(window.localStorage.getItem(FAVORITES_STORAGE_KEY) ?? '[]');
-    return new Set(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : []);
+    return normalizeEffectIds(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : [], aliases);
   } catch {
     return new Set();
   }
 }
 
-function readArchived(): Set<string> {
+function readArchived(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<string> {
   try {
     const stored = JSON.parse(window.localStorage.getItem(ARCHIVED_STORAGE_KEY) ?? '[]');
-    return new Set(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : []);
+    return normalizeEffectIds(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : [], aliases);
   } catch {
     return new Set();
   }
@@ -75,13 +75,14 @@ function readArchived(): Set<string> {
 
 export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   const [route, navigate] = useHashRoute();
+  const effectAliases = useMemo(() => buildEffectAliasIndex(catalog), [catalog]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<EffectCategory | 'all'>('all');
   const [mode, setMode] = useState<ModeFilter>('all');
   const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const [favorites, setFavorites] = useState<Set<string>>(readFavorites);
+  const [favorites, setFavorites] = useState<Set<string>>(() => readFavorites(effectAliases));
   const [archivedOnly, setArchivedOnly] = useState(false);
-  const [archived, setArchived] = useState<Set<string>>(readArchived);
+  const [archived, setArchived] = useState<Set<string>>(() => readArchived(effectAliases));
   const [maintenanceSort, setMaintenanceSort] = useState<MaintenanceSort>('catalog');
   const [collectionId, setCollectionId] = useState<string | null>(null);
 
@@ -98,7 +99,6 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
 
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
   const isConsolidationCenter = routePath === '/dashboard/008';
-  const effectAliases = useMemo(() => buildEffectAliasIndex(catalog), [catalog]);
   const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
   const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
   const sharedConfig: EffectConfigValues | null = openEntry
@@ -117,7 +117,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     // Sammlungen behalten ihre kuratierte Reihenfolge, solange nicht nach
     // Update-Datum sortiert wird.
     const source = activeCollection
-      ? activeCollection.effectIds
+      ? normalizeEffectCollectionIds(activeCollection.effectIds, effectAliases)
           .map((id) => catalog.find((e) => e.meta.id === id))
           .filter((e): e is EffectEntry => Boolean(e))
       : catalog;
@@ -130,10 +130,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
       if (mode === 'production' && !m.productionSafe) return false;
       if (mode === 'heavy' && m.complexity !== 'heavy') return false;
       if (mode === 'lightweight' && m.complexity !== 'low') return false;
-      if (q) {
-        const hay = `${m.id} ${m.name} ${m.description} ${m.bestFor.join(' ')} ${m.sourceWebsite}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
+      if (!matchesEffectSearch(e, q)) return false;
       return true;
     });
     if (maintenanceSort === 'catalog') return entries;
@@ -143,7 +140,12 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
         (effectUpdatedAtTimestamp(a.meta.updatedAt) - effectUpdatedAtTimestamp(b.meta.updatedAt)) *
         direction,
     );
-  }, [catalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection]);
+  }, [catalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection, effectAliases]);
+
+  useEffect(() => {
+    setFavorites((current) => normalizeEffectIds(current, effectAliases));
+    setArchived((current) => normalizeEffectIds(current, effectAliases));
+  }, [effectAliases]);
 
   useEffect(() => {
     try {
