@@ -9,7 +9,6 @@ const migrations = [
     core: 'src/motion-arsenal/effects/hero/HeroTextReveal.tsx',
     legacy: 'src/motion-arsenal/effects/hero/MaskedTextReveal.tsx',
     canonicalId: 'hero-text-reveal',
-    legacyId: 'hero-masked-text-reveal',
     coreName: 'HeroTextReveal',
     legacyName: 'MaskedTextReveal',
   },
@@ -18,7 +17,6 @@ const migrations = [
     core: 'src/motion-arsenal/effects/cards/InteractiveSurfaceCard.tsx',
     legacy: 'src/motion-arsenal/effects/cards/TiltParallaxCard.tsx',
     canonicalId: 'cards-interactive-surface-card',
-    legacyId: 'cards-tilt-parallax',
     coreName: 'InteractiveSurfaceCard',
     legacyName: 'TiltParallaxCard',
   },
@@ -27,7 +25,6 @@ const migrations = [
     core: 'src/motion-arsenal/effects/forms/FormSignalSystem.tsx',
     legacy: 'src/motion-arsenal/effects/forms/ValidationPulse.tsx',
     canonicalId: 'forms-signal-system',
-    legacyId: 'forms-validation-pulse',
     coreName: 'FormSignalSystem',
     legacyName: 'ValidationPulse',
   },
@@ -39,7 +36,7 @@ for (const migration of migrations) {
   const legacy = read(migration.legacy);
 
   assert.ok(catalog.includes(`id: '${migration.canonicalId}'`), `${migration.coreName} must be the active catalog entry`);
-  assert.ok(catalog.includes(`legacyIds: ['${migration.legacyId}']`), `${migration.legacyId} must resolve through the registry`);
+  assert.doesNotMatch(catalog, /legacyIds:/, `${migration.coreName} has no former static catalog ID to resolve through the registry`);
   assert.ok(catalog.includes(`import('./${migration.coreName}')`), `catalog must load ${migration.coreName}`);
   assert.match(core, new RegExp(`export (default )?function ${migration.coreName}|export \{ ${migration.coreName} \}`), `${migration.coreName} must remain directly importable`);
   assert.match(legacy, new RegExp(`export (default )?function ${migration.legacyName}|export \{ ${migration.legacyName} \}`), `${migration.legacyName} wrapper must remain directly importable`);

@@ -86,7 +86,6 @@ export const CARDS_CATALOG: EffectEntry[] = [
   {
     meta: {
       id: 'cards-interactive-surface-card',
-      legacyIds: ['cards-tilt-parallax'],
       name: 'InteractiveSurfaceCard',
       category: 'cards',
       sourceWebsite: 'krank-lusion',

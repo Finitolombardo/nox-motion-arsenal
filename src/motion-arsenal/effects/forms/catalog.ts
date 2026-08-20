@@ -64,7 +64,6 @@ export const FORMS_CATALOG: EffectEntry[] = [
   {
     meta: {
       id: 'forms-signal-system',
-      legacyIds: ['forms-validation-pulse'],
       name: 'FormSignalSystem',
       category: 'forms',
       sourceWebsite: 'nox-original',

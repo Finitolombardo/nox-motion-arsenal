@@ -19,9 +19,8 @@ export const CURSOR_CATALOG: EffectEntry[] = [
       technicalBasis: 'React composition over preserved standalone cursor effects.',
       importPath: '@/motion-arsenal/effects/cursor/PointerInteractionField', usageJsx: '<PointerInteractionField mode="light" intensity={1} />',
       props: [{ key: 'mode', label: 'Interaction Mode', type: 'select', default: 'light', options: ['light', 'distortion', 'parallax', 'spotlight', 'symbols'] }, { key: 'accent', label: 'Accent', type: 'color', default: '#C93030' }, { key: 'intensity', label: 'Intensity', type: 'range', default: 1, min: 0.4, max: 1.5, step: 0.05 }],
-      legacyIds: ['cursor-light-field', 'cursor-hover-distortion', 'cursor-pointer-parallax-stage', 'cursor-spotlight-reveal', 'cursor-interactive-symbol-drift'],
       supersedes: ['CursorLightField', 'HoverDistortionShader', 'PointerParallaxStage', 'SpotlightReveal', 'InteractiveSymbolDrift'],
-      deprecationNotes: 'Saved legacy IDs resolve here; all standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
+      deprecationNotes: 'All standalone component imports and catalog entries remain supported.', productionSafe: true, status: 'production-safe',
     }, Component: lazy(() => import('./PointerInteractionField')),
   },
   {

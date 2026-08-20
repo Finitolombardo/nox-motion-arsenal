@@ -9,7 +9,7 @@ export const SYSTEM_CATALOG: EffectEntry[] = [
       bestFor: ['Loading feedback', 'Progression moments', 'Dashboard completion states'], performanceNotes: 'Renders one preserved feedback implementation at a time; no extra loop is introduced.', mobileNotes: 'All selected modes remain touch-safe.', reducedMotionNotes: 'Delegates to the selected effect\'s existing reduced-motion state.',
       description: 'Canonical selector for scan, ring, and XP progress feedback.', technicalBasis: 'React composition over preserved standalone progress effects.', importPath: '@/motion-arsenal/effects/system/ProgressFeedbackSystem', usageJsx: '<ProgressFeedbackSystem mode="ring" target={100} />',
       props: [{ key: 'mode', label: 'Feedback Mode', type: 'select', default: 'scan', options: ['scan', 'ring', 'xp'] }, { key: 'accent', label: 'Accent', type: 'color', default: '#C93030' }, { key: 'speed', label: 'Speed', type: 'range', default: 1, min: 0.3, max: 3, step: 0.1 }, { key: 'target', label: 'Target %', type: 'range', default: 100, min: 20, max: 100, step: 5 }, { key: 'autoReplay', label: 'Auto-Replay', type: 'boolean', default: true }],
-      legacyIds: ['system-scan-complete-pulse', 'system-progress-ring-charge', 'system-xp-fill-surge'], supersedes: ['ScanCompletePulse', 'ProgressRingCharge', 'XPFillSurge'], deprecationNotes: 'Saved legacy IDs resolve here; direct standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
+      supersedes: ['ScanCompletePulse', 'ProgressRingCharge', 'XPFillSurge'], deprecationNotes: 'Direct standalone component imports remain supported.', productionSafe: true, status: 'production-safe',
     }, Component: lazy(() => import('./ProgressFeedbackSystem')),
   },
   {

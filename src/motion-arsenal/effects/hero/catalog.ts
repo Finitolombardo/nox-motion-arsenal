@@ -42,7 +42,6 @@ export const HERO_CATALOG: EffectEntry[] = [
   {
     meta: {
       id: 'hero-text-reveal',
-      legacyIds: ['hero-masked-text-reveal'],
       name: 'HeroTextReveal',
       category: 'hero',
       sourceWebsite: 'shopify-editions',
