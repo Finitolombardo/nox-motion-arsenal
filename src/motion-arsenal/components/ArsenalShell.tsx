@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { EffectCategory, EffectEntry } from '../types';
 import { effectUpdatedAtTimestamp } from '../lib/effectDates';
+import { buildEffectAliasIndex, findEffectEntry } from '../data/effectRegistry';
 import { EFFECT_COLLECTIONS } from '../data/collections';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { EffectCard } from './EffectCard';
@@ -95,7 +96,8 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   })();
 
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
-  const openEntry = openId ? catalog.find((e) => e.meta.id === openId) : null;
+  const effectAliases = useMemo(() => buildEffectAliasIndex(catalog), [catalog]);
+  const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
   const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
   const sharedConfig: EffectConfigValues | null = openEntry
     ? decodeConfigParam(openEntry.meta, sharedParam)

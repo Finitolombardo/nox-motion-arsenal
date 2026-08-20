@@ -1,5 +1,6 @@
 import type { EffectEntry, EffectImprovementStatus } from '../types';
 import effectUpdates from 'virtual:effect-updates';
+import { buildEffectAliasIndex } from './effectRegistry';
 import { BACKGROUNDS_CATALOG } from '../effects/backgrounds/catalog';
 import { HERO_CATALOG } from '../effects/hero/catalog';
 import { TRANSITIONS_CATALOG } from '../effects/transitions/catalog';
@@ -183,7 +184,13 @@ function deriveImprovementStatus(entry: EffectEntry): EffectImprovementStatus {
   return 'pending';
 }
 
-export const EFFECTS_CATALOG: EffectEntry[] = RAW_EFFECTS_CATALOG.map((entry) => {
+const LEGACY_IDS_HIDDEN_FROM_ACTIVE = new Set(
+  RAW_EFFECTS_CATALOG.flatMap((entry) => entry.meta.legacyIds ?? []),
+);
+
+export const EFFECTS_CATALOG: EffectEntry[] = RAW_EFFECTS_CATALOG
+  .filter((entry) => !LEGACY_IDS_HIDDEN_FROM_ACTIVE.has(entry.meta.id))
+  .map((entry) => {
   const updatedAt = effectUpdates[entry.meta.importPath] ?? entry.meta.updatedAt;
   const override = IMPROVEMENT_OVERRIDES[entry.meta.id] ?? {};
   const mergedMeta = { ...entry.meta, ...override };
@@ -203,6 +210,8 @@ export const EFFECTS_CATALOG: EffectEntry[] = RAW_EFFECTS_CATALOG.map((entry) =>
     },
   };
 });
+
+export const EFFECT_ALIAS_INDEX = buildEffectAliasIndex(EFFECTS_CATALOG);
 
 const seen = new Set<string>();
 for (const e of EFFECTS_CATALOG) {
