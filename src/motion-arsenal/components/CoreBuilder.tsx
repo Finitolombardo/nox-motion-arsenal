@@ -12,11 +12,11 @@ import {
   type CoreBuilderState,
 } from '../lib/coreState';
 import {
-  buildConfigJson,
   buildImplementationBrief,
   buildImportLine,
   normalizeControlValue,
 } from '../lib/effectConfig';
+import { buildEffectConfigV1, payloadFingerprint, stableStringify } from '../lib/canonExports';
 import { EffectPreview } from './EffectPreview';
 import { FullscreenPreview } from './FullscreenPreview';
 import { ControlList } from './PropsPanel';
@@ -58,6 +58,7 @@ export function CoreBuilder({
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [provenanceOpen, setProvenanceOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
 
   const resolved = useMemo(
@@ -69,7 +70,22 @@ export function CoreBuilder({
 
   const minimalJsx = useMemo(() => buildMinimalJsx(m, core, resolved), [m, core, resolved]);
   const importLine = useMemo(() => buildImportLine(m), [m]);
-  const fullConfig = useMemo(() => buildConfigJson(entry, resolved.values), [entry, resolved.values]);
+  const configV1 = useMemo(
+    () => buildEffectConfigV1(entry, core, state, presets),
+    [entry, core, state, presets],
+  );
+  const fullConfig = useMemo(() => stableStringify(configV1), [configV1]);
+  const fingerprint = useMemo(() => payloadFingerprint(configV1), [configV1]);
+
+  // D020.3: which layer actually won for each value. The builder already tracks
+  // this to make RESET exact — surfacing it turns "why is this 0.46?" into a
+  // one-glance answer instead of a guess.
+  const provenanceRows = useMemo(() => {
+    const order = { core: 0, mode: 1, preset: 2, profile: 3, user: 4 } as const;
+    return Object.entries(resolved.provenance)
+      .filter(([, layer]) => layer !== 'core')
+      .sort((a, b) => order[b[1]] - order[a[1]] || a[0].localeCompare(b[0]));
+  }, [resolved.provenance]);
 
   const setOverride = (key: string, value: unknown) => {
     const control = controlsByKey.get(key);
@@ -313,6 +329,37 @@ export function CoreBuilder({
             </dl>
           </section>
 
+          {/* ---- PROVENANCE --------------------------------------------------- */}
+          <section className="core-section core-section--collapsible" data-testid="core-provenance">
+            <button
+              type="button"
+              className="section-toggle"
+              aria-expanded={provenanceOpen}
+              onClick={() => setProvenanceOpen((o) => !o)}
+            >
+              <span>Provenance</span>
+              <span className="section-toggle__meta">
+                {provenanceRows.length ? `${provenanceRows.length} non-default` : 'all core defaults'}
+              </span>
+              <span className={`section-toggle__chevron ${provenanceOpen ? 'open' : ''}`} aria-hidden="true">▾</span>
+            </button>
+            {provenanceOpen && (
+              provenanceRows.length ? (
+                <ul className="provenance-list" data-testid="provenance-list">
+                  {provenanceRows.map(([key, layer]) => (
+                    <li key={key} data-provenance-key={key} data-provenance-layer={layer}>
+                      <span className="provenance-list__key">{controlsByKey.get(key)?.label ?? key}</span>
+                      <span className={`provenance-list__layer provenance-${layer}`}>{layer}</span>
+                      <span className="provenance-list__value">{String(resolved.values[key])}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="core-section__empty">Every value comes from the core defaults.</p>
+              )
+            )}
+          </section>
+
           {/* ---- EXPORT ------------------------------------------------------ */}
           <section className="core-section core-section--export" data-testid="core-export">
             <h2>Export</h2>
@@ -327,6 +374,8 @@ export function CoreBuilder({
                   <div><dt>Preset</dt><dd>{resolved.preset ? resolved.preset.label : 'core defaults'}</dd></div>
                   <div><dt>Overrides</dt><dd>{overrideCount || 'none'}</dd></div>
                   <div><dt>Runtime assumption</dt><dd>{TIER_NOTE[core.runtimeTier]}</dd></div>
+                  <div><dt>Schema</dt><dd>{configV1.schema}</dd></div>
+                  <div><dt>Fingerprint</dt><dd><code>{fingerprint}</code></dd></div>
                 </dl>
                 <pre className="codebox">{minimalJsx}</pre>
               </div>

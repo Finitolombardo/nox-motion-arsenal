@@ -5,6 +5,7 @@ import { canonDispositionCounts, canonReviewRows, coreLibraryEntries } from '../
 import { CORE_CANON_BY_ID } from '../data/coreCanon';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
 import { readCoreStateFromQuery } from '../lib/coreState';
+import { useFocusRestoration } from '../lib/focusRestoration';
 import { CoreCard } from './CoreCard';
 import { EffectCard } from './EffectCard';
 import { IncrementalGrid } from './IncrementalGrid';
@@ -169,6 +170,9 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     return index === -1 ? [route, ''] : [route.slice(0, index), route.slice(index + 1)];
   })();
 
+  // D016: coming back from a core restores focus to the card it was opened from.
+  const rememberFocus = useFocusRestoration(routePath === '/' || routePath === '');
+
   const coreId = routePath.startsWith('/core/') ? routePath.slice('/core/'.length) : null;
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
   const primarySection: PrimarySection = routePath === '/templates' ? 'templates'
@@ -234,9 +238,9 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
     : null;
   useEffect(() => {
     if (canonicalRedirect && CORE_CANON_BY_ID.has(canonicalRedirect)) {
-      navigate(`/core/${canonicalRedirect}`);
+      navigate(routeQuery ? `/core/${canonicalRedirect}?${routeQuery}` : `/core/${canonicalRedirect}`);
     }
-  }, [canonicalRedirect]);
+  }, [canonicalRedirect, routeQuery]);
 
   const toggleIn = (setter: React.Dispatch<React.SetStateAction<Set<string>>>) => (id: string) => {
     setter((current) => {
@@ -471,7 +475,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
                     entry={entry}
                     core={core}
                     favorite={favorites.has(entry.meta.id)}
-                    onOpen={(id) => navigate(`/core/${id}`)}
+                    onOpen={(id) => { rememberFocus(id); navigate(`/core/${id}`); }}
                     onToggleFavorite={toggleFavorite}
                   />
                 ) : (
@@ -479,7 +483,7 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
                     entry={entry}
                     favorite={favorites.has(entry.meta.id)}
                     archived={archived.has(entry.meta.id)}
-                    onOpen={(id) => navigate(`/effect/${id}`)}
+                    onOpen={(id) => { rememberFocus(id); navigate(`/effect/${id}`); }}
                     onToggleFavorite={toggleFavorite}
                     onToggleArchive={toggleArchive}
                   />

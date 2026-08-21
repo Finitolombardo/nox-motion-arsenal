@@ -53,7 +53,14 @@ export function IncrementalGrid<T>({
 
   return (
     <>
-      <div className="grid" data-testid="incremental-grid" data-rendered={visible.length} data-total={items.length} aria-label={label}>
+      <div
+        className="grid"
+        data-testid="incremental-grid"
+        data-rendered={visible.length}
+        data-total={items.length}
+        aria-label={label}
+        tabIndex={-1}
+      >
         {visible.map((item) => (
           <React.Fragment key={getKey(item)}>{render(item)}</React.Fragment>
         ))}

@@ -83,14 +83,25 @@ export interface RuntimeBudget {
 /** A slot needs a real reason to be filled, not merely a tag match. */
 const MIN_SCORE = 30;
 
+/**
+ * Hard eligibility gates run before scoring (D007/D013): a gated candidate is
+ * not merely unlikely, it is ineligible, and no score can promote it.
+ */
+function isEligible(core: CoreCanonEntry, role: EffectTemplateRole, surface: EffectTemplateSurface): boolean {
+  if (!core.templateRoles.includes(role)) return false;
+  if (!core.templateSurfaces.includes(surface)) return false;
+  // Dashboard surfaces carry a heavy budget of zero by canon.
+  if (surface === 'dashboard' && (core.runtimeTier === 'heavy' || core.runtimeTier === 'gpu')) return false;
+  return true;
+}
+
 function scoreCandidate(
   core: CoreCanonEntry,
   role: EffectTemplateRole,
   surface: EffectTemplateSurface,
   niche: NicheId,
 ): { score: number; reasons: string[]; preset: EffectNichePreset | null } | null {
-  if (!core.templateRoles.includes(role)) return null;
-  if (!core.templateSurfaces.includes(surface)) return null;
+  if (!isEligible(core, role, surface)) return null;
 
   const reasons: string[] = [];
   // Declared priority is the base: it encodes how canonical this core is for
@@ -145,7 +156,12 @@ export function composeTemplate(
         cost: TIER_COST[core.runtimeTier],
       });
     }
-    candidates.sort((a, b) => b.score - a.score || a.core.id.localeCompare(b.core.id));
+    const COMPLEXITY_ORDER = ['low', 'medium', 'high', 'heavy'];
+    candidates.sort((a, b) =>
+      b.score - a.score
+      || b.core.templatePriority - a.core.templatePriority
+      || COMPLEXITY_ORDER.indexOf(a.entry.meta.complexity) - COMPLEXITY_ORDER.indexOf(b.entry.meta.complexity)
+      || a.core.id.localeCompare(b.core.id));
 
     const pin = pinned[role];
     const pinnedCandidate = pin ? candidates.find((c) => c.core.id === pin) ?? null : null;
@@ -166,7 +182,18 @@ export function composeTemplate(
   });
 }
 
-export function runtimeBudget(slots: readonly TemplateSlot[]): RuntimeBudget {
+// D007: website and dashboard carry separate budgets, and dashboard enforces a
+// heavy budget of zero.
+const SURFACE_BUDGET: Record<EffectTemplateSurface, { runtimeMax: number; heavyMax: number; gpuMax: number }> = {
+  website: { runtimeMax: 18, heavyMax: 1, gpuMax: 1 },
+  dashboard: { runtimeMax: 12, heavyMax: 0, gpuMax: 0 },
+};
+
+export function runtimeBudget(
+  slots: readonly TemplateSlot[],
+  surface: EffectTemplateSurface = 'website',
+): RuntimeBudget {
+  const caps = SURFACE_BUDGET[surface];
   const chosen = slots.map((slot) => slot.chosen).filter((c): c is TemplateCandidate => Boolean(c));
   const mobileRisk: string[] = [];
   for (const candidate of chosen) {
@@ -176,11 +203,11 @@ export function runtimeBudget(slots: readonly TemplateSlot[]): RuntimeBudget {
   }
   return {
     runtime: chosen.reduce((sum, c) => sum + c.cost, 0),
-    runtimeMax: 18,
+    runtimeMax: caps.runtimeMax,
     heavy: chosen.filter((c) => c.core.runtimeTier === 'heavy').length,
-    heavyMax: 1,
+    heavyMax: caps.heavyMax,
     gpu: chosen.filter((c) => c.core.runtimeTier === 'gpu').length,
-    gpuMax: 1,
+    gpuMax: caps.gpuMax,
     clickToRun: chosen.filter((c) => c.entry.meta.clickToRun).length,
     fullBleed: chosen.filter((c) => c.entry.meta.fullBleed).length,
     mobileRisk,

@@ -7,6 +7,7 @@ import {
   ROLE_LABELS,
   runtimeBudget,
 } from '../lib/templateComposer';
+import { buildTemplateBlueprintV1, stableStringify } from '../lib/canonExports';
 import { CopyButton } from './CopyButton';
 
 /**
@@ -32,7 +33,7 @@ export function TemplateComposer({
     () => composeTemplate(catalog, surface, niche, pinned),
     [catalog, surface, niche, pinned],
   );
-  const budget = useMemo(() => runtimeBudget(slots), [slots]);
+  const budget = useMemo(() => runtimeBudget(slots, surface), [slots, surface]);
 
   const swap = (role: EffectTemplateRole, coreId: string) => {
     setPinned((current) => ({ ...current, [role]: coreId }));
@@ -165,9 +166,14 @@ export function TemplateComposer({
 
       <div className="section-toolbar">
         <CopyButton
-          text={() => buildBlueprint(surface, niche, slots, budget)}
+          text={() => stableStringify(buildTemplateBlueprintV1(surface, niche, slots, budget))}
           label={surface === 'website' ? 'COPY WEB BLUEPRINT' : 'COPY DASH BLUEPRINT'}
           testId="copy-blueprint"
+        />
+        <CopyButton
+          text={() => buildBlueprint(surface, niche, slots, budget)}
+          label="COPY BLUEPRINT NOTES"
+          testId="copy-blueprint-notes"
         />
         {Object.keys(pinned).length > 0 && (
           <button type="button" className="copy-btn" onClick={() => setPinned({})}>RESET SWAPS</button>

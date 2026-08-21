@@ -70,7 +70,7 @@ export function CompareWorkspace({
     const resolve = (presetId: string) => resolveCoreState(diffEntry.meta, diffCore, {
       mode: null, presetId, profileId: null, overrides: {},
     }, diffPresets).values;
-    return semanticDiff(diffEntry.meta, resolve(left.id), resolve(right.id));
+    return semanticDiff(diffEntry.meta, resolve(left.id), resolve(right.id), diffCore);
   }, [diffCore, diffEntry, diffPresets, leftNiche, rightNiche]);
 
   const toggle = (id: string) => {
@@ -200,11 +200,25 @@ export function CompareWorkspace({
           </label>
         </div>
 
+        {diffRows.length > 0 && (
+          <p className="diff-summary" data-testid="diff-summary">
+            {diffRows.filter((r) => r.severity === 'MATERIAL').length} material · {diffRows.filter((r) => r.severity === 'INFO').length} informational
+          </p>
+        )}
         {diffRows.length > 0 ? (
           <ul className="diff-list" data-testid="diff-list">
             {diffRows.map((row) => (
-              <li key={row.key} data-diff-key={row.key} data-diff-direction={row.direction}>
-                <span className="diff-list__label">{row.label}</span>
+              <li
+                key={row.key}
+                data-diff-key={row.key}
+                data-diff-direction={row.direction}
+                data-diff-group={row.group}
+                data-diff-severity={row.severity}
+              >
+                <span className="diff-list__label">
+                  <span className={`diff-group diff-group--${row.severity.toLowerCase()}`}>{row.group}</span>
+                  {row.label}
+                </span>
                 <span className={`diff-list__verdict diff-${row.direction}`}>
                   {row.direction === 'enabled' ? 'enabled'
                     : row.direction === 'disabled' ? 'disabled'

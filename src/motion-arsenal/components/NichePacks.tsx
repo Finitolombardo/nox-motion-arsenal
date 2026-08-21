@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import type { EffectEntry, NicheId } from '../types';
 import { CORE_CANON_BY_ID, coreNichePresets, coresForNiche, NICHE_IDS, NICHE_LABELS } from '../data/coreCanon';
 import { buildNichePack } from '../lib/templateComposer';
+import { buildNichePackV1, stableStringify } from '../lib/canonExports';
 import { resolveCoreState } from '../lib/coreState';
 import { EffectPreview } from './EffectPreview';
 import { IncrementalGrid } from './IncrementalGrid';
@@ -74,7 +75,14 @@ export function NichePacks({
         <p className="result-count" data-testid="niche-pack-count">
           {cards.length} CANONICAL CORES · {NICHE_LABELS[niche].toUpperCase()}
         </p>
-        <CopyButton text={() => buildNichePack(niche, catalog)} label="COPY NICHE PACK" testId="copy-niche-pack" />
+        <div className="section-toolbar__actions">
+          <CopyButton
+            text={() => stableStringify(buildNichePackV1(niche, catalog))}
+            label="COPY NICHE PACK"
+            testId="copy-niche-pack"
+          />
+          <CopyButton text={() => buildNichePack(niche, catalog)} label="COPY PACK NOTES" testId="copy-niche-pack-notes" />
+        </div>
       </div>
 
       <IncrementalGrid

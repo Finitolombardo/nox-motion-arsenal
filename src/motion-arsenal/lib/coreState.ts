@@ -190,10 +190,13 @@ export function readCoreStateFromQuery(
   const mode = params.get('mode');
   const preset = params.get('preset');
   const profile = params.get('profile');
+  // Drive-era links carry a bare niche id (`?preset=saas`); the builder keys
+  // presets as `<coreId>::<niche>`. Accept both so shared links keep working.
+  const presetId = preset ? (preset.includes('::') ? preset : `${meta.id}::${preset}`) : null;
   return {
     ...base,
     mode: mode && core?.modes?.some((m) => m.value === mode) ? mode : base.mode,
-    presetId: preset || null,
+    presetId,
     profileId: (profile as EffectPresetPerformanceProfile | null) ?? null,
   };
 }

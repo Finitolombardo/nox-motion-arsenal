@@ -12,6 +12,16 @@ import type { ConfigValue } from './effectConfig';
 
 export type DiffDirection = 'higher' | 'lower' | 'changed' | 'enabled' | 'disabled';
 
+/**
+ * D020.2 groups. Module toggles are deliberately a separate group from
+ * parameters: turning a mechanic off is a different kind of change from
+ * retuning it, and collapsing the two produced noisy diffs after consolidation.
+ */
+export type DiffGroup = 'IDENTITY' | 'MODULES' | 'PARAMETERS' | 'NICHE_PRESET' | 'PERFORMANCE';
+
+/** Cosmetic parameter changes never become blocking (D020.2). */
+export type DiffSeverity = 'INFO' | 'MATERIAL' | 'BLOCKING';
+
 export interface SemanticDiffRow {
   key: string;
   label: string;
@@ -20,6 +30,8 @@ export interface SemanticDiffRow {
   direction: DiffDirection;
   /** Plain-language magnitude, e.g. 'much higher', 'slightly lower'. */
   magnitude: string;
+  group: DiffGroup;
+  severity: DiffSeverity;
 }
 
 function magnitudeFor(control: EffectPropControl, left: number, right: number): string {
@@ -32,12 +44,17 @@ function magnitudeFor(control: EffectPropControl, left: number, right: number): 
   return 'slightly ';
 }
 
+const GROUP_ORDER: DiffGroup[] = ['IDENTITY', 'MODULES', 'NICHE_PRESET', 'PERFORMANCE', 'PARAMETERS'];
+
 export function semanticDiff(
   meta: EffectEntry['meta'],
   left: Record<string, ConfigValue>,
   right: Record<string, ConfigValue>,
+  core?: CoreCanonEntry,
 ): SemanticDiffRow[] {
+  const moduleKeys = new Set((core?.modules ?? []).map((m) => m.key));
   const rows: SemanticDiffRow[] = [];
+
   for (const control of meta.props) {
     const a = left[control.key];
     const b = right[control.key];
@@ -52,8 +69,24 @@ export function semanticDiff(
       direction = b > a ? 'higher' : 'lower';
       magnitude = magnitudeFor(control, a, b);
     }
-    rows.push({ key: control.key, label: control.label, left: a, right: b, direction, magnitude });
+
+    const group: DiffGroup = moduleKeys.has(control.key) ? 'MODULES'
+      : control.key === core?.modeControl ? 'IDENTITY'
+        : control.key === 'preset' ? 'NICHE_PRESET'
+          : control.key === 'performanceProfile' ? 'PERFORMANCE'
+            : 'PARAMETERS';
+
+    // A mechanic switching on or off, or the core changing mode, is material.
+    // Retuning a slider is information unless it moves most of its range.
+    const severity: DiffSeverity = group === 'MODULES' || group === 'IDENTITY' || group === 'NICHE_PRESET'
+      ? 'MATERIAL'
+      : magnitude === 'much ' ? 'MATERIAL' : 'INFO';
+
+    rows.push({ key: control.key, label: control.label, left: a, right: b, direction, magnitude, group, severity });
   }
+
+  rows.sort((x, y) =>
+    GROUP_ORDER.indexOf(x.group) - GROUP_ORDER.indexOf(y.group) || x.key.localeCompare(y.key));
   return rows;
 }
 
