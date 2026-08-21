@@ -1,44 +1,45 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { EffectCategory, EffectEntry } from '../types';
-import { effectUpdatedAtTimestamp } from '../lib/effectDates';
-import { buildEffectAliasIndex, findEffectEntry, matchesEffectSearch, normalizeEffectCollectionIds, normalizeEffectIds } from '../data/effectRegistry';
-import { EFFECT_COLLECTIONS } from '../data/collections';
+import { buildEffectAliasIndex, findEffectEntry, matchesEffectSearch, normalizeEffectIds } from '../data/effectRegistry';
 import { canonDispositionCounts, canonReviewRows, coreLibraryEntries } from '../data/driveCanonLedger';
+import { CORE_CANON_BY_ID } from '../data/coreCanon';
 import { decodeConfigParam, decodeShareContext, SHARE_PARAM, type EffectConfigValues } from '../lib/effectConfig';
+import { readCoreStateFromQuery } from '../lib/coreState';
+import { CoreCard } from './CoreCard';
 import { EffectCard } from './EffectCard';
+import { IncrementalGrid } from './IncrementalGrid';
 import { ConsolidationMigrationCenter } from './ConsolidationMigrationCenter';
 import { ReadinessDashboards } from './ReadinessDashboards';
+import { NichePacks } from './NichePacks';
+import { TemplateComposer } from './TemplateComposer';
+import { CompareWorkspace } from './CompareWorkspace';
 
-const EffectDetail = React.lazy(() => import('./EffectDetail').then((module) => ({ default: module.EffectDetail })));
+const EffectDetail = React.lazy(() => import('./EffectDetail').then((m) => ({ default: m.EffectDetail })));
+const CoreBuilder = React.lazy(() => import('./CoreBuilder').then((m) => ({ default: m.CoreBuilder })));
 
 const FAVORITES_STORAGE_KEY = 'nox-motion-arsenal:favorites:v1';
 const ARCHIVED_STORAGE_KEY = 'nox-motion-arsenal:archived:v1';
 
 const CATEGORY_LABELS: Record<EffectCategory, string> = {
   premium: 'Studio-Level NOX',
-  'forge-skilltree': 'NOX Forge Skilltree Systems',
-  backgrounds: 'Signature Backgrounds',
-  hero: 'Hero Transitions',
-  transitions: 'Page / Section Transitions',
-  scroll: 'Scroll Choreography',
-  cursor: 'Cursor / Mouse',
+  'forge-skilltree': 'Forge Skilltree',
+  backgrounds: 'Backgrounds',
+  hero: 'Hero',
+  transitions: 'Transitions',
+  scroll: 'Scroll',
+  cursor: 'Cursor',
   cards: 'Cards / Panels',
   system: 'Data / System',
-  forms: 'Form / Quiz',
-  overlays: 'Modal / Overlay',
-  originkit: 'Originkit Components',
-  'canvas-ui': 'Canvas UI Import',
-  img2threejs: 'Image → 3D Rebuilds',
-  concepts: 'Neue Effekte · Konzeptdeck',
+  forms: 'Forms',
+  overlays: 'Overlays',
+  originkit: 'Originkit',
+  'canvas-ui': 'Canvas UI',
+  img2threejs: 'Image → 3D',
+  concepts: 'Konzeptdeck',
 };
 
-const CATEGORY_ORDER: EffectCategory[] = [
-  'concepts', 'premium', 'forge-skilltree', 'backgrounds', 'hero', 'transitions', 'scroll', 'cursor', 'cards', 'system', 'forms', 'overlays', 'originkit', 'canvas-ui', 'img2threejs',
-];
-
-type ModeFilter = 'all' | 'nox-adapted' | 'production' | 'heavy' | 'lightweight';
-type MaintenanceSort = 'catalog' | 'newest' | 'oldest';
 type PrimarySection = 'library' | 'templates' | 'niche-packs' | 'compare' | 'governance';
+type LibraryView = 'canonical' | 'standalone' | 'all' | 'favorites' | 'archive';
 
 const PRIMARY_NAV: Array<{ id: PrimarySection; label: string; route: string }> = [
   { id: 'library', label: 'LIBRARY', route: '/' },
@@ -48,6 +49,16 @@ const PRIMARY_NAV: Array<{ id: PrimarySection; label: string; route: string }> =
   { id: 'governance', label: 'GOVERNANCE', route: '/governance' },
 ];
 
+const LIBRARY_VIEWS: Array<{ id: LibraryView; label: string }> = [
+  { id: 'canonical', label: 'Canonical Cores' },
+  { id: 'standalone', label: 'Standalone' },
+  { id: 'all', label: 'All Approved' },
+  { id: 'favorites', label: 'Favorites' },
+  { id: 'archive', label: 'Archive' },
+];
+
+// The dashboards keep their internal numbers, but the operator navigates by
+// function — 008–012 mean nothing outside this repository's history.
 const GOVERNANCE_DASHBOARDS = [
   { id: '008', label: 'Consolidation Center', route: '/dashboard/008', testId: 'consolidation-dashboard-link' },
   { id: '009', label: 'Niche Readiness', route: '/dashboard/009', testId: 'dashboard-009-link' },
@@ -56,10 +67,11 @@ const GOVERNANCE_DASHBOARDS = [
   { id: '012', label: 'Integration Readiness', route: '/dashboard/012', testId: 'dashboard-012-link' },
 ] as const;
 
+type ModeFilter = 'all' | 'production' | 'heavy' | 'lightweight';
+
 const MODE_FILTERS: Array<{ id: ModeFilter; label: string }> = [
   { id: 'all', label: 'ALLE' },
-  { id: 'nox-adapted', label: 'NOX ADAPTED' },
-  { id: 'production', label: 'PRODUCTION READY' },
+  { id: 'production', label: 'PRODUCTION' },
   { id: 'heavy', label: 'HEAVY' },
   { id: 'lightweight', label: 'LIGHTWEIGHT' },
 ];
@@ -74,18 +86,9 @@ function useHashRoute(): [string, (h: string) => void] {
   return [hash, (h: string) => (window.location.hash = h)];
 }
 
-function readFavorites(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<string> {
+function readStored(key: string, aliases: ReturnType<typeof buildEffectAliasIndex>): Set<string> {
   try {
-    const stored = JSON.parse(window.localStorage.getItem(FAVORITES_STORAGE_KEY) ?? '[]');
-    return normalizeEffectIds(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : [], aliases);
-  } catch {
-    return new Set();
-  }
-}
-
-function readArchived(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<string> {
-  try {
-    const stored = JSON.parse(window.localStorage.getItem(ARCHIVED_STORAGE_KEY) ?? '[]');
+    const stored = JSON.parse(window.localStorage.getItem(key) ?? '[]');
     return normalizeEffectIds(Array.isArray(stored) ? stored.filter((id): id is string => typeof id === 'string') : [], aliases);
   } catch {
     return new Set();
@@ -94,33 +97,58 @@ function readArchived(aliases: ReturnType<typeof buildEffectAliasIndex>): Set<st
 
 function GovernanceHub({ catalog, onNavigate }: { catalog: readonly EffectEntry[]; onNavigate: (route: string) => void }) {
   const reviewRows = useMemo(() => canonReviewRows(catalog), [catalog]);
-  const dispositionCounts = useMemo(() => canonDispositionCounts(), []);
+  const counts = useMemo(() => canonDispositionCounts(), []);
+  const unresolved = counts.REVIEW_UNRESOLVED ?? 0;
 
   return (
-    <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
-      <main className="main governance-hub" data-testid="governance-hub">
-        <nav className="primary-nav" aria-label="Arsenal primary navigation">
-          {PRIMARY_NAV.map((item) => <button key={item.id} className={`chip ${item.id === 'governance' ? 'on' : ''}`} onClick={() => onNavigate(item.route)}>{item.label}</button>)}
-        </nav>
-        <header className="governance-hub__header">
-          <p className="readiness-dashboard__kicker">CORE-FIRST · READ-ONLY GOVERNANCE</p>
-          <h1>Governance</h1>
-          <p>Catalog governance is separated from the production library. Canon review reads the Drive disposition ledger without changing classifications.</p>
-        </header>
-        <section className="governance-hub__dashboards" aria-label="Governance dashboards">
-          <h2>Dashboards</h2>
-          <div className="governance-hub__actions">
-            {GOVERNANCE_DASHBOARDS.map((dashboard) => <button key={dashboard.id} className="side-link" data-testid={dashboard.testId} onClick={() => onNavigate(dashboard.route)}><span>{dashboard.label}</span><span className="side-count">{dashboard.id}</span></button>)}
+    <div className="governance-hub" data-testid="governance-hub">
+      <header className="section-header">
+        <p className="kicker">Read-only governance</p>
+        <h1>Governance</h1>
+        <p>Catalog governance is separate from the production library. Canon review reads the Drive disposition ledger without changing classifications.</p>
+      </header>
+
+      <section className="governance-counts" aria-label="Disposition counts">
+        {(['ACTIVE_CANONICAL', 'ACTIVE_STANDALONE', 'LEGACY_WRAPPER', 'PRESET_OR_MODE', 'INTERNAL_RUNTIME', 'REVIEW_UNRESOLVED'] as const).map((key) => (
+          <div key={key} className="governance-count">
+            <span className="governance-count__value">{counts[key] ?? 0}</span>
+            <span className="governance-count__label">{key.replace(/_/g, ' ')}</span>
           </div>
-        </section>
-        <section className="governance-hub__canon-review">
-          <div className="readiness-dashboard__panel-heading"><div><p className="readiness-dashboard__kicker">CANON REVIEW</p><h2>Excluded from the core Library</h2></div><span className="readiness-dashboard__operator">READ-ONLY LEDGER</span></div>
-          <p>{(dispositionCounts.ACTIVE_CANONICAL ?? 0) + (dispositionCounts.ACTIVE_STANDALONE ?? 0)} approved core entries · {reviewRows.length} entries retained for governance, aliases, modes, runtime, or source review.</p>
+        ))}
+      </section>
+
+      <section className="governance-section" aria-label="Governance dashboards">
+        <h2>Dashboards</h2>
+        <div className="governance-hub__actions">
+          {GOVERNANCE_DASHBOARDS.map((dashboard) => (
+            <button key={dashboard.id} className="side-link" data-testid={dashboard.testId} onClick={() => onNavigate(dashboard.route)}>
+              <span>{dashboard.label}</span>
+              <span className="side-count">{dashboard.id}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="governance-section" data-testid="canon-review">
+        <h2>Canon Review</h2>
+        {unresolved === 0 ? (
+          <div className="canon-clean" data-testid="canon-review-empty">
+            <strong>CANON CLEAN</strong>
+            <span>0 unresolved effects</span>
+            <p>Newly imported effects with an unclear disposition land here for review.</p>
+          </div>
+        ) : (
+          <p>{unresolved} entries still need a disposition decision.</p>
+        )}
+        <details className="governance-details">
+          <summary>{reviewRows.length} entries excluded from the core Library</summary>
           <ul className="readiness-dashboard__list" data-testid="canon-review-list">
-            {reviewRows.map((row) => <li key={row.static_id}><code>{row.static_id}</code><span>{row.disposition} · {row.name}</span></li>)}
+            {reviewRows.map((row) => (
+              <li key={row.static_id}><code>{row.static_id}</code><span>{row.disposition} · {row.name}</span></li>
+            ))}
           </ul>
-        </section>
-      </main>
+        </details>
+      </section>
     </div>
   );
 }
@@ -131,24 +159,17 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<EffectCategory | 'all'>('all');
   const [mode, setMode] = useState<ModeFilter>('all');
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const [favorites, setFavorites] = useState<Set<string>>(() => readFavorites(effectAliases));
-  const [archivedOnly, setArchivedOnly] = useState(false);
-  const [archived, setArchived] = useState<Set<string>>(() => readArchived(effectAliases));
-  const [maintenanceSort, setMaintenanceSort] = useState<MaintenanceSort>('catalog');
-  const [collectionId, setCollectionId] = useState<string | null>(null);
+  const [libraryView, setLibraryView] = useState<LibraryView>('canonical');
+  const [favorites, setFavorites] = useState<Set<string>>(() => readStored(FAVORITES_STORAGE_KEY, effectAliases));
+  const [archived, setArchived] = useState<Set<string>>(() => readStored(ARCHIVED_STORAGE_KEY, effectAliases));
+  const [compareSelection, setCompareSelection] = useState<string[]>([]);
 
-  const activeCollection = collectionId
-    ? EFFECT_COLLECTIONS.find((c) => c.id === collectionId) ?? null
-    : null;
-
-  // Share-Links tragen die Konfiguration als Query im Hash:
-  // #/effect/<id>?config=<base64url>
   const [routePath, routeQuery] = (() => {
     const index = route.indexOf('?');
     return index === -1 ? [route, ''] : [route.slice(0, index), route.slice(index + 1)];
   })();
 
+  const coreId = routePath.startsWith('/core/') ? routePath.slice('/core/'.length) : null;
   const openId = routePath.startsWith('/effect/') ? routePath.slice('/effect/'.length) : null;
   const primarySection: PrimarySection = routePath === '/templates' ? 'templates'
     : routePath === '/niche-packs' ? 'niche-packs'
@@ -157,56 +178,41 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
           : 'library';
   const isConsolidationCenter = routePath === '/dashboard/008';
   const readinessDashboard = (['009', '010', '011', '012'] as const).find((id) => routePath === `/dashboard/${id}`);
-  const openEntry = openId ? findEffectEntry(catalog, openId, effectAliases) : null;
-  const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
-  const sharedConfig: EffectConfigValues | null = openEntry
-    ? decodeConfigParam(openEntry.meta, sharedParam)
-    : null;
-  const sharedContext = openEntry ? decodeShareContext(sharedParam) : null;
 
-  const coreCatalog = useMemo(() => coreLibraryEntries(catalog), [catalog]);
-  const scopedCatalog = useMemo(() => {
-    if (primarySection === 'templates') return coreCatalog.filter((entry) => entry.meta.presets?.some((preset) => preset.templateSurfaces?.length));
-    if (primarySection === 'niche-packs') return coreCatalog.filter((entry) => Boolean(entry.meta.presets?.length));
-    return coreCatalog;
-  }, [coreCatalog, primarySection]);
+  // --- catalog partitions ---------------------------------------------------
+  const approved = useMemo(() => coreLibraryEntries(catalog), [catalog]);
+  const canonical = useMemo(() => approved.filter((entry) => CORE_CANON_BY_ID.has(entry.meta.id)), [approved]);
+  const standalone = useMemo(() => approved.filter((entry) => !CORE_CANON_BY_ID.has(entry.meta.id)), [approved]);
+
+  const viewSource = useMemo(() => {
+    switch (libraryView) {
+      case 'canonical': return canonical;
+      case 'standalone': return standalone;
+      case 'all': return approved;
+      case 'favorites': return approved.filter((entry) => favorites.has(entry.meta.id));
+      case 'archive': return approved.filter((entry) => archived.has(entry.meta.id));
+    }
+  }, [libraryView, canonical, standalone, approved, favorites, archived]);
 
   const counts = useMemo(() => {
-    const c = new Map<EffectCategory, number>();
-    for (const e of scopedCatalog) c.set(e.meta.category, (c.get(e.meta.category) ?? 0) + 1);
-    return c;
-  }, [scopedCatalog]);
+    const map = new Map<EffectCategory, number>();
+    for (const entry of viewSource) map.set(entry.meta.category, (map.get(entry.meta.category) ?? 0) + 1);
+    return map;
+  }, [viewSource]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    // Sammlungen behalten ihre kuratierte Reihenfolge, solange nicht nach
-    // Update-Datum sortiert wird.
-    const source = activeCollection
-      ? normalizeEffectCollectionIds(activeCollection.effectIds, effectAliases)
-          .map((id) => catalog.find((e) => e.meta.id === id))
-          .filter((e): e is EffectEntry => Boolean(e))
-          .filter((e) => scopedCatalog.includes(e))
-      : scopedCatalog;
-    const entries = source.filter((e) => {
-      const m = e.meta;
-      if (archivedOnly ? !archived.has(m.id) : archived.has(m.id)) return false;
-      if (favoritesOnly && !favorites.has(m.id)) return false;
+    return viewSource.filter((entry) => {
+      const m = entry.meta;
+      // Archived entries stay out of every view except the archive itself.
+      if (libraryView !== 'archive' && archived.has(m.id)) return false;
       if (category !== 'all' && m.category !== category) return false;
-      if (mode === 'nox-adapted' && m.mode !== 'nox-adapted') return false;
       if (mode === 'production' && !m.productionSafe) return false;
       if (mode === 'heavy' && m.complexity !== 'heavy') return false;
       if (mode === 'lightweight' && m.complexity !== 'low') return false;
-      if (!matchesEffectSearch(e, q)) return false;
-      return true;
+      return matchesEffectSearch(entry, q);
     });
-    if (maintenanceSort === 'catalog') return entries;
-    const direction = maintenanceSort === 'newest' ? -1 : 1;
-    return entries.sort(
-      (a, b) =>
-        (effectUpdatedAtTimestamp(a.meta.updatedAt) - effectUpdatedAtTimestamp(b.meta.updatedAt)) *
-        direction,
-    );
-  }, [catalog, scopedCatalog, query, category, mode, favoritesOnly, favorites, archivedOnly, archived, maintenanceSort, activeCollection, effectAliases]);
+  }, [viewSource, libraryView, archived, category, mode, query]);
 
   useEffect(() => {
     setFavorites((current) => normalizeEffectIds(current, effectAliases));
@@ -214,249 +220,273 @@ export function ArsenalShell({ catalog }: { catalog: EffectEntry[] }) {
   }, [effectAliases]);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...favorites]));
-    } catch {
-      // Favorites remain usable for the current session when storage is blocked.
-    }
+    try { window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...favorites])); } catch { /* storage blocked */ }
   }, [favorites]);
-
   useEffect(() => {
-    try {
-      window.localStorage.setItem(ARCHIVED_STORAGE_KEY, JSON.stringify([...archived]));
-    } catch {
-      // Archive remains usable for the current session when storage is blocked.
-    }
+    try { window.localStorage.setItem(ARCHIVED_STORAGE_KEY, JSON.stringify([...archived])); } catch { /* storage blocked */ }
   }, [archived]);
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+  useEffect(() => { window.scrollTo({ top: 0 }); }, [routePath]);
 
-  const toggleArchive = (id: string) => {
-    setArchived((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  // Detail view scrolls to top on open.
+  // Legacy /effect/<id> deep links to a fused core resolve to the Core Builder.
+  const canonicalRedirect = openId
+    ? findEffectEntry(catalog, openId, effectAliases)?.meta.id ?? null
+    : null;
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [openId]);
+    if (canonicalRedirect && CORE_CANON_BY_ID.has(canonicalRedirect)) {
+      navigate(`/core/${canonicalRedirect}`);
+    }
+  }, [canonicalRedirect]);
 
+  const toggleIn = (setter: React.Dispatch<React.SetStateAction<Set<string>>>) => (id: string) => {
+    setter((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+  const toggleFavorite = toggleIn(setFavorites);
+  const toggleArchive = toggleIn(setArchived);
+
+  const addToCompare = (id: string) => {
+    setCompareSelection((current) => (current.includes(id) || current.length >= 4 ? current : [...current, id]));
+    navigate('/compare');
+  };
+
+  // --- routed screens -------------------------------------------------------
   if (isConsolidationCenter) {
     return <ConsolidationMigrationCenter catalog={catalog} onBack={() => navigate('/governance')} />;
   }
-
   if (readinessDashboard) {
     return <ReadinessDashboards catalog={catalog} dashboard={readinessDashboard} onBack={() => navigate('/governance')} />;
   }
 
-  if (primarySection === 'governance') {
-    return <GovernanceHub catalog={catalog} onNavigate={navigate} />;
-  }
-
-  if (openEntry) {
+  if (coreId) {
+    const entry = findEffectEntry(catalog, coreId, effectAliases);
+    const core = entry ? CORE_CANON_BY_ID.get(entry.meta.id) : undefined;
+    if (entry && core) {
+      return (
+        <div className="shell shell--single">
+          <main className="main">
+            <React.Suspense fallback={<div className="fallback-note" style={{ position: 'static', minHeight: 320 }}>CORE LÄDT…</div>}>
+              <CoreBuilder
+                key={`${entry.meta.id}:${routeQuery}`}
+                entry={entry}
+                core={core}
+                initialState={routeQuery ? readCoreStateFromQuery(routeQuery, entry.meta, core) : undefined}
+                onBack={() => navigate('/')}
+                onCompare={addToCompare}
+              />
+            </React.Suspense>
+          </main>
+        </div>
+      );
+    }
     return (
-      <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
+      <div className="shell shell--single">
         <main className="main">
-          <React.Suspense fallback={<div className="fallback-note" style={{ position: 'static', minHeight: 320 }}>EFFEKT LÄDT…</div>}>
-            <EffectDetail
-              // Ein Share-Link auf denselben Effekt muss den State neu setzen,
-              // deshalb geht die serialisierte Config in den Key ein.
-              key={`${openEntry.meta.id}:${routeQuery}`}
-              entry={openEntry}
-              initialConfig={sharedConfig}
-              initialContext={sharedContext}
-              onBack={() => navigate('/')}
-            />
-          </React.Suspense>
+          <button className="back-btn" onClick={() => navigate('/')}>← LIBRARY</button>
+          <div className="fallback-note" style={{ position: 'static', marginTop: 18, padding: 60 }}>
+            KEIN CANONICAL CORE „{coreId}“
+          </div>
         </main>
       </div>
     );
   }
 
   if (openId) {
+    const entry = findEffectEntry(catalog, openId, effectAliases);
+    // A canonical core always opens in the builder, even via a legacy deep link.
+    // The redirect itself runs in an effect (see canonicalRedirect above).
+    if (entry && CORE_CANON_BY_ID.has(entry.meta.id)) {
+      return (
+        <div className="shell shell--single">
+          <main className="main">
+            <div className="fallback-note" style={{ position: 'static', minHeight: 200 }}>CORE ÖFFNEN…</div>
+          </main>
+        </div>
+      );
+    }
+    const sharedParam = new URLSearchParams(routeQuery).get(SHARE_PARAM);
+    const sharedConfig: EffectConfigValues | null = entry ? decodeConfigParam(entry.meta, sharedParam) : null;
     return (
-      <div className="shell" style={{ gridTemplateColumns: '1fr' }}>
+      <div className="shell shell--single">
         <main className="main">
-          <button className="back-btn" onClick={() => navigate('/')}>← ARSENAL</button>
-          <div className="fallback-note" style={{ position: 'static', marginTop: 18, padding: 60 }}>
-            EFFEKT „{openId}“ NICHT GEFUNDEN
-          </div>
+          {entry ? (
+            <React.Suspense fallback={<div className="fallback-note" style={{ position: 'static', minHeight: 320 }}>EFFEKT LÄDT…</div>}>
+              <EffectDetail
+                key={`${entry.meta.id}:${routeQuery}`}
+                entry={entry}
+                initialConfig={sharedConfig}
+                initialContext={decodeShareContext(sharedParam)}
+                onBack={() => navigate('/')}
+              />
+            </React.Suspense>
+          ) : (
+            <>
+              <button className="back-btn" onClick={() => navigate('/')}>← LIBRARY</button>
+              <div className="fallback-note" style={{ position: 'static', marginTop: 18, padding: 60 }}>
+                EFFEKT „{openId}“ NICHT GEFUNDEN
+              </div>
+            </>
+          )}
         </main>
       </div>
     );
   }
 
+  const sidebar = (
+    <aside className="sidebar">
+      <div className="arsenal-header">
+        <h1 className="arsenal-wordmark">NOX MOTION<br />ARSENAL <span>v2</span></h1>
+        <p className="arsenal-sub">MOTION SYSTEM OS</p>
+      </div>
+      <nav className="primary-nav primary-nav--sidebar" aria-label="Arsenal primary navigation">
+        {PRIMARY_NAV.map((item) => (
+          <button
+            key={item.id}
+            className={`side-link ${primarySection === item.id ? 'active' : ''}`}
+            data-testid={`primary-nav-${item.id}`}
+            onClick={() => navigate(item.route)}
+          >
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </nav>
+
+      {primarySection === 'library' && (
+        <>
+          <div className="side-title">Library</div>
+          {LIBRARY_VIEWS.map((view) => {
+            const count = view.id === 'canonical' ? canonical.length
+              : view.id === 'standalone' ? standalone.length
+                : view.id === 'all' ? approved.length
+                  : view.id === 'favorites' ? favorites.size
+                    : archived.size;
+            return (
+              <button
+                key={view.id}
+                className={`side-link ${libraryView === view.id ? 'active' : ''}`}
+                data-testid={`library-view-${view.id}`}
+                aria-pressed={libraryView === view.id}
+                onClick={() => { setLibraryView(view.id); setCategory('all'); }}
+              >
+                <span>{view.label}</span>
+                <span className="side-count">{count}</span>
+              </button>
+            );
+          })}
+        </>
+      )}
+    </aside>
+  );
+
+  const isCoreView = libraryView === 'canonical';
+
   return (
     <div className="shell">
-      <aside className="sidebar">
-        <div className="arsenal-header">
-          <h1 style={{ fontSize: 16 }}>NOX MOTION<br />ARSENAL <span style={{ color: 'var(--red)' }}>v2</span></h1>
-        </div>
-        <p className="sub" style={{ fontFamily: 'var(--mono)', fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.14em', margin: '4px 0 0' }}>
-          INTERNAL EFFECT LIBRARY
-        </p>
-        <div className="side-title">Primary</div>
-        <nav className="primary-nav primary-nav--sidebar" aria-label="Arsenal primary navigation">
-          {PRIMARY_NAV.map((item) => (
-            <button key={item.id} className={`side-link ${primarySection === item.id ? 'active' : ''}`} data-testid={`primary-nav-${item.id}`} onClick={() => navigate(item.route)}>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </nav>
-        <div className="side-title">Sammlungen</div>
-        {EFFECT_COLLECTIONS.map((c) => (
-          <button
-            key={c.id}
-            className={`side-link ${collectionId === c.id ? 'active' : ''}`}
-            data-testid={`collection-${c.id}`}
-            title={c.description}
-            onClick={() => {
-            setCollectionId((current) => (current === c.id ? null : c.id));
-            setFavoritesOnly(false);
-            setArchivedOnly(false);
-            setCategory('all');
-            }}
-          >
-            <span>{c.label}</span>
-            <span className="side-count">{c.effectIds.length}</span>
-          </button>
-        ))}
-        <div className="side-title">Meine Auswahl</div>
-        <button
-          className={`side-link favorites-link ${favoritesOnly ? 'active' : ''}`}
-          data-testid="favorites-sidebar-filter"
-          onClick={() => {
-            setFavoritesOnly(true);
-            setArchivedOnly(false);
-            setCategory('all');
-            setCollectionId(null);
-          }}
-        >
-          <span><span aria-hidden="true">♥</span> Favoriten</span>
-          <span className="side-count">{favorites.size}</span>
-        </button>
-        <button
-          className={`side-link archive-link ${archivedOnly ? 'active' : ''}`}
-          data-testid="archive-sidebar-filter"
-          onClick={() => {
-            setArchivedOnly(true);
-            setFavoritesOnly(false);
-            setCategory('all');
-            setCollectionId(null);
-          }}
-        >
-          <span><span aria-hidden="true">▧</span> Archiv</span>
-          <span className="side-count">{archived.size}</span>
-        </button>
-        <div className="side-title">Kategorien</div>
-        <button
-          className={`side-link ${!favoritesOnly && !collectionId && category === 'all' ? 'active' : ''}`}
-          onClick={() => {
-            setFavoritesOnly(false);
-            setArchivedOnly(false);
-            setCategory('all');
-            setCollectionId(null);
-          }}
-        >
-          <span>Alle Effekte</span>
-          <span className="side-count">{catalog.length}</span>
-        </button>
-        {CATEGORY_ORDER.map((c) => (
-          <button
-            key={c}
-            className={`side-link ${!favoritesOnly && !collectionId && category === c ? 'active' : ''}`}
-            onClick={() => {
-              setFavoritesOnly(false);
-              setArchivedOnly(false);
-              setCategory(c);
-              setCollectionId(null);
-            }}
-          >
-            <span>{CATEGORY_LABELS[c]}</span>
-            <span className="side-count">{counts.get(c) ?? 0}</span>
-          </button>
-        ))}
-      </aside>
-
+      {sidebar}
       <main className="main">
-        {primarySection !== 'library' && (
-          <header className="library-section-header">
-            <p className="readiness-dashboard__kicker">CORE LIBRARY</p>
-            <h2>{primarySection === 'templates' ? 'Templates' : primarySection === 'niche-packs' ? 'Niche Packs' : 'Compare'}</h2>
-            <p>{primarySection === 'templates' ? 'Core effects with registered template surface metadata.' : primarySection === 'niche-packs' ? 'Core effects with registered niche preset metadata.' : 'Use the core Library to open two approved effects in separate tabs for a factual side-by-side review.'}</p>
-          </header>
+        {primarySection === 'templates' && <TemplateComposer catalog={catalog} onOpenCore={(id) => navigate(`/core/${id}`)} />}
+        {primarySection === 'niche-packs' && (
+          <NichePacks catalog={catalog} onOpenCore={(id, presetId) => navigate(`/core/${id}?preset=${encodeURIComponent(presetId)}`)} />
         )}
-        <div className="topbar">
-          <input
-            type="search"
-            placeholder="Effekt suchen… (Name, Use-Case, Quelle)"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          {MODE_FILTERS.map((f) => (
-            <button key={f.id} className={`chip ${mode === f.id ? 'on' : ''}`} onClick={() => setMode(f.id)}>
-              {f.label}
-            </button>
-          ))}
-          <button
-            className={`chip favorites-chip ${favoritesOnly ? 'on' : ''}`}
-            data-testid="favorites-chip"
-            aria-pressed={favoritesOnly}
-            onClick={() => {
-              setFavoritesOnly((active) => !active);
-              setArchivedOnly(false);
-              setCollectionId(null);
-            }}
-          >
-            <span aria-hidden="true">♥</span> NUR FAVORITEN
-          </button>
-          <label className="maintenance-sort">
-            <span>UPDATE</span>
-            <select
-              data-testid="maintenance-sort"
-              value={maintenanceSort}
-              onChange={(event) => setMaintenanceSort(event.target.value as MaintenanceSort)}
-            >
-              <option value="catalog">KATALOG-REIHENFOLGE</option>
-              <option value="newest">NEUESTE ZUERST</option>
-              <option value="oldest">ÄLTESTE ZUERST</option>
-            </select>
-          </label>
-        </div>
-        <p className="result-count">
-          {filtered.length} / {scopedCatalog.length} CORE EFFECTS
-          {activeCollection ? ` · SAMMLUNG: ${activeCollection.label.toUpperCase()}` : ''}
-          {favoritesOnly ? ` · ${favorites.size} FAVORITEN GESPEICHERT` : ''}
-          {archivedOnly ? ` · ${archived.size} ARCHIVIERT` : ''}
-        </p>
-        <div className="grid">
-          {filtered.map((e) => (
-            <EffectCard
-              key={e.meta.id}
-              entry={e}
-              favorite={favorites.has(e.meta.id)}
-              archived={archived.has(e.meta.id)}
-              onOpen={(id) => navigate(`/effect/${id}`)}
-              onToggleFavorite={toggleFavorite}
-              onToggleArchive={toggleArchive}
+        {primarySection === 'compare' && (
+          <CompareWorkspace catalog={catalog} selection={compareSelection} onSelectionChange={setCompareSelection} />
+        )}
+        {primarySection === 'governance' && <GovernanceHub catalog={catalog} onNavigate={navigate} />}
+
+        {primarySection === 'library' && (
+          <>
+            <header className="section-header">
+              <p className="kicker">
+                {isCoreView ? 'Primary surface' : libraryView === 'standalone' ? 'Secondary library' : 'Full approved catalog'}
+              </p>
+              <h1>{LIBRARY_VIEWS.find((v) => v.id === libraryView)?.label}</h1>
+              <p>
+                {isCoreView
+                  ? 'The fused canonical cores. Each one carries modes, modules, niche presets and performance profiles.'
+                  : libraryView === 'standalone'
+                    ? 'Independently usable approved effects that were not folded into a canonical core.'
+                    : libraryView === 'all'
+                      ? 'Every source-approved effect: canonical cores and standalone mechanics together.'
+                      : libraryView === 'favorites'
+                        ? 'Your marked effects.'
+                        : 'Effects you archived out of the working views.'}
+              </p>
+            </header>
+
+            <div className="topbar">
+              <input
+                type="search"
+                placeholder="Suchen… (Name, Use-Case, Quelle)"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <div className="topbar__filters">
+                {MODE_FILTERS.map((f) => (
+                  <button key={f.id} className={`chip ${mode === f.id ? 'on' : ''}`} onClick={() => setMode(f.id)}>{f.label}</button>
+                ))}
+              </div>
+            </div>
+
+            <div className="category-filter" role="group" aria-label="Kategorie">
+              <button className={`chip chip--quiet ${category === 'all' ? 'on' : ''}`} onClick={() => setCategory('all')}>
+                ALLE <span>{viewSource.length}</span>
+              </button>
+              {[...counts.entries()]
+                .sort((a, b) => b[1] - a[1])
+                .map(([id, count]) => (
+                  <button
+                    key={id}
+                    className={`chip chip--quiet ${category === id ? 'on' : ''}`}
+                    data-category={id}
+                    onClick={() => setCategory((current) => (current === id ? 'all' : id))}
+                  >
+                    {CATEGORY_LABELS[id]} <span>{count}</span>
+                  </button>
+                ))}
+            </div>
+
+            <p className="result-count" data-testid="library-result-count">
+              {filtered.length} / {viewSource.length} {isCoreView ? 'CANONICAL CORES' : 'EFFECTS'}
+            </p>
+
+            <IncrementalGrid
+              items={filtered}
+              getKey={(entry) => entry.meta.id}
+              label={`Library ${libraryView}`}
+              emptyState={
+                <div className="fallback-note" style={{ position: 'static', padding: 60 }}>
+                  {libraryView === 'archive' ? 'ARCHIV IST LEER'
+                    : libraryView === 'favorites' ? 'NOCH KEINE FAVORITEN'
+                      : 'KEINE TREFFER'}
+                </div>
+              }
+              render={(entry) => {
+                const core = CORE_CANON_BY_ID.get(entry.meta.id);
+                return core ? (
+                  <CoreCard
+                    entry={entry}
+                    core={core}
+                    favorite={favorites.has(entry.meta.id)}
+                    onOpen={(id) => navigate(`/core/${id}`)}
+                    onToggleFavorite={toggleFavorite}
+                  />
+                ) : (
+                  <EffectCard
+                    entry={entry}
+                    favorite={favorites.has(entry.meta.id)}
+                    archived={archived.has(entry.meta.id)}
+                    onOpen={(id) => navigate(`/effect/${id}`)}
+                    onToggleFavorite={toggleFavorite}
+                    onToggleArchive={toggleArchive}
+                  />
+                );
+              }}
             />
-          ))}
-        </div>
-        {!filtered.length && (
-          <div className="fallback-note empty-favorites" style={{ position: 'static', padding: 60 }}>
-            {archivedOnly ? 'ARCHIV IST LEER · KARTE ÜBER ARCHIV ABLEGEN' : favoritesOnly ? 'NOCH KEINE FAVORITEN · HERZ AUF EINER KARTE MARKIEREN' : 'KEINE TREFFER'}
-          </div>
+          </>
         )}
       </main>
     </div>

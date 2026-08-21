@@ -1,11 +1,14 @@
 import React, { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { EffectEntry } from '../types';
-import { useInView } from '../lib/animationUtils';
+import { useInView, usePrefersReducedMotion } from '../lib/animationUtils';
 
-class PreviewErrorBoundary extends Component<{ effectId: string; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
+class PreviewErrorBoundary extends Component<
+  { effectId: string; onRetry: () => void; children: ReactNode },
+  { failed: boolean; message: string }
+> {
+  state = { failed: false, message: '' };
+  static getDerivedStateFromError(error: Error) {
+    return { failed: true, message: error.message };
   }
   componentDidCatch(error: Error) {
     // Without this the crash is invisible: the boundary swallows it and the
@@ -13,7 +16,26 @@ class PreviewErrorBoundary extends Component<{ effectId: string; children: React
     console.error(`[arsenal] effect "${this.props.effectId}" crashed:`, error);
   }
   render() {
-    if (this.state.failed) return <div className="fallback-note">EFFECT CRASHED — siehe Konsole</div>;
+    if (this.state.failed) {
+      return (
+        <div className="fallback-note preview-error" role="alert">
+          <span>EFFECT FAILED</span>
+          <code>{this.state.message.slice(0, 120)}</code>
+          <button
+            type="button"
+            className="copy-btn"
+            data-testid="preview-retry"
+            onClick={(event) => {
+              event.stopPropagation();
+              this.setState({ failed: false, message: '' });
+              this.props.onRetry();
+            }}
+          >
+            RETRY
+          </button>
+        </div>
+      );
+    }
     return this.props.children;
   }
 }
@@ -46,6 +68,44 @@ function usePreviewSize(ref: React.RefObject<HTMLDivElement | null>): PreviewSiz
   return size;
 }
 
+/**
+ * Tab sleep: a backgrounded tab keeps every mounted preview's rAF loop queued.
+ * Unmounting the effect bodies while the tab is hidden is the only reliable way
+ * to stop that, since each effect owns its own loop.
+ */
+export function useTabVisible(): boolean {
+  const [visible, setVisible] = useState(
+    () => typeof document === 'undefined' || document.visibilityState !== 'hidden',
+  );
+  useEffect(() => {
+    const onChange = () => setVisible(document.visibilityState !== 'hidden');
+    document.addEventListener('visibilitychange', onChange);
+    return () => document.removeEventListener('visibilitychange', onChange);
+  }, []);
+  return visible;
+}
+
+/**
+ * Defers the first mount to an idle callback so a scroll that sweeps a dozen
+ * cards into view does not mount a dozen effects inside one frame.
+ */
+function useIdleReady(active: boolean, variant: Props['variant']): boolean {
+  const [ready, setReady] = useState(() => variant !== 'thumbnail');
+  useEffect(() => {
+    if (ready || !active) return;
+    const idle = (window as unknown as {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    }).requestIdleCallback;
+    if (!idle) {
+      setReady(true);
+      return;
+    }
+    const handle = idle(() => setReady(true), { timeout: 600 });
+    return () => (window as unknown as { cancelIdleCallback?: (h: number) => void }).cancelIdleCallback?.(handle);
+  }, [active, ready]);
+  return ready;
+}
+
 function fittedProps(entry: EffectEntry, values: Record<string, unknown> | undefined, size: PreviewSize) {
   const next = { ...(values ?? {}) };
   for (const axis of ['width', 'height'] as const) {
@@ -59,15 +119,20 @@ function fittedProps(entry: EffectEntry, values: Record<string, unknown> | undef
 }
 
 /**
- * Mounts an effect only while it is near the viewport (heavy WebGL previews
- * would otherwise all run at once) and gates `heavy` effects behind a
- * click-to-run button — the same tier-gating idea as Shopify's detect-gpu
- * fallback chain, just manual.
+ * Mounts an effect only while it is near the viewport and the tab is visible
+ * (heavy WebGL previews would otherwise all run at once), and gates `heavy`
+ * effects behind a click-to-run button — the same tier-gating idea as
+ * Shopify's detect-gpu fallback chain, just manual.
  */
 export function EffectPreview({ entry, propValues, interactive = true, variant = 'detail' }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, '60px');
+  const inView = useInView(ref, variant === 'thumbnail' ? '160px' : '60px');
+  const tabVisible = useTabVisible();
   const measured = usePreviewSize(ref);
+  const [retryToken, setRetryToken] = useState(0);
+  const idleReady = useIdleReady(inView, variant);
+  const live = inView && tabVisible && idleReady;
+
   const stage = variant === 'thumbnail'
     ? {
         width: Math.max(1, measured.width * THUMBNAIL_OVERVIEW_RATIO),
@@ -86,35 +151,39 @@ export function EffectPreview({ entry, propValues, interactive = true, variant =
     <div
       ref={ref}
       data-preview-shell={variant}
+      data-preview-live={live ? 'true' : 'false'}
       style={{ position: 'absolute', inset: 0, pointerEvents: interactive ? 'auto' : 'none', overflow: 'hidden' }}
     >
       {/* Keyed by effect id so switching effects gives the run-gate and the
           error boundary a fresh instance. Without the key a single crashed
           effect left the boundary latched, and every effect opened afterwards
           rendered "EFFECT CRASHED" even though it was fine. */}
-      {inView && (
+      {live && (
         <PreviewBody
-          key={entry.meta.id}
+          key={`${entry.meta.id}:${retryToken}`}
           entry={entry}
           propValues={componentProps}
           variant={variant}
           stage={stage}
           scale={scale}
+          onRetry={() => setRetryToken((token) => token + 1)}
         />
       )}
     </div>
   );
 }
 
-function PreviewBody({ entry, propValues, variant, stage, scale }: {
+function PreviewBody({ entry, propValues, variant, stage, scale, onRetry }: {
   entry: EffectEntry;
   propValues?: Record<string, unknown>;
   variant: NonNullable<Props['variant']>;
   stage: PreviewSize;
   scale: number;
+  onRetry: () => void;
 }) {
   const needsGate = entry.meta.clickToRun || entry.meta.complexity === 'heavy';
   const [armed, setArmed] = useState(!needsGate);
+  const reduced = usePrefersReducedMotion();
   const Comp = entry.Component;
   const previewProps = entry.meta.id === 'scroll-pinned-product-stage'
     ? { ...(propValues ?? {}), previewScrollSimulation: true }
@@ -131,16 +200,17 @@ function PreviewBody({ entry, propValues, variant, stage, scale }: {
         >
           ▶ Run Effect
         </button>
-        <span>HEAVY — startet erst auf Klick</span>
+        <span>{entry.meta.complexity === 'heavy' ? 'HEAVY' : 'CLICK TO RUN'} — startet erst auf Klick</span>
       </div>
     );
   }
 
   return (
-    <PreviewErrorBoundary effectId={entry.meta.id}>
+    <PreviewErrorBoundary effectId={entry.meta.id} onRetry={onRetry}>
       <Suspense fallback={<div className="fallback-note">LOADING…</div>}>
         <div
           data-preview-stage={variant}
+          data-reduced-motion={reduced ? 'true' : 'false'}
           style={{
             position: variant === 'thumbnail' ? 'absolute' : 'relative',
             left: variant === 'thumbnail' ? '50%' : undefined,

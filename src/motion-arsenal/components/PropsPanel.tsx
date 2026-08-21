@@ -8,7 +8,7 @@ interface Props {
   onChange: (key: string, value: unknown) => void;
 }
 
-function ControlRow({ c, v, onChange }: { c: EffectPropControl; v: unknown; onChange: (key: string, value: unknown) => void }) {
+export function ControlRow({ c, v, onChange }: { c: EffectPropControl; v: unknown; onChange: (key: string, value: unknown) => void }) {
   return (
     <div className="prop-row" key={c.key}>
       <label>
@@ -105,6 +105,19 @@ export function PropsPanel({ controls, values, onChange }: Props) {
       ))}
       {groups.map((g) => (
         <GroupSection key={g.title} title={g.title} controls={g.controls} values={values} onChange={onChange} />
+      ))}
+    </div>
+  );
+}
+
+/** Bare list of controls without the panel chrome — used by the Core Builder,
+    which supplies its own section headings. */
+export function ControlList({ controls, values, onChange }: Props) {
+  if (!controls.length) return null;
+  return (
+    <div className="control-list">
+      {controls.map((c) => (
+        <ControlRow key={c.key} c={c} v={values[c.key] ?? c.default} onChange={onChange} />
       ))}
     </div>
   );
