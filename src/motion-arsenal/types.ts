@@ -115,3 +115,84 @@ export interface EffectEntry {
   meta: EffectMeta;
   Component: LazyExoticComponent<ComponentType<any>> | ComponentType<any>;
 }
+
+// ---------------------------------------------------------------------------
+// Core canon layer — the product surface of a fused canonical core.
+//
+// Every field below must bind to something the component genuinely supports:
+// a `modeControl` names a real `select` prop, a module names a real `boolean`
+// prop, and preset/profile overrides only carry keys that exist in `props`.
+// `scripts/test-core-canon-contract.mjs` enforces exactly that, so the UI can
+// never advertise a mode or module the runtime cannot honour.
+// ---------------------------------------------------------------------------
+
+export type CoreRuntimeTier = 'light' | 'standard' | 'heavy' | 'gpu';
+
+export type NicheId =
+  | 'restaurant'
+  | 'beauty'
+  | 'fitness'
+  | 'local-service'
+  | 'real-estate'
+  | 'automotive'
+  | 'healthcare'
+  | 'finance'
+  | 'saas'
+  | 'ecommerce'
+  | 'luxury'
+  | 'creator';
+
+export interface CoreModeDefinition {
+  /** Value written into the mode control prop. */
+  value: string;
+  label: string;
+  description: string;
+  /** Legacy static IDs this mode replaces. */
+  absorbs?: string[];
+}
+
+export interface CoreModuleDefinition {
+  /** Prop key toggled by the module switch. */
+  key: string;
+  label: string;
+  description: string;
+  absorbs?: string[];
+  /**
+   * Non-boolean props (e.g. an `atmosphere` enum) still make honest module
+   * switches as long as both states are named explicitly. Boolean props may
+   * omit these and default to true/false.
+   */
+  onValue?: number | string | boolean;
+  offValue?: number | string | boolean;
+}
+
+export interface CorePerformanceProfile {
+  id: EffectPresetPerformanceProfile;
+  label: string;
+  /** Real prop overrides — a profile must change configuration, not styling. */
+  overrides: Record<string, number | string | boolean>;
+  note: string;
+}
+
+export interface CoreCanonEntry {
+  id: string;
+  /** One-line functional description shown on the core card. */
+  summary: string;
+  /** Product role, e.g. 'Atmosphere', 'Pointer', 'Route'. */
+  role: string;
+  runtimeTier: CoreRuntimeTier;
+  /** Prop key of the select control that switches modes, when the core has modes. */
+  modeControl?: string;
+  modes?: CoreModeDefinition[];
+  modules?: CoreModuleDefinition[];
+  /** The 5–10 props surfaced before ADVANCED. */
+  coreControls: string[];
+  profiles?: CorePerformanceProfile[];
+  templateSurfaces: EffectTemplateSurface[];
+  templateRoles: EffectTemplateRole[];
+  /** Higher wins when two cores compete for one template slot. */
+  templatePriority: number;
+  /** Legacy static IDs folded into this core. */
+  absorbs: string[];
+  migrationNotes?: string;
+}

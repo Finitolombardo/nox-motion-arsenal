@@ -18,6 +18,16 @@ export interface InteractiveSurfaceCardProps {
   depth?: number; // 0..2 parallax plane spacing multiplier
   glare?: number; // 0..1 glare sweep intensity
   overshoot?: number; // 0..1 how elastic the settle is
+  /** Refraction module (absorbed from HoverLightRefraction). */
+  refraction?: boolean;
+  /** Chromatic fringe strength of the refraction module. */
+  chroma?: number; // 0..2
+  /** Border-trace module (absorbed from BorderTraceDepth). */
+  borderTrace?: boolean;
+  /** Trace + glow accent of the border-trace module. */
+  accent?: string;
+  /** Trace revolutions per second. */
+  traceSpeed?: number;
 }
 
 /** Canonical interactive card-surface core; legacy card variants delegate here. */
@@ -26,6 +36,11 @@ export function InteractiveSurfaceCard({
   depth = 1,
   glare = 0.6,
   overshoot = 0.7,
+  refraction = true,
+  chroma = 1,
+  borderTrace = true,
+  accent = NOX_COLORS.gold,
+  traceSpeed = 1,
 }: InteractiveSurfaceCardProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -33,7 +48,10 @@ export function InteractiveSurfaceCard({
   const reduced = usePrefersReducedMotion();
   const touch = useTouchMode();
 
-  const anim = useRef({ rx: 0, ry: 0, vx: 0, vy: 0 });
+  // px/py track the raw pointer for the refraction highlight, vel is the
+  // pointer speed the chromatic fringe scales with (Active-Theory velocity
+  // thinking), trace is the border-trace angle advanced per frame.
+  const anim = useRef({ rx: 0, ry: 0, vx: 0, vy: 0, px: 0.5, py: 0.5, vel: 0, trace: 0 });
 
   useRafLoop(
     (dt, t) => {
@@ -70,11 +88,38 @@ export function InteractiveSurfaceCard({
       }
       el.style.setProperty('--tp-rx', s.rx.toFixed(3));
       el.style.setProperty('--tp-ry', s.ry.toFixed(3));
+
+      if (refraction) {
+        // Touch mode has no pointer, so the highlight rides the auto-tilt.
+        const targetX = touch ? 0.5 + Math.sin(t * 0.75) * 0.28 : p.inside ? p.tx : 0.5;
+        const targetY = touch ? 0.5 + Math.cos(t * 0.55) * 0.28 : p.inside ? p.ty : 0.5;
+        const nx = damp(s.px, targetX, 14, dt);
+        const ny = damp(s.py, targetY, 14, dt);
+        const speed = Math.hypot(nx - s.px, ny - s.py) / Math.max(dt, 1e-4);
+        s.px = nx;
+        s.py = ny;
+        s.vel = damp(s.vel, Math.min(speed, 6), 6, dt);
+        el.style.setProperty('--tp-px', `${(nx * 100).toFixed(2)}%`);
+        el.style.setProperty('--tp-py', `${(ny * 100).toFixed(2)}%`);
+        el.style.setProperty('--tp-fringe', (Math.min(s.vel / 6, 1) * chroma).toFixed(3));
+      }
+
+      if (borderTrace) {
+        s.trace = (s.trace + dt * 360 * 0.28 * traceSpeed) % 360;
+        el.style.setProperty('--tp-trace', `${s.trace.toFixed(1)}deg`);
+      }
     },
     !reduced,
   );
 
-  const cardVars = { '--tp-rx': '0', '--tp-ry': '0' } as CSSProperties;
+  const cardVars = {
+    '--tp-rx': '0',
+    '--tp-ry': '0',
+    '--tp-px': '50%',
+    '--tp-py': '50%',
+    '--tp-fringe': '0',
+    '--tp-trace': '0deg',
+  } as CSSProperties;
   const z = (v: number) => `${(v * depth).toFixed(1)}px`;
   // Inner planes drift slightly opposite to tilt on top of translateZ.
   const plane = (zv: number, driftMul: number): CSSProperties => ({
@@ -145,6 +190,79 @@ export function InteractiveSurfaceCard({
             }}
           />
         </div>
+        {/* Refraction module — absorbed from HoverLightRefraction. The specular
+            highlight moves counter to the pointer and a red/cyan fringe grows
+            with pointer velocity. */}
+        {refraction && (
+          <div
+            data-module="refraction"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              borderRadius: 16,
+              overflow: 'hidden',
+              pointerEvents: 'none',
+              transform: 'translateZ(3px)',
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                inset: '-20%',
+                background:
+                  'radial-gradient(circle at calc(100% - var(--tp-px)) calc(100% - var(--tp-py)), rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 26%, transparent 58%)',
+                mixBlendMode: 'screen',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 16,
+                opacity: 'var(--tp-fringe)',
+                boxShadow:
+                  'inset 3px 0 10px rgba(255,60,60,0.55), inset -3px 0 10px rgba(60,220,255,0.55)',
+                mixBlendMode: 'screen',
+              }}
+            />
+          </div>
+        )}
+        {/* Border-trace module — absorbed from BorderTraceDepth: a conic edge
+            light plus an offset blurred copy that reads as depth. */}
+        {borderTrace && (
+          <>
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: -2,
+                borderRadius: 18,
+                padding: 2,
+                background: `conic-gradient(from var(--tp-trace), transparent 0deg, ${accent} 26deg, transparent 74deg)`,
+                filter: 'blur(9px)',
+                opacity: 0.5,
+                transform: 'translateZ(0px)',
+                pointerEvents: 'none',
+              }}
+            />
+            <div
+              data-module="border-trace"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: 16,
+                padding: 1,
+                background: `conic-gradient(from var(--tp-trace), transparent 0deg, ${accent} 22deg, transparent 66deg)`,
+                WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
+                WebkitMaskComposite: 'xor',
+                mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
+                maskComposite: 'exclude',
+                transform: 'translateZ(4px)',
+                pointerEvents: 'none',
+              }}
+            />
+          </>
+        )}
         {/* Typo plane */}
         <div
           style={{

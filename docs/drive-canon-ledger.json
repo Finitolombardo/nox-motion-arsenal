@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "title": "NOX Arsenal Drive Canon Ledger",
   "scope": {
     "product_code_modified": false,
@@ -19,7 +19,7 @@
     }
   ],
   "extraction": {
-    "method": "deterministic full-line chronological scan of complete local Drive sources; static catalog AST extraction; mapping by meta.id, meta.legacyIds, meta.supersedes, meta.sourceFiles filename, lazy import filename, component import filename, and normalized ID/component token",
+    "method": "deterministic full-line chronological scan of complete local Drive sources; static catalog AST extraction; mapping by meta.id, meta.legacyIds, meta.supersedes, meta.sourceFiles filename, lazy import filename, component import filename, and normalized ID/component token; semantic repair applies explicit decision precedence before incidental chronological mentions",
     "source_lines_scanned": 24897,
     "repository_catalog_files_scanned": 15,
     "repository_static_ids_discovered": 167
@@ -40,25 +40,25 @@
     ],
     "static_ids_classified": 167,
     "disposition_counts": {
-      "ACTIVE_CANONICAL": 22,
-      "ACTIVE_STANDALONE": 34,
-      "INTERNAL_RUNTIME": 2,
-      "LEGACY_WRAPPER": 21,
-      "PRESET_OR_MODE": 6,
-      "REVIEW_UNRESOLVED": 82
+      "ACTIVE_CANONICAL": 32,
+      "ACTIVE_STANDALONE": 78,
+      "INTERNAL_RUNTIME": 7,
+      "LEGACY_WRAPPER": 47,
+      "PRESET_OR_MODE": 3,
+      "REVIEW_UNRESOLVED": 0
     },
     "confidence_counts": {
       "EXACT": 36,
-      "REVIEW": 82,
-      "STRONG": 49
+      "REVIEW": 7,
+      "STRONG": 124
     }
   },
   "static_id_ledger": [
     {
       "static_id": "bg-atmosphere-field",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -94,7 +94,7 @@
       "static_id": "bg-depth-glow-stack",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -118,9 +118,9 @@
     },
     {
       "static_id": "bg-ember-curl-drift",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -146,7 +146,7 @@
       "static_id": "bg-forge-energy-glyphs",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "STRONG",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -172,9 +172,9 @@
     },
     {
       "static_id": "bg-holographic-mask-shader",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "ACTIVE_STANDALONE",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -195,7 +195,7 @@
       "static_id": "bg-noise-fog-field",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -220,9 +220,9 @@
     },
     {
       "static_id": "bg-nox-interactive-glyph-field",
-      "disposition": "PRESET_OR_MODE",
+      "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -256,7 +256,7 @@
       "static_id": "bg-nox-scribble-field",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "STRONG",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -284,7 +284,7 @@
       "static_id": "bg-nox-starfield-drift",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -309,9 +309,9 @@
     },
     {
       "static_id": "bg-orbital-light-trails",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -337,7 +337,7 @@
       "static_id": "bg-radial-beam-atmosphere",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -361,9 +361,9 @@
     },
     {
       "static_id": "bg-symbol-storm",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -390,7 +390,7 @@
       "static_id": "canvasui-glass-lens",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -416,7 +416,7 @@
       "static_id": "canvasui-glitch-burst",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -443,7 +443,7 @@
       "static_id": "canvasui-laser",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -469,7 +469,7 @@
       "static_id": "canvasui-liquid-ripple",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -496,7 +496,7 @@
       "static_id": "canvasui-particle-field-system",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -530,7 +530,7 @@
       "static_id": "canvasui-particle-object",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -556,7 +556,7 @@
       "static_id": "canvasui-particle-reveal",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -582,7 +582,7 @@
       "static_id": "canvasui-shatter-reveal",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/canvas-ui/catalog.ts",
         "category": "canvas-ui",
@@ -606,9 +606,9 @@
     },
     {
       "static_id": "cards-border-trace-depth",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -634,7 +634,7 @@
       "static_id": "cards-fold-notch-panel",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -661,7 +661,7 @@
       "static_id": "cards-glass-metal-panel",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -686,9 +686,9 @@
     },
     {
       "static_id": "cards-hover-light-refraction",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -712,9 +712,9 @@
     },
     {
       "static_id": "cards-interactive-surface-card",
-      "disposition": "ACTIVE_STANDALONE",
+      "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -739,9 +739,9 @@
     },
     {
       "static_id": "cards-lock-unlock-scan",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cards/catalog.ts",
         "category": "cards",
@@ -766,9 +766,9 @@
     },
     {
       "static_id": "cursor-hover-distortion",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -792,9 +792,9 @@
     },
     {
       "static_id": "cursor-interactive-symbol-drift",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -818,9 +818,9 @@
     },
     {
       "static_id": "cursor-light-field",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -844,9 +844,9 @@
     },
     {
       "static_id": "cursor-magnetic-cta",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -870,9 +870,9 @@
     },
     {
       "static_id": "cursor-pointer-interaction-field",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -907,9 +907,9 @@
     },
     {
       "static_id": "cursor-pointer-parallax-stage",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -933,9 +933,9 @@
     },
     {
       "static_id": "cursor-spotlight-reveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/cursor/catalog.ts",
         "category": "cursor",
@@ -959,9 +959,9 @@
     },
     {
       "static_id": "forms-answer-lock-in",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forms/catalog.ts",
         "category": "forms",
@@ -986,9 +986,9 @@
     },
     {
       "static_id": "forms-question-transition",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forms/catalog.ts",
         "category": "forms",
@@ -1013,9 +1013,9 @@
     },
     {
       "static_id": "forms-selection-energy-ripple",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forms/catalog.ts",
         "category": "forms",
@@ -1041,9 +1041,9 @@
     },
     {
       "static_id": "forms-signal-system",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forms/catalog.ts",
         "category": "forms",
@@ -1068,9 +1068,9 @@
     },
     {
       "static_id": "hero-blur-to-sharp-boot",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1097,7 +1097,7 @@
       "static_id": "hero-image-reveal-behind-text",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1122,9 +1122,9 @@
     },
     {
       "static_id": "hero-massive-typography-reveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1149,9 +1149,9 @@
     },
     {
       "static_id": "hero-object-float",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1176,9 +1176,9 @@
     },
     {
       "static_id": "hero-split-entrance",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "ACTIVE_STANDALONE",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1196,9 +1196,9 @@
     },
     {
       "static_id": "hero-text-reveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1223,9 +1223,9 @@
     },
     {
       "static_id": "hero-word-letter-cascade",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/hero/catalog.ts",
         "category": "hero",
@@ -1250,9 +1250,9 @@
     },
     {
       "static_id": "img2threejs-nox-orbital-station",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/img2threejs/catalog.ts",
         "category": "img2threejs",
@@ -1277,9 +1277,9 @@
     },
     {
       "static_id": "lab-active-theory-trails",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "INTERNAL_RUNTIME",
+      "confidence": "STRONG",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/lab/catalog.ts",
         "category": "lab",
@@ -1303,9 +1303,9 @@
     },
     {
       "static_id": "lab-krank-curl-particles",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "INTERNAL_RUNTIME",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/lab/catalog.ts",
         "category": "lab",
@@ -1323,9 +1323,9 @@
     },
     {
       "static_id": "lab-oryzo-scribble-field",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "INTERNAL_RUNTIME",
+      "confidence": "STRONG",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/lab/catalog.ts",
         "category": "lab",
@@ -1350,9 +1350,9 @@
     },
     {
       "static_id": "lab-shopify-butterflies",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "INTERNAL_RUNTIME",
+      "confidence": "STRONG",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/lab/catalog.ts",
         "category": "lab",
@@ -1376,9 +1376,9 @@
     },
     {
       "static_id": "lab-shopify-coin-rain",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "INTERNAL_RUNTIME",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/lab/catalog.ts",
         "category": "lab",
@@ -1398,7 +1398,7 @@
       "static_id": "nox-axiscursor",
       "disposition": "INTERNAL_RUNTIME",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match identifies an internal runtime concern rather than a public canon effect.",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1422,9 +1422,9 @@
     },
     {
       "static_id": "nox-blurcarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1448,9 +1448,9 @@
     },
     {
       "static_id": "nox-boxcarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1474,9 +1474,9 @@
     },
     {
       "static_id": "nox-buttoncarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1502,7 +1502,7 @@
       "static_id": "nox-characterwaves",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1528,7 +1528,7 @@
       "static_id": "nox-clickeffects",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1552,9 +1552,9 @@
     },
     {
       "static_id": "nox-coverflowcarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1578,9 +1578,9 @@
     },
     {
       "static_id": "nox-coverflowgallery",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1606,7 +1606,7 @@
       "static_id": "nox-cursorimagegallery",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1632,7 +1632,7 @@
       "static_id": "nox-curvedmarquee",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1658,7 +1658,7 @@
       "static_id": "nox-directionhover",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1682,9 +1682,9 @@
     },
     {
       "static_id": "nox-dotimagereveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1710,7 +1710,7 @@
       "static_id": "nox-draggablegrid",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1736,7 +1736,7 @@
       "static_id": "nox-dusttextreveal",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "STRONG",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1762,7 +1762,7 @@
       "static_id": "nox-dynamicweight",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1788,7 +1788,7 @@
       "static_id": "nox-electricborder",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1814,7 +1814,7 @@
       "static_id": "nox-emojiburst",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1840,7 +1840,7 @@
       "static_id": "nox-floatingicons",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1864,9 +1864,9 @@
     },
     {
       "static_id": "nox-fluidimagereveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1892,7 +1892,7 @@
       "static_id": "nox-glitchtext",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1918,7 +1918,7 @@
       "static_id": "nox-glitterwrap",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1942,9 +1942,9 @@
     },
     {
       "static_id": "nox-gravitygallery",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1968,9 +1968,9 @@
     },
     {
       "static_id": "nox-hoverimagereveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -1994,9 +1994,9 @@
     },
     {
       "static_id": "nox-imagefold",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2020,9 +2020,9 @@
     },
     {
       "static_id": "nox-imagegallery",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2046,9 +2046,9 @@
     },
     {
       "static_id": "nox-imageripple",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2072,9 +2072,9 @@
     },
     {
       "static_id": "nox-infinitegallery",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2100,7 +2100,7 @@
       "static_id": "nox-inkbleed",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2126,7 +2126,7 @@
       "static_id": "nox-juiceeffect",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2150,9 +2150,9 @@
     },
     {
       "static_id": "nox-kineticgrid",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2178,7 +2178,7 @@
       "static_id": "nox-linkpreview",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2202,9 +2202,9 @@
     },
     {
       "static_id": "nox-magneticcarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2228,9 +2228,9 @@
     },
     {
       "static_id": "nox-particlesphere",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2254,9 +2254,9 @@
     },
     {
       "static_id": "nox-pixelateimage",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2280,9 +2280,9 @@
     },
     {
       "static_id": "nox-pixelcard",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2308,7 +2308,7 @@
       "static_id": "nox-pixeldrift",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2332,9 +2332,9 @@
     },
     {
       "static_id": "nox-pixelreveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2358,9 +2358,9 @@
     },
     {
       "static_id": "nox-pixelunfold",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2384,9 +2384,9 @@
     },
     {
       "static_id": "nox-prismgrid",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2412,7 +2412,7 @@
       "static_id": "nox-randomletterswap",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2436,9 +2436,9 @@
     },
     {
       "static_id": "nox-reactivegrid",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2462,9 +2462,9 @@
     },
     {
       "static_id": "nox-reactivelines",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2488,9 +2488,9 @@
     },
     {
       "static_id": "nox-roundcarousel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2516,7 +2516,7 @@
       "static_id": "nox-scrambletext",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2542,7 +2542,7 @@
       "static_id": "nox-shinypill",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2568,7 +2568,7 @@
       "static_id": "nox-smokytext",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2594,7 +2594,7 @@
       "static_id": "nox-snowfall",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2620,7 +2620,7 @@
       "static_id": "nox-spinimage",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2644,9 +2644,9 @@
     },
     {
       "static_id": "nox-spiralimages",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2672,7 +2672,7 @@
       "static_id": "nox-spotlighttext",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2698,7 +2698,7 @@
       "static_id": "nox-stardust",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2724,7 +2724,7 @@
       "static_id": "nox-svgparticle",
       "disposition": "PRESET_OR_MODE",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2750,7 +2750,7 @@
       "static_id": "nox-swipestack",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2776,7 +2776,7 @@
       "static_id": "nox-textrevealwall",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2802,7 +2802,7 @@
       "static_id": "nox-textvaporize",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "STRONG",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2828,7 +2828,7 @@
       "static_id": "nox-textwave",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2854,7 +2854,7 @@
       "static_id": "nox-typewriter",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2880,7 +2880,7 @@
       "static_id": "nox-usercursor",
       "disposition": "INTERNAL_RUNTIME",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match identifies an internal runtime concern rather than a public canon effect.",
+      "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2906,7 +2906,7 @@
       "static_id": "nox-weighthover",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2932,7 +2932,7 @@
       "static_id": "originkit-blackhole",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2958,7 +2958,7 @@
       "static_id": "originkit-draggablesticker",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -2984,7 +2984,7 @@
       "static_id": "originkit-flickertext",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "STRONG",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3010,7 +3010,7 @@
       "static_id": "originkit-fluidtrail",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3036,7 +3036,7 @@
       "static_id": "originkit-globe",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3062,7 +3062,7 @@
       "static_id": "originkit-meshtexthover",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3086,9 +3086,9 @@
     },
     {
       "static_id": "originkit-particle-text-transformation-system",
-      "disposition": "ACTIVE_STANDALONE",
+      "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3122,7 +3122,7 @@
       "static_id": "originkit-text-mutation-system",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3154,9 +3154,9 @@
     },
     {
       "static_id": "originkit-text-signal-system",
-      "disposition": "PRESET_OR_MODE",
+      "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3190,7 +3190,7 @@
       "static_id": "originkit-textmorph",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3216,7 +3216,7 @@
       "static_id": "originkit-thunderstrike",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3240,9 +3240,9 @@
     },
     {
       "static_id": "originkit-variable-weight-text",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/originkit/catalog.ts",
         "category": "originkit",
@@ -3274,9 +3274,9 @@
     },
     {
       "static_id": "overlays-glass-sheet",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/overlays/catalog.ts",
         "category": "overlays",
@@ -3301,9 +3301,9 @@
     },
     {
       "static_id": "overlays-modal-iris-reveal",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/overlays/catalog.ts",
         "category": "overlays",
@@ -3328,9 +3328,9 @@
     },
     {
       "static_id": "overlays-surface-system",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/overlays/catalog.ts",
         "category": "overlays",
@@ -3359,9 +3359,9 @@
     },
     {
       "static_id": "premium-before-after-slider",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "ACTIVE_STANDALONE",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3379,9 +3379,9 @@
     },
     {
       "static_id": "premium-case-study-gallery",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "ACTIVE_STANDALONE",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3399,9 +3399,9 @@
     },
     {
       "static_id": "premium-data-stream-journey",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3425,9 +3425,9 @@
     },
     {
       "static_id": "premium-glass-distortion-cards",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3451,9 +3451,9 @@
     },
     {
       "static_id": "premium-logo-reference-marquee",
-      "disposition": "REVIEW_UNRESOLVED",
+      "disposition": "ACTIVE_STANDALONE",
       "confidence": "REVIEW",
-      "rationale": "No deterministic component/meta/import/filename evidence found in the two local Drive sources.",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3471,9 +3471,9 @@
     },
     {
       "static_id": "premium-signal-particles",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3499,7 +3499,7 @@
       "static_id": "premium-terminal-scan-reveal",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "STRONG",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3524,9 +3524,9 @@
     },
     {
       "static_id": "premium-timeline-orchestrator",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/premium/catalog.ts",
         "category": "premium",
@@ -3550,9 +3550,9 @@
     },
     {
       "static_id": "scroll-cosmic-depth-field",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/backgrounds/catalog.ts",
         "category": "backgrounds",
@@ -3579,7 +3579,7 @@
       "static_id": "scroll-object-transform",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3606,7 +3606,7 @@
       "static_id": "scroll-parallax-symbol-layers",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3633,7 +3633,7 @@
       "static_id": "scroll-pinned-product-stage",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3662,7 +3662,7 @@
       "static_id": "scroll-scene-system",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3696,7 +3696,7 @@
       "static_id": "scroll-section-snap-depth",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3723,7 +3723,7 @@
       "static_id": "scroll-timeline-progress-rail",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3750,7 +3750,7 @@
       "static_id": "scroll-velocity-skew",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Existing explicit fusion-target decision retains this canonical public core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/scroll/catalog.ts",
         "category": "scroll",
@@ -3774,9 +3774,9 @@
     },
     {
       "static_id": "skilltree-active-pulse-ring",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3801,9 +3801,9 @@
     },
     {
       "static_id": "skilltree-astral-constellation",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3827,9 +3827,9 @@
     },
     {
       "static_id": "skilltree-border-trace-quest-card",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3854,9 +3854,9 @@
     },
     {
       "static_id": "skilltree-corrupted-risk-glitch",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3880,9 +3880,9 @@
     },
     {
       "static_id": "skilltree-floating-nodes",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3906,9 +3906,9 @@
     },
     {
       "static_id": "skilltree-forge-chamber-hard-mode",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3932,9 +3932,9 @@
     },
     {
       "static_id": "skilltree-glass-metal-panel",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3959,9 +3959,9 @@
     },
     {
       "static_id": "skilltree-locked-path-shadow",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -3985,9 +3985,9 @@
     },
     {
       "static_id": "skilltree-node-state-system",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4018,9 +4018,9 @@
     },
     {
       "static_id": "skilltree-particle-atmosphere-light",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4045,9 +4045,9 @@
     },
     {
       "static_id": "skilltree-progress-energy-ring",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_STANDALONE",
+      "confidence": "STRONG",
+      "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4072,9 +4072,9 @@
     },
     {
       "static_id": "skilltree-recommended-focus-ring",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4098,9 +4098,9 @@
     },
     {
       "static_id": "skilltree-scene-system",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "ACTIVE_CANONICAL",
+      "confidence": "STRONG",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4133,9 +4133,9 @@
     },
     {
       "static_id": "skilltree-svg-energy-lines",
-      "disposition": "REVIEW_UNRESOLVED",
-      "confidence": "REVIEW",
-      "rationale": "A deterministic source match exists, but its latest text does not establish a permitted public disposition.",
+      "disposition": "LEGACY_WRAPPER",
+      "confidence": "STRONG",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/forge-skilltree/catalog.ts",
         "category": "forge-skilltree",
@@ -4162,7 +4162,7 @@
       "static_id": "system-agent-log-stream",
       "disposition": "PRESET_OR_MODE",
       "confidence": "EXACT",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4189,7 +4189,7 @@
       "static_id": "system-progress-feedback",
       "disposition": "ACTIVE_CANONICAL",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4220,9 +4220,9 @@
     },
     {
       "static_id": "system-progress-ring-charge",
-      "disposition": "ACTIVE_CANONICAL",
+      "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4249,7 +4249,7 @@
       "static_id": "system-rank-reveal",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4274,9 +4274,9 @@
     },
     {
       "static_id": "system-scan-complete-pulse",
-      "disposition": "ACTIVE_CANONICAL",
+      "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4303,7 +4303,7 @@
       "static_id": "system-terminal-boot-stream",
       "disposition": "PRESET_OR_MODE",
       "confidence": "EXACT",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4328,9 +4328,9 @@
     },
     {
       "static_id": "system-xp-fill-surge",
-      "disposition": "ACTIVE_CANONICAL",
+      "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence identifies the deterministically matched target as active/canonical or a fusion core.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/system/catalog.ts",
         "category": "system",
@@ -4357,7 +4357,7 @@
       "static_id": "transitions-clip-path-reveal",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4384,7 +4384,7 @@
       "static_id": "transitions-layered-page-enter",
       "disposition": "ACTIVE_STANDALONE",
       "confidence": "EXACT",
-      "rationale": "Latest source evidence preserves the deterministically matched effect as a separate active mechanism.",
+      "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4410,7 +4410,7 @@
       "static_id": "transitions-masked-route",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4437,7 +4437,7 @@
       "static_id": "transitions-panel-shift",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4461,9 +4461,9 @@
     },
     {
       "static_id": "transitions-route-system",
-      "disposition": "PRESET_OR_MODE",
+      "disposition": "ACTIVE_CANONICAL",
       "confidence": "STRONG",
-      "rationale": "Latest deterministic source match only identifies the target as a preset or mode.",
+      "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4503,7 +4503,7 @@
       "static_id": "transitions-smooth-section-wipe",
       "disposition": "LEGACY_WRAPPER",
       "confidence": "EXACT",
-      "rationale": "The raw static ID is declared in a canonical entry meta.legacyIds compatibility mapping.",
+      "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core.",
       "deterministic_mapping": {
         "catalog_file": "src/motion-arsenal/effects/transitions/catalog.ts",
         "category": "transitions",
@@ -4529,5 +4529,1021 @@
   "limitations": [
     "A Drive/source disposition is canon evidence, not proof that full-repository typecheck, build, browser QA, or migration parity has run.",
     "REVIEW_UNRESOLVED is a completed classification outcome: it records that no permitted disposition can be established from the deterministic local evidence."
-  ]
+  ],
+  "semantic_contracts": {
+    "decision_precedence": [
+      "EXPLICIT_ACTIVE_CORE",
+      "EXPLICIT_FUSION_TARGET",
+      "EXPLICIT_KEEP_STANDALONE",
+      "EXPLICIT_LEGACY_WRAPPER",
+      "EXPLICIT_INTERNAL_RUNTIME",
+      "EXPLICIT_PRESET_OR_MODE",
+      "INCIDENTAL_MENTION"
+    ],
+    "rule": "The first matching explicit decision governs disposition; incidental mentions cannot override it.",
+    "decisions": [
+      {
+        "static_id": "bg-atmosphere-field",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "bg-depth-glow-stack",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "bg-ember-curl-drift",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "bg-forge-energy-glyphs",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "bg-holographic-mask-shader",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "bg-noise-fog-field",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "bg-nox-interactive-glyph-field",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "bg-nox-scribble-field",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "bg-nox-starfield-drift",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "bg-orbital-light-trails",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "bg-radial-beam-atmosphere",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "bg-symbol-storm",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "canvasui-glass-lens",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "canvasui-glitch-burst",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "canvasui-laser",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "canvasui-liquid-ripple",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "canvasui-particle-field-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "canvasui-particle-object",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "canvasui-particle-reveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "canvasui-shatter-reveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "cards-border-trace-depth",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cards-fold-notch-panel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "cards-glass-metal-panel",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "cards-hover-light-refraction",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cards-interactive-surface-card",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "cards-lock-unlock-scan",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "cursor-hover-distortion",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cursor-interactive-symbol-drift",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cursor-light-field",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cursor-magnetic-cta",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "cursor-pointer-interaction-field",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "cursor-pointer-parallax-stage",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "cursor-spotlight-reveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "forms-answer-lock-in",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "forms-question-transition",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "forms-selection-energy-ripple",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "forms-signal-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "hero-blur-to-sharp-boot",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "hero-image-reveal-behind-text",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "hero-massive-typography-reveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "hero-object-float",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "hero-split-entrance",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "hero-text-reveal",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "hero-word-letter-cascade",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "img2threejs-nox-orbital-station",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "lab-active-theory-trails",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "lab-krank-curl-particles",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "lab-oryzo-scribble-field",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "lab-shopify-butterflies",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "lab-shopify-coin-rain",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "nox-axiscursor",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "nox-blurcarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-boxcarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-buttoncarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-characterwaves",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-clickeffects",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-coverflowcarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-coverflowgallery",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-cursorimagegallery",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "nox-curvedmarquee",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-directionhover",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-dotimagereveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-draggablegrid",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-dusttextreveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-dynamicweight",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-electricborder",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "nox-emojiburst",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-floatingicons",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-fluidimagereveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-glitchtext",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-glitterwrap",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-gravitygallery",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-hoverimagereveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-imagefold",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-imagegallery",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-imageripple",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-infinitegallery",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-inkbleed",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-juiceeffect",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "nox-kineticgrid",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-linkpreview",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "nox-magneticcarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-particlesphere",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-pixelateimage",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-pixelcard",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-pixeldrift",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "nox-pixelreveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-pixelunfold",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-prismgrid",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-randomletterswap",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-reactivegrid",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-reactivelines",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-roundcarousel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-scrambletext",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-shinypill",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-smokytext",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-snowfall",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-spinimage",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-spiralimages",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "nox-spotlighttext",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-stardust",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-svgparticle",
+        "disposition": "PRESET_OR_MODE",
+        "decision": "EXPLICIT_PRESET_OR_MODE",
+        "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions."
+      },
+      {
+        "static_id": "nox-swipestack",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-textrevealwall",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-textvaporize",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-textwave",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "nox-typewriter",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "nox-usercursor",
+        "disposition": "INTERNAL_RUNTIME",
+        "decision": "EXPLICIT_INTERNAL_RUNTIME",
+        "rationale": "Explicit INTERNAL/reference-runtime decision excludes this entry from public canon selection."
+      },
+      {
+        "static_id": "nox-weighthover",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "originkit-blackhole",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "originkit-draggablesticker",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "originkit-flickertext",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "originkit-fluidtrail",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "originkit-globe",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "originkit-meshtexthover",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "originkit-particle-text-transformation-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "originkit-text-mutation-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "originkit-text-signal-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "originkit-textmorph",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "originkit-thunderstrike",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "originkit-variable-weight-text",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "overlays-glass-sheet",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "overlays-modal-iris-reveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "overlays-surface-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "premium-before-after-slider",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-case-study-gallery",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-data-stream-journey",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-glass-distortion-cards",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-logo-reference-marquee",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-signal-particles",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "premium-terminal-scan-reveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "premium-timeline-orchestrator",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "scroll-cosmic-depth-field",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "scroll-object-transform",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "scroll-parallax-symbol-layers",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "scroll-pinned-product-stage",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "scroll-scene-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "scroll-section-snap-depth",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "scroll-timeline-progress-rail",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "scroll-velocity-skew",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_FUSION_TARGET",
+        "rationale": "Existing explicit fusion-target decision retains this canonical public core."
+      },
+      {
+        "static_id": "skilltree-active-pulse-ring",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-astral-constellation",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-border-trace-quest-card",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "skilltree-corrupted-risk-glitch",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-floating-nodes",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-forge-chamber-hard-mode",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-glass-metal-panel",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "skilltree-locked-path-shadow",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-node-state-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "skilltree-particle-atmosphere-light",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-progress-energy-ring",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "No ACTIVE CORE/FUSION/LEGACY/INTERNAL/PRESET decision captures this public effect; explicit KEEP STANDALONE disposition applies."
+      },
+      {
+        "static_id": "skilltree-recommended-focus-ring",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "skilltree-scene-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "skilltree-svg-energy-lines",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "system-agent-log-stream",
+        "disposition": "PRESET_OR_MODE",
+        "decision": "EXPLICIT_PRESET_OR_MODE",
+        "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions."
+      },
+      {
+        "static_id": "system-progress-feedback",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "system-progress-ring-charge",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "system-rank-reveal",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "system-scan-complete-pulse",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "system-terminal-boot-stream",
+        "disposition": "PRESET_OR_MODE",
+        "decision": "EXPLICIT_PRESET_OR_MODE",
+        "rationale": "Explicit PRESET/MODE decision outranks incidental component mentions."
+      },
+      {
+        "static_id": "system-xp-fill-surge",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "transitions-clip-path-reveal",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "transitions-layered-page-enter",
+        "disposition": "ACTIVE_STANDALONE",
+        "decision": "EXPLICIT_KEEP_STANDALONE",
+        "rationale": "Explicit KEEP STANDALONE decision preserves its distinct public mechanism."
+      },
+      {
+        "static_id": "transitions-masked-route",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "transitions-panel-shift",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      },
+      {
+        "static_id": "transitions-route-system",
+        "disposition": "ACTIVE_CANONICAL",
+        "decision": "EXPLICIT_ACTIVE_CORE",
+        "rationale": "Explicit ACTIVE CORE/FUSION target decision outranks incidental later source mentions."
+      },
+      {
+        "static_id": "transitions-smooth-section-wipe",
+        "disposition": "LEGACY_WRAPPER",
+        "decision": "EXPLICIT_LEGACY_WRAPPER",
+        "rationale": "Explicit LEGACY compatibility/member decision routes this raw ID through its canonical core."
+      }
+    ]
+  }
 }
